@@ -9,6 +9,8 @@ export default ({save, onChange, onKeyDown, value}) => {
                    onKeyDown={onKeyDown}
                    className="form-control"
             /></div>
-        <button onClick={save} className="btn btn-primary">Сохранить</button>
+        <div className="text-center">
+            <button onClick={save} className="btn btn-primary">Send</button>
+        </div>
     </>
 }

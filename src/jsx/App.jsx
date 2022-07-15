@@ -2,6 +2,8 @@ import React from "react";
 import InputPart from "./InputPart";
 import "../sass/main.scss";
 import {StorageSender} from "./StorageSender";
+import sha256 from 'crypto-js/sha256'
+import encHex from 'crypto-js/enc-hex'
 
 export class App extends React.Component {
 
@@ -16,6 +18,17 @@ export class App extends React.Component {
         this.setVal = this.setVal.bind(this)
         this.onKeyDown = this.onKeyDown.bind(this)
         this.save = this.save.bind(this)
+        this.copy = this.copy.bind(this)
+
+    }
+
+    copy(str) {
+        let tmp = document.createElement('textarea');
+        tmp.value = str;
+        document.body.appendChild(tmp);
+        tmp.select();
+        document.execCommand('copy');
+        document.body.removeChild(tmp);
     }
 
     setVal(event) {
@@ -49,7 +62,9 @@ export class App extends React.Component {
 
     getFile() {
 
-        fetch("static/pic.jpeg?path=" + encodeURIComponent(this.state.val))
+        let proxy = window.location.host === 'localhost:8081' ? "static/pic.jpeg?path=" : '/proxy/?'
+
+        fetch(proxy + encodeURIComponent(this.state.val))
             .then((response) => {
                 if (!response.ok) {
                     throw `HTTP error! Status: ${response.status}`;
@@ -65,6 +80,7 @@ export class App extends React.Component {
                             file: {
                                 headers: headers,
                                 image: objectURL,
+                                imageHash: sha256(myBlob).toString(encHex)
                             },
                             procedure: 2,
                         })
@@ -84,6 +100,12 @@ export class App extends React.Component {
 
         let _input = '', _error = '', _procedure = [];
 
+        if (this.state.procedure) {
+            _procedure.push(<div key="address">
+                <div>Address: {address}</div>
+            </div>)
+        }
+
         switch (this.state.procedure) {
             case 0:
                 _input =
@@ -92,11 +114,9 @@ export class App extends React.Component {
                 break;
             case 1:
                 _procedure.push(<div key="fileLoading">
-                    <div key="p1" className="h4">Получение файла</div>
-                    <div key="p2">
-                        <div className="spinner-border" role="status">
-                            <span className="sr-only">Loading...</span>
-                        </div>
+                    <div key="p1">File getting <div className="spinner-border" role="status">
+                        <span className="sr-only">Loading...</span>
+                    </div>
                     </div>
                 </div>)
                 break;
@@ -105,21 +125,55 @@ export class App extends React.Component {
                     if (this.state.file.error) {
                         _procedure.push(<div key="p1_e" className="error">{this.state.file.error}</div>)
                     } else {
+                        let image = '';
                         if (this.state.file.image) {
-                            _procedure.push(<div key="image">
-                                <div key="p1_i" className="h4">Картинка:</div>
-                                <div key="image"><img src={this.state.file.image} alt="image"/></div>
-                            </div>)
+                            image = <div key="image" className="col-sm">
+                                <div key="image"><img src={this.state.file.image} alt="image" style={{width: '100%'}}/></div>
+                            </div>
                         }
+                        let headers = [];
                         if (this.state.file.headers) {
-                            let headers = [];
                             Object.keys(this.state.file.headers).forEach((key, index) => {
                                 headers.push(<div key={"h" + index}>{key} -- {this.state.file.headers[key]}</div>)
                             })
-                            _procedure.push(<div key="headers">Заголовки: {headers}</div>)
+                            headers = <div key="headers" className="col-sm">Proxy headers: {headers}</div>;
                         }
+
+                        _procedure.push(<div key="hr"><hr/></div>)
+                        _procedure.push(<div key="file-data" className="row">{image}{headers}</div>)
                     }
                     _procedure.push(<StorageSender key="sender" file={this.state.file.image}/>)
+
+                    let btnForSend;
+                    let value = this.state.val;
+                    let imageHash = this.state.file.imageHash
+                    btnForSend = <div>
+                        <hr/>
+                        Copy and past to contract form:
+                        <div>url: <button className="btn btn-danger btn-sm"
+                                          onClick={() => this.copy(value)}>copy</button> <span
+                            className="panel-body" id="copyUrl">{this.state.val}
+                        </span>
+                        </div>
+                        <div>hash: <button className="btn btn-danger  btn-sm"
+                                           onClick={() => this.copy(imageHash)}>copy</button><span
+                            className="panel-body" id="copyHash">{this.state.file.imageHash}
+                            </span>
+                        </div>
+                    </div>
+
+
+                    _procedure.push
+                    (
+                        <div key="btnToIframe" className="row">{btnForSend}
+                        </div>
+                    );
+
+                    this.iframe = <iframe style={{width: 650, height: 300}}
+                                          key="ifr"
+                                          src="https://code.hyperdapp.dev/flow/QmZ8VHgWWoe6GG97VvCAGJg7iVkpLeUEtDZhPPxLsxxHyJ"></iframe>;
+
+                    _procedure.push(this.iframe)
                 }
 
 
@@ -133,9 +187,6 @@ export class App extends React.Component {
         return <div>
             {_error}
             {_input}
-
-            <div className="h4" key="header">Адрес для проверки</div>
-            <div className="h4" key="address">{address}</div>
             {_procedure}
         </div>;
     }
