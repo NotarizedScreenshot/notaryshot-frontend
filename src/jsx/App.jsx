@@ -62,9 +62,9 @@ export class App extends React.Component {
 
     getFile() {
 
-        let proxy = window.location.host === 'localhost:8081' ? "static/pic.jpeg?path=" : '/proxy/?'
+        let proxy = window.location.host.match(/^localhost/) ? "static/pic.jpeg" : ('/proxy/?' + this.state.val)
 
-        fetch(proxy + encodeURIComponent(this.state.val))
+        fetch(proxy)
             .then((response) => {
                 if (!response.ok) {
                     throw `HTTP error! Status: ${response.status}`;
