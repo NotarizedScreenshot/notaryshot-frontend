@@ -1,0 +1,21 @@
+name: QuantumOracle frontend build and deploy
+
+on:
+  push:
+    branches: '*'
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  brownie-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16.x
+      - name: Install dependencies
+        run: yarn install
+      - name: Build
+        run: yarn build
