@@ -77,14 +77,20 @@ export class App extends React.Component {
                         headers[key] = val;
                     })
                     response.arrayBuffer().then((myBlob) => {
-                        const objectURL = URL.createObjectURL(myBlob);
                         this.setState({
                             file: {
                                 headers: headers,
-                                image: objectURL,
                                 imageHash: encHex.stringify(sha256( CryptoJS.lib.WordArray.create(myBlob)))
                             },
                             procedure: 2,
+                        })
+                    })
+                    response.blob().then((myBlob) => {
+                        const objectURL = URL.createObjectURL(myBlob);
+                        this.setState({
+                            file: {
+                                image: objectURL,
+                            },
                         })
                     })
                 }
