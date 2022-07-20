@@ -30,7 +30,7 @@ jobs:
           known_hosts: ${{ secrets.KNOWN_HOSTS }}
       - run: ls -l ./dist
       - name: rsync over ssh
-        run: rsync -r ./dist/ link@quantumoracle.app:/home/link/github_actions/build/
+        run: rsync -r ./dist/ link@quantumoracle.app:/home/link/github_actions/build/dist/ && rsync -r ./static/ link@quantumoracle.app:/home/link/github_actions/build/static/
       - run: ls -l ./dist
       - name: copy to /var/www/html
         run: ssh link@quantumoracle.app "~/github_actions/deploy_frontend.sh"
