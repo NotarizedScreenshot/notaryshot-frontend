@@ -74,7 +74,7 @@ export class App extends React.Component {
                     response.headers.forEach(function (val, key) {
                         headers[key] = val;
                     })
-                    response.blob().then((myBlob) => {
+                    response.arrayBuffer().then((myBlob) => {
                         const objectURL = URL.createObjectURL(myBlob);
                         this.setState({
                             file: {
