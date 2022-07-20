@@ -49,9 +49,9 @@ export class App extends React.Component {
 
     save(isEnter) {
         if (!this.state.val.match(/^https:\/\//)) {
-            this.setState({error: "Адрес должен начинаться с https://"})
+            this.setState({ error: "Адрес должен начинаться с https://" })
         } else {
-            this.setState({procedure: 1})
+            this.setState({ procedure: 1 })
             setTimeout(() => {
                 this.getFile()
             }, 500);
@@ -86,8 +86,8 @@ export class App extends React.Component {
                     })
                 }
             }).catch((err) => {
-            this.setState({file: {error: err}});
-        });
+                this.setState({ file: { error: err } });
+            });
     }
 
     render() {
@@ -109,7 +109,7 @@ export class App extends React.Component {
             case 0:
                 _input =
                     <InputPart onChange={this.setVal} save={this.save} onKeyDown={this.onKeyDown}
-                               value={this.state.val}/>
+                        value={this.state.val} />
                 break;
             case 1:
                 _procedure.push(<div key="fileLoading" id="fileLoading">
@@ -127,7 +127,7 @@ export class App extends React.Component {
                         let image = '';
                         if (this.state.file.image) {
                             image = <div key="image" className="col-sm">
-                                <div key="image"><img src={this.state.file.image} alt="image" style={{width: '100%'}}/></div>
+                                <div key="image"><img src={this.state.file.image} alt="image" style={{ width: '100%' }} /></div>
                             </div>
                         }
                         let headers = [];
@@ -138,37 +138,37 @@ export class App extends React.Component {
                             headers = <div key="headers" className="col-sm">Proxy headers: {headers}</div>;
                         }
 
-                       // _procedure.push(<div key="hr"><hr/></div>)
-                       // _procedure.push(<div key="file-data" className="row">{image}{headers}</div>)
+                        // _procedure.push(<div key="hr"><hr/></div>)
+                        // _procedure.push(<div key="file-data" className="row">{image}{headers}</div>)
                     }
 
                     let btnForSend;
                     let value = this.state.val;
                     let imageHash = this.state.file.imageHash
                     btnForSend = <div id="data-for-form">
-                        <hr/>
+                        <hr />
                         Copy and past to contract form:
                         <div>url: <button className="btn btn-primary btn-sm"
-                                          onClick={() => this.copy(value)}>copy</button> <span
-                            className="panel-body" id="copyUrl">{this.state.val}
-                        </span>
+                            onClick={() => this.copy(value)}>copy</button> <span
+                                className="panel-body" id="copyUrl">{this.state.val}
+                            </span>
                         </div>
                         <div>hash: <button className="btn btn-primary  btn-sm"
-                                           onClick={() => this.copy(imageHash)}>copy</button><span
-                            className="panel-body" id="copyHash">{this.state.file.imageHash}
+                            onClick={() => this.copy(imageHash)}>copy</button><span
+                                className="panel-body" id="copyHash">{this.state.file.imageHash}
                             </span>
                         </div>
                     </div>
 
 
                     _procedure.push
-                    (
-                        <div key="btnToIframe" id="btnToIframe">{btnForSend}
-                        </div>
-                    );
+                        (
+                            <div key="btnToIframe" id="btnToIframe">{btnForSend}
+                            </div>
+                        );
 
                     this.iframe = <iframe key="ifr"
-                                          src="https://code.hyperdapp.dev/flow/QmZ8VHgWWoe6GG97VvCAGJg7iVkpLeUEtDZhPPxLsxxHyJ"></iframe>;
+                        src="https://code.hyperdapp.dev/flow/Qma5ymdSBgHgh6eAZu46atkHuNy7LPx1ePUJQ1ivoj9wj7"></iframe>;
 
                     _procedure.push(this.iframe)
                 }
