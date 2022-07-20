@@ -46,9 +46,12 @@ let config = {
         ]
     },
     devServer: {
+        static: {
+            directory: path.join(__dirname, 'static'),
+            publicPath: '/static',
+        },
+        compress: true,
         historyApiFallback: true,
-        contentBasePublicPath: '/static',
-        contentBase: path.resolve(__dirname, './static'),
     },
     devtool: setDevTool()
     ,

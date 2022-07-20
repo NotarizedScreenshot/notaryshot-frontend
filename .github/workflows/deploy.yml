@@ -1,0 +1,37 @@
+name: QuantumOracle frontend build and deploy
+
+on:
+  push:
+    branches: '*'
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16
+          cache: 'yarn'
+      - name: Install dependencies
+        run: yarn install
+      - name: Build
+        run: yarn build
+
+  deploy:
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    needs: build
+    steps:
+      - name: Install SSH Key
+        uses: shimataro/ssh-key-action@v2
+        with:
+          key: ${{ secrets.FRONTEND_DEPLOY_SSH_PRIVATE_KEY }}
+          name: id_rsa
+          known_hosts: ${{ secrets.KNOWN_HOSTS }}
+      - name: rsync over ssh
+        run: rsync -r ./dist/ link@quantumoracle.app:/home/link/github_actions/build/dist/ && rsync -r ./static/ link@quantumoracle.app:/home/link/github_actions/build/static/
+      - name: copy to /var/www/html
+        run: ssh link@quantumoracle.app "~/github_actions/deploy_frontend.sh"
