@@ -26,7 +26,7 @@ jobs:
         with:
           key: ${{ secrets.FRONTEND_DEPLOY_SSH_PRIVATE_KEY }}
           name: id_rsa
-          known_hosts: ${{ secrets.KNOWN_HOSTS }}
+          known_hosts: ${{ secrets.SSH_HOST }}
       - name: rsync over ssh
         run: rsync ./dist/ link@quantumoracle.app:/home/link/github_actions/build/
       - name: copy to /var/www/html
