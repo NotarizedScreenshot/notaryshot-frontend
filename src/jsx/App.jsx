@@ -1,7 +1,6 @@
 import React from "react";
 import InputPart from "./InputPart";
 import "../sass/main.scss";
-import {StorageSender} from "./StorageSender";
 import sha256 from 'crypto-js/sha256'
 import encHex from 'crypto-js/enc-hex'
 
@@ -55,7 +54,7 @@ export class App extends React.Component {
             this.setState({procedure: 1})
             setTimeout(() => {
                 this.getFile()
-            }, 2000);
+            }, 500);
 
         }
     }
@@ -101,7 +100,7 @@ export class App extends React.Component {
         let _input = '', _error = '', _procedure = [];
 
         if (this.state.procedure) {
-            _procedure.push(<div key="address">
+            _procedure.push(<div key="address" id="address">
                 <div>Address: {address}</div>
             </div>)
         }
@@ -113,7 +112,7 @@ export class App extends React.Component {
                                value={this.state.val}/>
                 break;
             case 1:
-                _procedure.push(<div key="fileLoading">
+                _procedure.push(<div key="fileLoading" id="fileLoading">
                     <div key="p1">File getting <div className="spinner-border" role="status">
                         <span className="sr-only">Loading...</span>
                     </div>
@@ -139,23 +138,22 @@ export class App extends React.Component {
                             headers = <div key="headers" className="col-sm">Proxy headers: {headers}</div>;
                         }
 
-                        _procedure.push(<div key="hr"><hr/></div>)
-                        _procedure.push(<div key="file-data" className="row">{image}{headers}</div>)
+                       // _procedure.push(<div key="hr"><hr/></div>)
+                       // _procedure.push(<div key="file-data" className="row">{image}{headers}</div>)
                     }
-                    _procedure.push(<StorageSender key="sender" file={this.state.file.image}/>)
 
                     let btnForSend;
                     let value = this.state.val;
                     let imageHash = this.state.file.imageHash
-                    btnForSend = <div>
+                    btnForSend = <div id="data-for-form">
                         <hr/>
                         Copy and past to contract form:
-                        <div>url: <button className="btn btn-danger btn-sm"
+                        <div>url: <button className="btn btn-primary btn-sm"
                                           onClick={() => this.copy(value)}>copy</button> <span
                             className="panel-body" id="copyUrl">{this.state.val}
                         </span>
                         </div>
-                        <div>hash: <button className="btn btn-danger  btn-sm"
+                        <div>hash: <button className="btn btn-primary  btn-sm"
                                            onClick={() => this.copy(imageHash)}>copy</button><span
                             className="panel-body" id="copyHash">{this.state.file.imageHash}
                             </span>
@@ -165,12 +163,11 @@ export class App extends React.Component {
 
                     _procedure.push
                     (
-                        <div key="btnToIframe" className="row">{btnForSend}
+                        <div key="btnToIframe" id="btnToIframe">{btnForSend}
                         </div>
                     );
 
-                    this.iframe = <iframe style={{width: 650, height: 300}}
-                                          key="ifr"
+                    this.iframe = <iframe key="ifr"
                                           src="https://code.hyperdapp.dev/flow/QmZ8VHgWWoe6GG97VvCAGJg7iVkpLeUEtDZhPPxLsxxHyJ"></iframe>;
 
                     _procedure.push(this.iframe)
