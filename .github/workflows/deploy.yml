@@ -7,9 +7,8 @@ on:
     branches: [ main ]
 
 jobs:
-  deploy-frontend:
+  build:
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
@@ -21,6 +20,11 @@ jobs:
       - name: Build
         run: yarn build
 
+  deploy:
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    needs: build
+    steps:
       - name: Install SSH Key
         uses: shimataro/ssh-key-action@v2
         with:
