@@ -5,6 +5,8 @@ import sha256 from 'crypto-js/sha256'
 import encHex from 'crypto-js/enc-hex'
 import CryptoJS from 'crypto-js'
 
+const HYPERDAPP_UI = "https://code.hyperdapp.dev/flow/QmVs2wB5rDrqsuyXcV6Qprbm79khcf52n3WkRygipkukTj"
+
 export class App extends React.Component {
 
     constructor(props) {
@@ -168,8 +170,7 @@ export class App extends React.Component {
                             </div>
                         );
 
-                    this.iframe = <iframe key="ifr"
-                        src="https://code.hyperdapp.dev/flow/QmVs2wB5rDrqsuyXcV6Qprbm79khcf52n3WkRygipkukTj"></iframe>;
+                    this.iframe = <iframe key="ifr" src=HYPERDAPP_UI/>;
 
                     _procedure.push(this.iframe)
                 }
