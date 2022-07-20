@@ -3,7 +3,7 @@ import React from "react";
 export default ({save, onChange, onKeyDown, value}) => {
     return <>
         <div className="form-group">
-            <input type="text" placeholder="https://" value={value}
+            <input type="text" placeholder="Image url..." value={value}
                    onChange={onChange}
                    onKeyDown={onKeyDown}
                    className="form-control"
