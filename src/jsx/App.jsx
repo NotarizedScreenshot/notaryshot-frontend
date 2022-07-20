@@ -3,6 +3,7 @@ import InputPart from "./InputPart";
 import "../sass/main.scss";
 import sha256 from 'crypto-js/sha256'
 import encHex from 'crypto-js/enc-hex'
+import CryptoJS from 'crypto-js'
 
 export class App extends React.Component {
 
@@ -79,7 +80,7 @@ export class App extends React.Component {
                             file: {
                                 headers: headers,
                                 image: objectURL,
-                                imageHash: sha256(myBlob).toString(encHex)
+                                imageHash: enchex.stringify(sha256( CryptoJS.lib.WordArray.create(myBlob)));
                             },
                             procedure: 2,
                         })
