@@ -46,10 +46,12 @@ let config = {
         ]
     },
     devServer: {
-        historyApiFallback: true,
-        contentBasePublicPath: '/static',
-        contentBase: path.resolve(__dirname, './static'),
+    historyApiFallback: true,
+    static: {
+      directory: path.resolve(__dirname, './static'),
+      publicPath: '/static',
     },
+  },
     devtool: setDevTool()
     ,
     plugins: [

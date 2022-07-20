@@ -1,0 +1,79 @@
+@font-face {
+  font-family: 'NeueMachina';
+  src: url(../static/fonts/PPNeueMachina-InktrapRegular.woff);
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: 'NeueMachina';
+  src: url(../static/fonts/PPNeueMachina-InktrapUltrabold.woff);
+  font-weight: 800;
+}
+
+@font-face {
+  font-family: 'RobotoMono';
+  src: url(../static/fonts/RobotoMono-Medium.ttf);
+  font-weight: 500;
+}
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+html {
+  width: 100%;
+
+  body {
+    position: relative;
+    width: 100%;
+    background-color: aquamarine;
+    color: white;
+
+    h1 {
+      font-family: NeueMachina;
+      font-size: 140px;
+      line-height: 125px;
+      font-weight: 800;
+    }
+
+    h2 {
+      font-family: NeueMachina;
+      font-size: 110px;
+      line-height: 90px;
+      font-weight: 800;
+    }
+
+    h3 {
+      font-family: NeueMachina;
+      font-size: 90px;
+      line-height: 82px;
+      font-weight: 800;
+    }
+    h4 {
+      font-family: NeueMachina;
+      font-size: 70px;
+      line-height: 82px;
+      font-weight: 800;
+    }
+    h5 {
+      font-family: NeueMachina;
+      font-size: 60px;
+      line-height: 82px;
+      font-weight: 800;
+    }
+    h6 {
+      font-family: NeueMachina;
+      font-size: 40px;
+      line-height: 82px;
+      font-weight: 800;
+    }
+    p {
+      font-family: NeueMachina;
+      margin: 0;
+    }
+
+    
+  }
+}

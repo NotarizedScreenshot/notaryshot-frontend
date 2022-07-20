@@ -1,0 +1,56 @@
+.container {
+  position: relative;
+  background-image: url('../../../../static/images/img-02.png');
+  background-size: cover;
+  background-color: #221739;
+  height: 1385px;
+
+  text-align: center;
+  padding-top: 150px;
+
+  h1 {
+    position: relative;
+    top: 830px;
+  }
+
+  .box {
+    position: absolute;
+    // background-color: aqua;
+    padding: 50px 50px;
+    max-width: 579px;
+    border-radius: 20px;
+    background: rgba(35, 25, 60, 0.7);
+    border: 1px solid #0074ff;
+    backdrop-filter: blur(25px);
+    text-align: start;
+
+    &.left {
+      left: 68px;
+      top: 160px;
+    }
+
+    &.right {
+      right: 30px;
+      top: 600px;
+    }
+
+    p {
+      font-size: 24px;
+      line-height: 36px;
+
+      &.description {
+        margin-bottom: 25px;
+      }
+
+      &.list {
+        margin: 5px 0;
+        span {
+          font-size: 85px;
+          line-height: 10px;
+          margin-left: -5px;
+          margin-right: 5px;
+        }
+      }
+    }
+  }
+}
