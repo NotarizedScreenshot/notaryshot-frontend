@@ -170,7 +170,7 @@ export class App extends React.Component {
                             </div>
                         );
 
-                    this.iframe = <iframe key="ifr" src=HYPERDAPP_UI/>;
+                    this.iframe = <iframe key="ifr" src={HYPERDAPP_UI}/>;
 
                     _procedure.push(this.iframe)
                 }
