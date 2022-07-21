@@ -208,7 +208,11 @@ export class App extends React.Component {
             </div>,
           );
 
-          this.iframe = <iframe key="ifr" src={HYPERDAPP_UI} />;
+          this.iframe = <iframe key="ifr" src={HYPERDAPP_UI} name="myframe" onLoad={() => {
+            console.log('iframe loaded');
+            const myFrameEl = myframe.document.querySelector(".p-inputtext")
+            console.log('myFrameEl', myFrameEl);
+          }} />;
 
           _procedure.push(this.iframe);
         }
