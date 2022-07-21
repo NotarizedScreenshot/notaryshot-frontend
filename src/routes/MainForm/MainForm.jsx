@@ -87,21 +87,19 @@ export class App extends React.Component {
           response.headers.forEach(function (val, key) {
             headers[key] = val;
           });
-          response.arrayBuffer().then((myBlob) => {
-            this.setState({
-              file: {
-                headers: headers,
-                imageHash: encHex.stringify(sha256(CryptoJS.lib.WordArray.create(myBlob))),
-              },
-              procedure: 2,
-            });
-          });
+
           response.blob().then((myBlob) => {
             const objectURL = URL.createObjectURL(myBlob);
-            this.setState({
-              file: {
-                image: objectURL,
-              },
+            myBlob.arrayBuffer().then((myBuffer) => {
+              this.setState({
+                file: {
+                  ...this.state.file,
+                  headers: headers,
+                  imageHash: encHex.stringify(sha256(CryptoJS.lib.WordArray.create(myBuffer))),
+                  image: objectURL,
+                },
+                procedure: 2,
+              });
             });
           });
         }
@@ -242,8 +240,6 @@ export class App extends React.Component {
         </div>
       );
     }
-
-    console.log('input: ', _input);
 
     return (
       <div className={styles.hyperContainer}>
