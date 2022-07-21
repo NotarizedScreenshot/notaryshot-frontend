@@ -27,6 +27,7 @@ export class App extends React.Component {
       val: 'https://pedlib.ru/download/Ej/Ej1.jpg', //https://totum.ewr1.vultrobjects.com/365_262_file.png
       error: null,
       procedure: 0,
+      showImage: false,
     };
 
     this.setVal = this.setVal.bind(this);
@@ -99,6 +100,7 @@ export class App extends React.Component {
                   image: objectURL,
                 },
                 procedure: 2,
+                showImage: true,
               });
             });
           });
@@ -119,14 +121,6 @@ export class App extends React.Component {
     let _input = '',
       _error = '',
       _procedure = [];
-
-    if (this.state.procedure) {
-      _procedure.push(
-        <div key="address" id="address">
-          <div>Address: {address}</div>
-        </div>,
-      );
-    }
 
     switch (this.state.procedure) {
       case 0:
@@ -160,16 +154,6 @@ export class App extends React.Component {
               </div>,
             );
           } else {
-            let image = '';
-            if (this.state.file.image) {
-              image = (
-                <div key="image" className="col-sm">
-                  <div key="image">
-                    <img src={this.state.file.image} alt="image" style={{ width: '100%' }} />
-                  </div>
-                </div>
-              );
-            }
             let headers = [];
             if (this.state.file.headers) {
               Object.keys(this.state.file.headers).forEach((key, index) => {
@@ -185,9 +169,6 @@ export class App extends React.Component {
                 </div>
               );
             }
-
-            // _procedure.push(<div key="hr"><hr/></div>)
-            // _procedure.push(<div key="file-data" className="row">{image}{headers}</div>)
           }
 
           let btnForSend;
@@ -245,6 +226,31 @@ export class App extends React.Component {
       <div className={styles.hyperContainer}>
         {_error}
         {_input}
+
+        {!!this.state.procedure && (
+          <div key="address" id="address">
+            <div>Address: {address}</div>
+          </div>
+        )}
+        {this.state.showImage && (
+          <div className={styles.responseData}>
+            <div key="image" className={styles.imageContainer}>
+              <div key="image">
+                <img src={this.state.file.image} alt="image" style={{ width: '100%' }} />
+              </div>
+            </div>
+            <div className={styles.headersContainer}>
+              Proxy headers:{' '}
+              {Object.entries(this.state.file?.headers).map(([key, val]) => {
+                return (
+                  <div key={key}>
+                    {key}: {val}
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        )}
         {_procedure}
       </div>
     );
