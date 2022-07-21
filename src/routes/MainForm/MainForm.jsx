@@ -96,7 +96,7 @@ export class App extends React.Component {
                 file: {
                   ...this.state.file,
                   headers: headers,
-                  imageHash: encHex.stringify(sha256(CryptoJS.lib.WordArray.create(myBuffer))),
+                  imageHash: '0x' + encHex.stringify(sha256(CryptoJS.lib.WordArray.create(myBuffer))),
                   image: objectURL,
                 },
                 procedure: 2,
