@@ -1,0 +1,56 @@
+.container {
+  background-image: url('../../../../public/images/img-03.png');
+  background-size: cover;
+  background-color: #501938;
+  height: 1335px;
+
+  padding: 110px;
+
+  .title {
+    padding: 150px 0;
+  }
+  p {
+    font-size: 24px;
+    line-height: 36px;
+    font-weight: 400;
+    padding-bottom: 50px;
+
+    &.description {
+      max-width: 500px;
+    }
+  }
+  .list {
+    font-size: 24px;
+    line-height: 36px;
+    font-weight: 400;
+    letter-spacing: 1px;
+    font-style: normal;
+    p {
+      padding: 0;
+    }
+
+    div {
+      background: #00165b;
+      border-radius: 16px;
+      width: 505px;
+      height: 90px;
+      margin-bottom: 38px;
+      display: flex;
+      justify-content: start;
+      align-items: center;
+      padding: 10px;
+      span {
+        display: inline-block;
+        flex-shrink: 0;
+        width: 14px;
+        height: 14px;
+        background-color: white;
+        border-radius: 100%;
+        margin: 10px;
+      }
+      &:not(:first-child) span {
+        margin-bottom: 45px;
+      }
+    }
+  }
+}

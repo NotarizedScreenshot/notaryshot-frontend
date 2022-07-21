@@ -1,0 +1,30 @@
+.container {
+  position: relative;
+  background-color: #0d0c27;
+  background: rgb(64, 152, 244);
+
+  background-position: 0px 0px;
+  background: radial-gradient(
+    circle at top left,
+    rgba(64, 152, 244, 1) 0%,
+    rgba(44, 84, 142, 1) 15%,
+    rgba(22, 40, 74, 1) 30%,
+    rgba(14, 12, 39, 1) 50%
+  );
+  height: 804px;
+  padding-left: 120px;
+
+  img {
+    position: absolute;
+    right: 74px;
+  }
+
+  h4 {
+    padding-top: 196px;
+    margin-bottom: 22px;
+  }
+
+  input {
+    margin-right: 20px;
+  }
+}

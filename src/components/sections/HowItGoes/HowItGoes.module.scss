@@ -1,0 +1,39 @@
+.container {
+  background-image: url('../../../../public/images/img-04.png');
+  background-color: #5e1a50;
+  background-size: cover;
+  height: 1580px;
+  padding: 376px 105px;
+
+  .title {
+    margin-bottom: 105px;
+  }
+
+  .box {
+    width: 757px;
+    background: rgba(35, 25, 60, 0.7);
+    border: 1px solid #0074ff;
+    backdrop-filter: blur(25px);
+    /* Note: backdrop-filter has minimal browser support */
+
+    border-radius: 20px;
+    font-family: NeueMachina;
+    padding: 40px;
+    display: flex;
+    margin-bottom: 41px;
+
+    .number {
+      font-weight: 800;
+      font-size: 72px;
+      line-height: 80px;
+      /* identical to box height, or 50% */
+
+      letter-spacing: 1px;
+      padding-right: 30px;
+    }
+    p {
+      font-size: 24px;
+      line-height: 36px;
+    }
+  }
+}
