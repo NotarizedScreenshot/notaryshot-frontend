@@ -67,7 +67,7 @@ const en = {
       },
     },
     subscribe: {
-      title: 'Subscribe for news&updates',
+      title: { l1: 'Subscribe', l2: 'for news&updates' },
       placeholder: 'Your e-mail',
       subscribeButton: 'Subscribe',
     },
