@@ -14,7 +14,7 @@ export const Subscribe = () => {
   };
   return (
     <div className={styles.container}>
-      <img src="../../../../public/images/img-subscribe.png" alt="subscribe" />
+      <img src="public/images/img-subscribe.png" alt="subscribe" />
       <h4>
         {t('subscribe.title.l1')}
         <br />

@@ -8,7 +8,7 @@ export const Intro = () => {
   console.log(t('intro.title'));
   return (
     <div className={styles.container}>
-      <img className={styles.logo} src="../../../../public/images/logo1000.png" alt="logo" />
+      <img className={styles.logo} src="public/images/logo1000.png" alt="logo" />
       <h1>{t('intro.title')}</h1>
       <nav>
         <Link to="/mainform">
@@ -21,16 +21,16 @@ export const Intro = () => {
       <p>{t('intro.poweredBy')}</p>
       <div className={styles.partners}>
         <div>
-          <img src="../../../../public/images/polygon.png" />
+          <img src="public/images/polygon.png" />
         </div>
         <div>
-          <img src="../../../../public/images/ipfs.png" />
+          <img src="public/images/ipfs.png" />
         </div>
         <div>
-          <img src="../../../../public/images/chainlink.png" />
+          <img src="public/images/chainlink.png" />
         </div>
         <div>
-          <img src="../../../../public/images/hyperdapp.png" />
+          <img src="public/images/hyperdapp.png" />
         </div>
       </div>
     </div>

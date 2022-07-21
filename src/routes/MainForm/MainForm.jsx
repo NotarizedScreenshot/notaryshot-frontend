@@ -12,7 +12,7 @@ import styles from './MainForm.module.scss';
 export const MainForm = () => {
   return (
     <div className={styles.container}>
-      <img className={styles.logo} src="../../../public/images/logo1000.png" alt="logo" />
+      <img className={styles.logo} src="public/images/logo1000.png" alt="logo" />
       <div className={styles.formContainer}>
         <App />
       </div>
