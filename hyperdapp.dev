@@ -1,0 +1,37 @@
+address(notarized, '0xe3c8e48121acde1e798bc6d1b1c4ac16c9affd32').
+
+abi(notarized, [
+  approve(address, uint256),
+  balanceOf(address): uint256 / view,
+  fulfillContentHash(bytes32, uint256),
+  getApproved(uint256): address / view,
+  isApprovedForAll(address, address): bool / view,
+  jobId: bytes32 / view,
+  name: string / view,
+  oracle: address / view,
+  ownerOf(uint256): address / view,
+  safeTransferFrom(address, address, uint256),
+  safeTransferFrom(address, address, uint256, bytes),
+  setApprovalForAll(address, bool),
+  setJobId(string),
+  submitMint(string, uint256),
+  supportsInterface(bytes4): bool / view,
+  symbol: string / view,
+  tokenURI(uint256): string / view,
+  transferFrom(address, address, uint256)
+]).
+
+
+  
+prompt :-
+  show [
+    col(
+      row(col(text('Screenshot URL'), input(text, url)),col(text('Screenshot hash'), input(text, urlcontenthash))),
+      button('Mint your screenshot', [ submitMint_action ])
+    )
+  ].
+
+submitMint_action :- 
+  get(input/url, URL),
+  get(input/urlcontenthash, URLCONTENTHASH),
+  call_fn(notarized, submitMint(URL,URLCONTENTHASH),  []).

@@ -7,9 +7,8 @@ on:
     branches: [ main ]
 
 jobs:
-  deploy-frontend:
+  build:
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
@@ -20,14 +19,32 @@ jobs:
         run: yarn install
       - name: Build
         run: yarn build
+      - name: Cache Dist
+        id: cache-dist
+        uses: actions/cache@v3
+        with:
+          path: dist
+          key: ${{github.run_id}}-dist
 
+  deploy:
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    needs: build
+    steps:
+      - uses: actions/checkout@v3
       - name: Install SSH Key
         uses: shimataro/ssh-key-action@v2
         with:
           key: ${{ secrets.FRONTEND_DEPLOY_SSH_PRIVATE_KEY }}
           name: id_rsa
           known_hosts: ${{ secrets.KNOWN_HOSTS }}
+      - name: Cache Dist
+        id: cache-dist
+        uses: actions/cache@v3
+        with:
+          path: dist
+          key: ${{github.run_id}}-dist
       - name: rsync over ssh
-        run: rsync -r ./dist/ link@quantumoracle.app:/home/link/github_actions/build/dist/ && rsync -r ./static/ link@quantumoracle.app:/home/link/github_actions/build/static/
+        run: rsync -r ${{ github.workspace }}/dist/ link@quantumoracle.app:/home/link/github_actions/build/dist/ && rsync -r ${{ github.workspace }}/static/ link@quantumoracle.app:/home/link/github_actions/build/static/
       - name: copy to /var/www/html
         run: ssh link@quantumoracle.app "~/github_actions/deploy_frontend.sh"
