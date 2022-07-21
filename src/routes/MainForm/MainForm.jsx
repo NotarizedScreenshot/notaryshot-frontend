@@ -208,7 +208,13 @@ export class App extends React.Component {
             </div>,
           );
 
-          this.iframe = <iframe key="ifr" src={HYPERDAPP_UI} name="myframe" onLoad={() => {
+          this.iframe = <iframe key="ifr" src={HYPERDAPP_UI} name="myframe"
+            onMouseOver={() => {
+              console.log('mouse over test');
+              const myFrameEl = myframe.document.querySelector(".p-inputtext")
+            console.log('myFrameEl mouseover', myFrameEl);
+            }}
+            onLoad={() => {
             console.log('iframe loaded');
             const myFrameEl = myframe.document.querySelector(".p-inputtext")
             console.log('myFrameEl', myFrameEl);
