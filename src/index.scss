@@ -1,18 +1,18 @@
 @font-face {
   font-family: 'NeueMachina';
-  src: url(../static/fonts/PPNeueMachina-InktrapRegular.woff);
+  src: url(../public/fonts/PPNeueMachina-InktrapRegular.woff);
   font-weight: 400;
 }
 
 @font-face {
   font-family: 'NeueMachina';
-  src: url(../static/fonts/PPNeueMachina-InktrapUltrabold.woff);
+  src: url(../public/fonts/PPNeueMachina-InktrapUltrabold.woff);
   font-weight: 800;
 }
 
 @font-face {
   font-family: 'RobotoMono';
-  src: url(../static/fonts/RobotoMono-Medium.ttf);
+  src: url(../public/fonts/RobotoMono-Medium.ttf);
   font-weight: 500;
 }
 
@@ -72,6 +72,16 @@ html {
     p {
       font-family: NeueMachina;
       margin: 0;
+    }
+
+    a {
+      color: white;
+      text-decoration: none;
+
+      &:hover {
+        color: white;
+        text-decoration: none;
+      }
     }
   }
 }

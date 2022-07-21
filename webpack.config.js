@@ -47,13 +47,12 @@ let config = {
     },
     devServer: {
         static: {
-            directory: path.join(__dirname, 'static'),
-            publicPath: '/static',
+            directory: path.join(__dirname, 'public'),
+            publicPath: '/public',
         },
         compress: true,
         historyApiFallback: true,
     },
-  },
     devtool: setDevTool()
     ,
     plugins: [
