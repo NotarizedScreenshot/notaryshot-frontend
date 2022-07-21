@@ -5,7 +5,7 @@ import encHex from 'crypto-js/enc-hex';
 import CryptoJS from 'crypto-js';
 
 const HYPERDAPP_UI =
-  'https://code.hyperdapp.dev/flow/QmVs2wB5rDrqsuyXcV6Qprbm79khcf52n3WkRygipkukTj';
+  'https://code.hyperdapp.dev/flow/QmcDWNZHWQdruYmKLjG8io5AdH4pm2gAtnBrqkVGu8wJ19';
 
 import styles from './MainForm.module.scss';
 
