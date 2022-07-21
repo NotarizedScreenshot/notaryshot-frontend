@@ -5,7 +5,7 @@ import sha256 from 'crypto-js/sha256'
 import encHex from 'crypto-js/enc-hex'
 import CryptoJS from 'crypto-js'
 
-const HYPERDAPP_UI = "https://code.hyperdapp.dev/flow/QmVs2wB5rDrqsuyXcV6Qprbm79khcf52n3WkRygipkukTj"
+const HYPERDAPP_UI = "https://code.hyperdapp.dev/flow/QmcDWNZHWQdruYmKLjG8io5AdH4pm2gAtnBrqkVGu8wJ19"
 
 export class App extends React.Component {
 
@@ -80,7 +80,7 @@ export class App extends React.Component {
                         this.setState({
                             file: {
                                 headers: headers,
-                                imageHash: encHex.stringify(sha256( CryptoJS.lib.WordArray.create(myBlob)))
+                                imageHash: encHex.stringify(sha256(CryptoJS.lib.WordArray.create(myBlob)))
                             },
                             procedure: 2,
                         })
@@ -176,7 +176,7 @@ export class App extends React.Component {
                             </div>
                         );
 
-                    this.iframe = <iframe key="ifr" src={HYPERDAPP_UI}/>;
+                    this.iframe = <iframe key="ifr" src={HYPERDAPP_UI} />;
 
                     _procedure.push(this.iframe)
                 }
