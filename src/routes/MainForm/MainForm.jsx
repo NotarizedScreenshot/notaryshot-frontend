@@ -5,7 +5,7 @@ import encHex from 'crypto-js/enc-hex';
 import CryptoJS from 'crypto-js';
 
 const HYPERDAPP_UI =
-  'https://code.hyperdapp.dev/flow/QmVs2wB5rDrqsuyXcV6Qprbm79khcf52n3WkRygipkukTj';
+  'https://code.hyperdapp.dev/flow/QmcDWNZHWQdruYmKLjG8io5AdH4pm2gAtnBrqkVGu8wJ19';
 
 import styles from './MainForm.module.scss';
 
@@ -208,7 +208,11 @@ export class App extends React.Component {
             </div>,
           );
 
-          this.iframe = <iframe key="ifr" src={HYPERDAPP_UI} />;
+          this.iframe = <iframe key="ifr" src={HYPERDAPP_UI} name="myframe" onLoad={() => {
+            console.log('iframe loaded');
+            const myFrameEl = myframe.document.querySelector(".p-inputtext")
+            console.log('myFrameEl', myFrameEl);
+          }} />;
 
           _procedure.push(this.iframe);
         }
