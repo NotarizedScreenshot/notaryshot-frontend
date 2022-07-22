@@ -28,6 +28,7 @@ export class App extends React.Component {
       error: null,
       procedure: 0,
       showImage: false,
+      isIFrameLoaded: false,
     };
 
     this.setVal = this.setVal.bind(this);
@@ -111,6 +112,10 @@ export class App extends React.Component {
         this.setState({ file: { error: err } });
       });
   }
+
+  iframeOnloadHandler = () => {
+    this.setState({ isIFrameLoaded: true });
+  };
 
   render() {
     let params = {};
@@ -214,26 +219,7 @@ export class App extends React.Component {
               key="ifr"
               src={HYPERDAPP_UI}
               name="myframe"
-              // onMouseOver={() => {
-              //   const myFrameEls = myframe.document.getElementsByClassName('p-inputtext');
-              //   console.log('onover', myFrameEls);
-              //   if (!!myFrameEls) {
-              //     const arr = Array.from(myFrameEls);
-              //     arr[0].value = this.state.val;
-              //     arr[1].value = this.state.file.imageHash;
-              //     console.log('myFrameEl mouseover', myFrameEls, arr);
-              //   }
-              // }}
-              // onMouseOut={() => {
-              //   const myFrameEls = myframe.document.getElementsByClassName('p-inputtext');
-              //   console.log('onout', myFrameEls);
-              //   if (!!myFrameEls) {
-              //     const arr = Array.from(myFrameEls);
-              //     arr[0].value = this.state.val;
-              //     arr[1].value = this.state.file.imageHash;
-              //     console.log('myFrameEl mouseover', myFrameEls, arr);
-              //   }
-              // }}
+              onLoad={this.iframeOnloadHandler}
             />
           );
 
@@ -254,7 +240,7 @@ export class App extends React.Component {
         className={styles.hyperContainer}
         onMouseMove={() => {
           try {
-            if (!!myframe) {
+            if (this.state.isIFrameLoaded) {
               const myFrameEls = myframe.document.getElementsByClassName('p-inputtext');
               if (!!myFrameEls && myFrameEls.length > 0) {
                 const arr = Array.from(myFrameEls);
