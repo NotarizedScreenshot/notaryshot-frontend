@@ -240,13 +240,12 @@ export class App extends React.Component {
         className={styles.hyperContainer}
         onMouseMove={() => {
           try {
-            if (!!this.state.isIFrameLoaded) {
+            if (this.state.isIFrameLoaded) {
               const myFrameEls = myframe.document.getElementsByClassName('p-inputtext');
               if (!!myFrameEls && myFrameEls.length > 0) {
                 const arr = Array.from(myFrameEls);
                 arr[0].value = this.state.val;
                 arr[1].value = this.state.file.imageHash;
-                console.log('myFrameEl mouseover', myFrameEls, arr);
               }
             }
           } catch (error) {
