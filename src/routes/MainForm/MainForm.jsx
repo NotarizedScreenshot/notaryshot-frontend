@@ -96,7 +96,8 @@ export class App extends React.Component {
                 file: {
                   ...this.state.file,
                   headers: headers,
-                  imageHash: '0x' + encHex.stringify(sha256(CryptoJS.lib.WordArray.create(myBuffer))),
+                  imageHash:
+                    '0x' + encHex.stringify(sha256(CryptoJS.lib.WordArray.create(myBuffer))),
                   image: objectURL,
                 },
                 procedure: 2,
@@ -208,17 +209,26 @@ export class App extends React.Component {
             </div>,
           );
 
-          this.iframe = <iframe key="ifr" src={HYPERDAPP_UI} name="myframe"
-            onMouseOver={() => {
-              console.log('mouse over test');
-              const myFrameEl = myframe.document.getElementsByClassName("p-inputtext")
-            console.log('myFrameEl mouseover', myFrameEl);
-            }}
-            onLoad={() => {
-            console.log('iframe loaded');
-            const myFrameEl = myframe.document.querySelector(".p-inputtext")
-            console.log('myFrameEl', myFrameEl);
-          }} />;
+          this.iframe = (
+            <iframe
+              key="ifr"
+              src={HYPERDAPP_UI}
+              name="myframe"
+              onMouseOver={() => {
+                console.log('mouse over test');
+                const myFrameEls = myframe.document.getElementsByClassName('p-inputtext');
+                const arr = Array.from(myFrameEls);
+                arr[0].value = this.state.val;
+                arr[1].value = this.state.file.imageHash;
+                console.log('myFrameEl mouseover', myFrameEls, arr);
+              }}
+              // onLoad={() => {
+              //   console.log('iframe loaded');
+              //   const myFrameEl = myframe.document.querySelector('.p-inputtext');
+              //   console.log('myFrameEl', myFrameEl);
+              // }}
+            />
+          );
 
           _procedure.push(this.iframe);
         }
