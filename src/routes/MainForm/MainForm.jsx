@@ -214,26 +214,26 @@ export class App extends React.Component {
               key="ifr"
               src={HYPERDAPP_UI}
               name="myframe"
-              onMouseOver={() => {
-                const myFrameEls = myframe.document.getElementsByClassName('p-inputtext');
-                console.log('onover', myFrameEls);
-                if (!!myFrameEls) {
-                  const arr = Array.from(myFrameEls);
-                  arr[0].value = this.state.val;
-                  arr[1].value = this.state.file.imageHash;
-                  console.log('myFrameEl mouseover', myFrameEls, arr);
-                }
-              }}
-              onMouseOut={() => {
-                const myFrameEls = myframe.document.getElementsByClassName('p-inputtext');
-                console.log('onout', myFrameEls);
-                if (!!myFrameEls) {
-                  const arr = Array.from(myFrameEls);
-                  arr[0].value = this.state.val;
-                  arr[1].value = this.state.file.imageHash;
-                  console.log('myFrameEl mouseover', myFrameEls, arr);
-                }
-              }}
+              // onMouseOver={() => {
+              //   const myFrameEls = myframe.document.getElementsByClassName('p-inputtext');
+              //   console.log('onover', myFrameEls);
+              //   if (!!myFrameEls) {
+              //     const arr = Array.from(myFrameEls);
+              //     arr[0].value = this.state.val;
+              //     arr[1].value = this.state.file.imageHash;
+              //     console.log('myFrameEl mouseover', myFrameEls, arr);
+              //   }
+              // }}
+              // onMouseOut={() => {
+              //   const myFrameEls = myframe.document.getElementsByClassName('p-inputtext');
+              //   console.log('onout', myFrameEls);
+              //   if (!!myFrameEls) {
+              //     const arr = Array.from(myFrameEls);
+              //     arr[0].value = this.state.val;
+              //     arr[1].value = this.state.file.imageHash;
+              //     console.log('myFrameEl mouseover', myFrameEls, arr);
+              //   }
+              // }}
             />
           );
 
@@ -255,11 +255,15 @@ export class App extends React.Component {
         onMouseMove={() => {
           const myFrameEls = myframe.document.getElementsByClassName('p-inputtext');
           console.log('onMouseMove', myFrameEls);
-          if (!!myFrameEls) {
-            const arr = Array.from(myFrameEls);
-            arr[0].value = this.state.val;
-            arr[1].value = this.state.file.imageHash;
-            console.log('myFrameEl mouseover', myFrameEls, arr);
+          try {
+            if (!!myFrameEls && myFrameEls.length > 0) {
+              const arr = Array.from(myFrameEls);
+              arr[0].value = this.state.val;
+              arr[1].value = this.state.file.imageHash;
+              console.log('myFrameEl mouseover', myFrameEls, arr);
+            }
+          } catch (error) {
+            console.warn('url/hash copy error: ', error);
           }
         }}
       >
