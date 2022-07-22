@@ -113,10 +113,6 @@ export class App extends React.Component {
       });
   }
 
-  iframeOnloadHandler = () => {
-    this.setState({ isIFrameLoaded: true });
-  };
-
   render() {
     let params = {};
     params.onKeyDown = this.onKeyDown;
@@ -214,14 +210,7 @@ export class App extends React.Component {
             </div>,
           );
 
-          this.iframe = (
-            <iframe
-              key="ifr"
-              src={HYPERDAPP_UI}
-              name="myframe"
-              onLoad={this.iframeOnloadHandler}
-            />
-          );
+          this.iframe = <iframe key="ifr" src={HYPERDAPP_UI} name="myframe" />;
 
           _procedure.push(this.iframe);
         }
@@ -236,23 +225,7 @@ export class App extends React.Component {
     }
 
     return (
-      <div
-        className={styles.hyperContainer}
-        onMouseMove={() => {
-          try {
-            if (this.state.isIFrameLoaded) {
-              const myFrameEls = myframe.document.getElementsByClassName('p-inputtext');
-              if (!!myFrameEls && myFrameEls.length > 0) {
-                const arr = Array.from(myFrameEls);
-                arr[0].value = this.state.val;
-                arr[1].value = this.state.file.imageHash;
-              }
-            }
-          } catch (error) {
-            console.warn('url/hash copy error: ', error);
-          }
-        }}
-      >
+      <div className={styles.hyperContainer}>
         {_error}
         {_input}
 
