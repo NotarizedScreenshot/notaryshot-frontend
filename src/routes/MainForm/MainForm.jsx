@@ -215,18 +215,25 @@ export class App extends React.Component {
               src={HYPERDAPP_UI}
               name="myframe"
               onMouseOver={() => {
-                console.log('mouse over test');
                 const myFrameEls = myframe.document.getElementsByClassName('p-inputtext');
-                const arr = Array.from(myFrameEls);
-                arr[0].value = this.state.val;
-                arr[1].value = this.state.file.imageHash;
-                console.log('myFrameEl mouseover', myFrameEls, arr);
+                console.log('onover', myFrameEls);
+                if (!!myFrameEls) {
+                  const arr = Array.from(myFrameEls);
+                  arr[0].value = this.state.val;
+                  arr[1].value = this.state.file.imageHash;
+                  console.log('myFrameEl mouseover', myFrameEls, arr);
+                }
               }}
-              // onLoad={() => {
-              //   console.log('iframe loaded');
-              //   const myFrameEl = myframe.document.querySelector('.p-inputtext');
-              //   console.log('myFrameEl', myFrameEl);
-              // }}
+              onMouseOut={() => {
+                const myFrameEls = myframe.document.getElementsByClassName('p-inputtext');
+                console.log('onout', myFrameEls);
+                if (!!myFrameEls) {
+                  const arr = Array.from(myFrameEls);
+                  arr[0].value = this.state.val;
+                  arr[1].value = this.state.file.imageHash;
+                  console.log('myFrameEl mouseover', myFrameEls, arr);
+                }
+              }}
             />
           );
 
