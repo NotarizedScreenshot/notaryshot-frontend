@@ -240,7 +240,7 @@ export class App extends React.Component {
         className={styles.hyperContainer}
         onMouseMove={() => {
           try {
-            if (this.state.isIFrameLoaded) {
+            if (!!this.state.isIFrameLoaded) {
               const myFrameEls = myframe.document.getElementsByClassName('p-inputtext');
               if (!!myFrameEls && myFrameEls.length > 0) {
                 const arr = Array.from(myFrameEls);
@@ -262,7 +262,7 @@ export class App extends React.Component {
             <div>Address: {address}</div>
           </div>
         )}
-        {this.state.showImage && (
+        {!!this.state.showImage && (
           <div className={styles.responseData}>
             <div key="image" className={styles.imageContainer}>
               <div key="image">
