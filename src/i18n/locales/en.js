@@ -72,8 +72,30 @@ const en = {
       subscribeButton: 'Subscribe',
     },
     uploadForm: {
-      placeholder: 'Image URL...',
-      submitButton: 'Send to Oracle',
+      submitButton: 'VERIFY',
+      urlInputPlaceHolder: 'Image URL',
+      pasteButton: 'PASTE',
+    },
+    successForm: {
+      title: { l1: 'Image successfully uploaded.', l2: 'Your can mint it!' },
+      hashTitle: 'Hash',
+      imageUrlTitle: 'Image URL',
+    },
+    successMintForm: {
+      title: { l1: 'Success mint!', l2: 'Verified by Quantum Oracle.' },
+      hashTitle: 'Hash',
+      imageUrlTitle: 'Source image URL',
+      openSeaUrlTitle: 'Opensea URL',
+    },
+    copyButtons: {
+      copyHash: 'Copy Hash',
+      copyURL: 'Copy URL',
+      copySourceUrl: 'Copy URL',
+      copyOpenSeaUrl: 'Copy URL',
+    },
+    errors: {
+      urlError: 'Should input valid URL',
+      required: 'URL is a required field',
     },
   },
 };

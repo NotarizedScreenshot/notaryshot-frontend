@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
 import './i18n/index';
 import {
   HowItGoes,
@@ -21,7 +21,8 @@ export const App = () => {
           <Route path="/" exact component={HomePage} />
           <Route path="/slicer" exact component={HomePage} />
           <Route path="/mainform" exact component={MainForm} />
-          <Route path="*" component={HomePage} />
+          <Route path="*"><Redirect to="/" />
+</Route>
         </Switch>
       </BrowserRouter>
     </div>
