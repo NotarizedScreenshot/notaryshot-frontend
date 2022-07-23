@@ -1,0 +1,20 @@
+.container {
+  padding: 0 125px 75px;
+  display: flex;
+  align-items: center;
+  .logo {
+    margin-right: 25px;
+    height: 100px;
+    img {
+      height: 100px;
+    }
+  }
+
+  .copyright {
+    font-family: NeueMachina;
+    font-style: normal;
+    font-weight: 800;
+    font-size: 30px;
+    line-height: 30px;
+  }
+}

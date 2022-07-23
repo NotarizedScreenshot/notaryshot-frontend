@@ -100,6 +100,9 @@ const en = {
       urlError: 'Provide a valid URL',
       required: 'URL is a required field',
     },
+    footer: {
+      copyright: '© Quantum Oracle, 2022',
+    },
   },
 };
 

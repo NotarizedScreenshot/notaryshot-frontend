@@ -7,6 +7,7 @@ import {
   Team,
   Verifiable,
   Web2ToWeb3,
+  Footer,
 } from '../components';
 
 export const HomePage = () => {
@@ -18,7 +19,7 @@ export const HomePage = () => {
       <Profit />
       <HowItGoes />
       <Team />
-      <Subscribe />
+      <Footer />
     </>
   );
 };
