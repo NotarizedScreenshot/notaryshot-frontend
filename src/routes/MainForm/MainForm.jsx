@@ -81,10 +81,8 @@ export class App extends React.Component {
 
   getFile = (value) => {
     let proxy = window.location.host.match(/^localhost/)
-      ? 'public/images/img-02.png'
+      ? 'public/pic.jpeg'
       : '/proxy/?' + value;
-
-    this.setState({ val: value });
 
     fetch(proxy)
       .then((response) => {
