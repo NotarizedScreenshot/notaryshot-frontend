@@ -4,16 +4,18 @@
   background-size: cover;
   background-position: right;
   background-color: #040d2c;
-  height: 1090px;
-  padding: 50px 120px;
+  padding: 50px 120px 70px;
 
   .logo {
-    width: 240px;
+    width: 500px;
+    position: absolute;
+    left: 0;
+    top: 0;
   }
 
   h1 {
     max-width: 800px;
-    padding-top: 150px;
+    padding-top: 480px;
     padding-bottom: 50px;
   }
 
@@ -43,9 +45,6 @@
     gap: 50px;
     div {
       width: 240px;
-      // height: 50px;
-      // background-color: rgb(21, 36, 31);
-      // border: 1px solid wheat;
     }
   }
 }

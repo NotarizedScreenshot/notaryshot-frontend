@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import InputPart from './Input/InputPart';
 import sha256 from 'crypto-js/sha256';
 import encHex from 'crypto-js/enc-hex';
@@ -7,7 +8,7 @@ import { useTranslation } from 'react-i18next';
 import * as yup from 'yup';
 
 const HYPERDAPP_UI =
-  'https://quantumoracle.app/flow/QmcDWNZHWQdruYmKLjG8io5AdH4pm2gAtnBrqkVGu8wJ19';
+  'https://quantumoracle.app/flow/QmTFtdPgiJB6W4AwQgAiBUdZzXfHJEH2Smfzi6kcqVdWfL';
 
 import styles from './MainForm.module.scss';
 import { useState } from 'react';
@@ -16,7 +17,9 @@ import { useEffect } from 'react';
 export const MainForm = () => {
   return (
     <div className={styles.container}>
-      <img className={styles.logo} src="public/images/spot_logo.png" alt="logo" />
+      <Link to="/">
+        <img className={styles.logo} src="public/images/spot_logo.png" alt="logo" />
+      </Link>
       <App />
     </div>
   );
@@ -52,6 +55,7 @@ export class App extends React.Component {
   }
 
   setVal(event) {
+    console.log('set val');
     let val = event.target.value;
     let state = {
       val: val,
@@ -80,6 +84,7 @@ export class App extends React.Component {
   }
 
   getFile = (value) => {
+    console.log('getFile', value);
     let proxy = window.location.host.match(/^localhost/)
       ? 'public/pic.jpeg'
       : '/proxy/?' + value;
@@ -106,6 +111,7 @@ export class App extends React.Component {
                     '0x' + encHex.stringify(sha256(CryptoJS.lib.WordArray.create(myBuffer))),
                   image: objectURL,
                 },
+                val: value,
                 procedure: 2,
                 showImage: true,
                 isShowSuccessForm: true,
@@ -231,6 +237,7 @@ export class App extends React.Component {
     }
 
     const { isShowInput, isShowMintSuccessForm, isShowSuccessForm, file, val } = this.state;
+    console.log('val', val);
 
     return (
       <div className={styles.hyperContainer}>
@@ -295,7 +302,7 @@ const UrlInputGroup = ({ onSubmit, defaultUrl }) => {
 
     setInputValue(value);
     validate({ value })
-      .then((data) => {
+      .then(() => {
         setIsInvalid(false);
         setErrorMessage(null);
       })
@@ -321,7 +328,7 @@ const UrlInputGroup = ({ onSubmit, defaultUrl }) => {
   const submitHandler = (event) => {
     event.preventDefault();
     validate({ value: inputValue })
-      .then((data) => {
+      .then(() => {
         setIsInvalid(false);
         setErrorMessage(null);
         onSubmit(inputValue);
@@ -501,7 +508,7 @@ const SuccessMintedForm = ({ onBack, hash, url, openSeaUrl, imageSrc }) => {
           <div className={styles.hash}>{hash}</div>
           <div className={styles.urlTitle}>{t('successMintForm.imageUrlTitle')}</div>
           <div className={styles.url}>{url}</div>
-          <div className={styles.urlTitle}>{t('successMintForm.imageUrlTitle')}</div>
+          <div className={styles.urlTitle}>{t('successMintForm.openSeaUrlTitle')}</div>
           <div className={styles.openSeaUrl}>{openSeaUrl}</div>
         </div>
       </div>

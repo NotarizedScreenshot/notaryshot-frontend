@@ -1,24 +1,126 @@
 .container {
-  background: rgb(88, 34, 91);
-  background: linear-gradient(
-    180deg,
-    rgba(88, 34, 91, 1) 0%,
-    rgba(65, 30, 86, 1) 15%,
-    rgba(6, 15, 51, 1) 40%,
-    rgba(6, 15, 51, 1) 60%,
-    rgba(65, 30, 86, 1) 85%,
-    rgba(88, 34, 91, 1) 100%
+  position: relative;
+  background-color: #0d0c27;
+  background: rgb(64, 152, 244);
+
+  background-position: 0px 0px;
+  background: radial-gradient(
+    circle at top left,
+    rgba(64, 152, 244, 1) 0%,
+    rgba(44, 84, 142, 1) 15%,
+    rgba(22, 40, 74, 1) 30%,
+    rgba(14, 12, 39, 1) 50%
   );
-  height: 1080px;
-  padding: 85px 65px;
+
+  padding: 85px 125px;
 
   .title {
-    margin-left: 100px;
+
     margin-bottom: 85px;
   }
 
   .cards {
-    display: flex;
-    gap: 50px;
+    font-family: NeueMachina;
+
+
+    .mainCards {
+      margin-bottom: 44px;
+      .largeCard {
+        width: 1065px;
+        height: 370px;
+        background: #0f0e2a;
+        // box-shadow: inset 0px 0px 100px 30px rgba(143, 0, 255, 0.6);
+        border-radius: 16px;
+        display: flex;
+        flex-wrap: wrap;
+        .ava {
+          height: 100%;
+          max-width: 370px;
+          img {
+            height: 100%;
+          }
+        }
+        .info {
+          padding: 52px 60px;
+          .name {
+            font-style: normal;
+            font-weight: 800;
+            font-size: 60px;
+            line-height: 90px;
+          }
+          .position {
+            position: relative;
+            font-weight: 800;
+            font-size: 30px;
+            line-height: 30px;
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+            div {
+              position: relative;
+              margin-left: 10px;
+              top: -3px;
+            }
+          }
+          .description {
+            font-weight: 400;
+            font-size: 18px;
+            line-height: 26px;
+            width: 460px;
+          }
+        }
+      }
+      .largeCard:not(:first-child) {
+        margin-top: 24px;
+      }
+      .largeCard:nth-child(1) {
+        box-shadow: inset 0px 0px 100px 30px rgba(143, 0, 255, 0.6);
+      }
+      .largeCard:nth-child(2) {
+        box-shadow: inset 0px 0px 100px 30px rgba(0, 240, 255, 0.3);
+      }
+    }
+
+    .minorCards {
+      display: flex;
+      max-width: 1065px;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 30px;
+
+      .smallCard {
+        width: 515px;
+        height: 215px;
+        background: #0e0c27;
+        border-radius: 16px;
+        padding: 60px;
+
+        .name {
+          font-weight: 800;
+          font-size: 36px;
+          line-height: 56px;
+          margin-bottom: 15px;
+        }
+        .position {
+          font-weight: 800;
+          font-size: 26px;
+          line-height: 26px;
+        }
+      }
+
+      .smallCard:nth-child(1) {
+        box-shadow: inset 0px 0px 100px 10px rgba(255, 138, 0, 0.6);
+      }
+
+      .smallCard:nth-child(2) {
+        box-shadow: inset 0px 0px 100px 10px #a14f58;
+      }
+      .smallCard:nth-child(3) {
+        box-shadow: inset 0px 0px 100px 10px #eb7171;
+      }
+      .smallCard:nth-child(4) {
+        box-shadow: inset 0px 0px 100px 10px rgba(0, 255, 25, 0.6);
+      }
+    }
   }
 }

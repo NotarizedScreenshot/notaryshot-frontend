@@ -8,7 +8,7 @@ export const Intro = () => {
   console.log(t('intro.title'));
   return (
     <div className={styles.container}>
-      <img className={styles.logo} src="public/images/logo1000.png" alt="logo" />
+      <img className={styles.logo} src="public/images/spot_logo.png" alt="logo" />
       <h1>{t('intro.title')}</h1>
       <nav>
         <Link to="/mainform">
