@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import InputPart from './Input/InputPart';
 import sha256 from 'crypto-js/sha256';
 import encHex from 'crypto-js/enc-hex';
@@ -16,7 +17,9 @@ import { useEffect } from 'react';
 export const MainForm = () => {
   return (
     <div className={styles.container}>
-      <img className={styles.logo} src="public/images/spot_logo.png" alt="logo" />
+      <Link to="/">
+        <img className={styles.logo} src="public/images/spot_logo.png" alt="logo" />
+      </Link>
       <App />
     </div>
   );

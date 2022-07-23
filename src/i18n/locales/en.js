@@ -35,7 +35,7 @@ const en = {
         'All that - combined, verified, and delivered with web3 technologies, have a lot more proving power than a mere picture that can be photoshopped in the matter of minutes.',
     },
     profit: {
-      title: 'Title',
+      title: 'Profit!',
       description:
         'When users stumble upon something newsworthy in their browser, with Quantum Oracle they can',
       list: {
@@ -77,7 +77,10 @@ const en = {
       pasteButton: 'PASTE',
     },
     successForm: {
-      title: { l1: 'Web2 content accepted for verification.', l2: 'Your can mint a notarized screenshot!' },
+      title: {
+        l1: 'Web2 content accepted for verification.',
+        l2: 'Your can mint a notarized screenshot!',
+      },
       hashTitle: 'Hash',
       imageUrlTitle: 'Image URL',
     },

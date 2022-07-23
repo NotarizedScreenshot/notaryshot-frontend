@@ -52,15 +52,20 @@
     align-items: flex-end;
     justify-content: space-between;
     flex-direction: row;
+    max-width: 1920px;
+    flex-wrap: wrap;
+    margin: auto;
 
     .flexgroup {
       display: flex;
       justify-content: space-between;
       flex-grow: 1;
-      padding: 0 35px 0 160px;
+      padding: 0 35px 0 140px;
+      max-width: 1300px;
     }
     .item {
       text-align: center;
+
       &.nft {
         h6 {
           padding-left: 40px;
