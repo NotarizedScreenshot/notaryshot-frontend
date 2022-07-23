@@ -11,14 +11,13 @@ const HYPERDAPP_UI =
 
 import styles from './MainForm.module.scss';
 import { useState } from 'react';
+import { useEffect } from 'react';
 
 export const MainForm = () => {
   return (
     <div className={styles.container}>
       <img className={styles.logo} src="public/images/spot_logo.png" alt="logo" />
-      {/* <div className={styles.formContainer}> */}
       <App />
-      {/* </div> */}
     </div>
   );
 };
@@ -27,7 +26,7 @@ export class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      val: 'https://pedlib.ru/download/Ej/Ej1.jpg', //https://totum.ewr1.vultrobjects.com/365_262_file.png
+      val: '',
       error: null,
       procedure: 0,
       showImage: false,
@@ -82,8 +81,10 @@ export class App extends React.Component {
 
   getFile = (value) => {
     let proxy = window.location.host.match(/^localhost/)
-      ? 'public/pic.jpeg'
+      ? 'public/images/img-02.png'
       : '/proxy/?' + value;
+
+    this.setState({ val: value });
 
     fetch(proxy)
       .then((response) => {
@@ -122,7 +123,7 @@ export class App extends React.Component {
   };
 
   showInput = () => {
-    this.setState({ isShowInput: true });
+    this.setState({ isShowInput: true, val: '' });
   };
 
   showMintSuccessForm = () => {
@@ -134,6 +135,7 @@ export class App extends React.Component {
       isShowInput: true,
       isShowMintSuccessForm: false,
       isShowSuccessForm: false,
+      val: '',
     });
   };
 
@@ -227,38 +229,16 @@ export class App extends React.Component {
               </div>
             </div>
           );
-
-          // _procedure.push(
-          //   <div key="btnToIframe" id="btnToIframe">
-          //     {btnForSend}
-          //   </div>,
-          // );
-
-          // this.iframe = <iframe key="ifr" src={HYPERDAPP_UI} name="myframe" />;
-
-          // _procedure.push(this.iframe);
         }
     }
-
-    // if (this.state.error) {
-    //   _error = (
-    //     <div key="error" className="error">
-    //       {this.state.error}
-    //     </div>
-    //   );
-    // }
 
     const { isShowInput, isShowMintSuccessForm, isShowSuccessForm, file, val } = this.state;
 
     return (
       <div className={styles.hyperContainer}>
-        {isShowSuccessForm && (
-          <button className={styles.testButton} onClick={this.showMintSuccessForm}>
-            TEST BUTTON TO SHOW ON_MINT_SUCCESS
-          </button>
-        )}
         {_error}
-        {isShowInput && <UrlInputGroup onSubmit={this.getFile} />}
+        {isShowInput && <UrlInputGroup onSubmit={this.getFile} defaultUrl={val} />}
+
         {isShowSuccessForm && (
           <SuccessUploadedForm
             imageSrc={file.image}
@@ -276,6 +256,11 @@ export class App extends React.Component {
             openSeaUrl={'url://opensea.com/sfasd'}
           />
         )}
+        {isShowSuccessForm && (
+          <button className={styles.testButton} onClick={this.showMintSuccessForm}>
+            PRESS BUTTON TO SHOW MINTED RESULTS
+          </button>
+        )}
         {isShowMintSuccessForm && (
           <div className={styles.successControl}>
             <button>Save</button>
@@ -287,7 +272,7 @@ export class App extends React.Component {
   }
 }
 
-const UrlInputGroup = ({ onSubmit }) => {
+const UrlInputGroup = ({ onSubmit, defaultUrl }) => {
   const { t } = useTranslation();
 
   yup.setLocale({
@@ -305,7 +290,7 @@ const UrlInputGroup = ({ onSubmit }) => {
   ) => yup.object().shape(urlValidationSchema).validate(value);
 
   const [isInvalid, setIsInvalid] = useState(false);
-  const [inputValue, setInputValue] = useState('https://pedlib.ru/download/Ej/Ej1.jpg'); // TODO: clean on prod
+  const [inputValue, setInputValue] = useState(defaultUrl);
   const [errorMessage, setErrorMessage] = useState(null);
   const onChangeHandler = async (event) => {
     const { value } = event.target;
@@ -313,12 +298,10 @@ const UrlInputGroup = ({ onSubmit }) => {
     setInputValue(value);
     validate({ value })
       .then((data) => {
-        console.log('valid', data);
         setIsInvalid(false);
         setErrorMessage(null);
       })
       .catch((error) => {
-        console.log(error.errors[0]);
         setErrorMessage(error.errors[0]);
         setIsInvalid(true);
       });
@@ -327,13 +310,11 @@ const UrlInputGroup = ({ onSubmit }) => {
     const clipboardData = await navigator.clipboard.readText();
     setInputValue(clipboardData);
     validate({ value: clipboardData })
-      .then((data) => {
-        console.log('valid', data);
+      .then(() => {
         setIsInvalid(false);
         setErrorMessage(null);
       })
       .catch((error) => {
-        console.log(error.errors[0]);
         setErrorMessage(error.errors[0]);
         setIsInvalid(true);
       });
@@ -341,8 +322,16 @@ const UrlInputGroup = ({ onSubmit }) => {
 
   const submitHandler = (event) => {
     event.preventDefault();
-    console.log('submit');
-    onSubmit(inputValue);
+    validate({ value: inputValue })
+      .then((data) => {
+        setIsInvalid(false);
+        setErrorMessage(null);
+        onSubmit(inputValue);
+      })
+      .catch((error) => {
+        setErrorMessage(error.errors[0]);
+        setIsInvalid(true);
+      });
   };
 
   return (
@@ -392,16 +381,16 @@ const SuccessUploadedForm = ({ imageSrc, onBack, hash, url }) => {
           </div>
         </div>
         <div className={styles.formGroup}>
-          <div className={styles.hashTitle}>
-            {t('successForm.hashTitle')}{' '}
-            <button onClick={copyToClipboardHandler(hash)}>{t('copyButtons.copyHash')}</button>
-          </div>
-          <div className={styles.hash}>{hash}</div>
           <div className={styles.urlTitle}>
             {t('successForm.imageUrlTitle')}{' '}
             <button onClick={copyToClipboardHandler(url)}>{t('copyButtons.copyURL')}</button>
           </div>
           <div className={styles.url}>{url}</div>
+          <div className={styles.hashTitle}>
+            {t('successForm.hashTitle')}{' '}
+            <button onClick={copyToClipboardHandler(hash)}>{t('copyButtons.copyHash')}</button>
+          </div>
+          <div className={styles.hash}>{hash}</div>
         </div>
       </div>
       <div className={styles.bottom}>
@@ -412,7 +401,74 @@ const SuccessUploadedForm = ({ imageSrc, onBack, hash, url }) => {
 };
 
 const SuccessMintedForm = ({ onBack, hash, url, openSeaUrl, imageSrc }) => {
+  const [imgWidth, setImgWidth] = useState(0);
+  const [imgHeight, setImgHeight] = useState(0);
+  const [stampWidth, setStampWidth] = useState(0);
+  const [stampHeight, setStampHeight] = useState(0);
+  const [stampHorOffset, setStampHorOffset] = useState(0);
+  const [stampVertOffset, setStampVertOffset] = useState(0);
+
   const { t } = useTranslation();
+
+  useEffect(() => {
+    const stampRatio = 0.8177;
+    const picWidthLimit = 600;
+    const picWidthMin = 465;
+    const pictHeightLimit = 710;
+    const img = new Image();
+    img.src = imageSrc;
+    img.onload = () => {
+      if (img.height > 0 && img.width > 0) {
+        const isHorisontal = img.width > img.height;
+        if (isHorisontal) {
+          if (img.width > picWidthLimit) {
+            setImgWidth(picWidthLimit);
+            const ratio = img.width / img.height;
+            const height = picWidthLimit / ratio;
+            setImgHeight(height);
+            setStampHeight(height);
+            setStampWidth(stampRatio * height);
+            setStampHorOffset((picWidthLimit - stampRatio * height) / 2);
+            return;
+          }
+          if (img.width < picWidthMin) {
+            setImgWidth(picWidthMin);
+            const ratio = img.width / img.height;
+            const height = picWidthMin / ratio;
+            setImgHeight(height);
+            setStampHeight(height);
+            setStampWidth(stampRatio * height);
+            setStampHorOffset((picWidthMin - stampRatio * height) / 2);
+            return;
+          }
+          setImgWidth(img.width);
+          setImgHeight(img.height);
+          setStampHeight(img.height);
+          setStampWidth(stampRatio * img.height);
+          setStampHorOffset((img.width - stampRatio * img.height) / 2);
+          return;
+        }
+        setImgHeight(pictHeightLimit);
+        const ratio = img.height / img.width;
+
+        const width = pictHeightLimit / ratio;
+        setImgWidth(width);
+
+        if (1 / ratio > stampRatio) {
+          setStampHeight(pictHeightLimit);
+          setStampWidth(pictHeightLimit * stampRatio);
+          setStampHorOffset((width - pictHeightLimit * stampRatio) / 2);
+
+          return;
+        }
+        setStampWidth(width);
+        setStampHeight(width / stampRatio);
+        setStampVertOffset((pictHeightLimit - width / stampRatio) / 2);
+
+        return;
+      }
+    };
+  }, []);
 
   return (
     <div className={styles.successMintFormGroup}>
@@ -427,27 +483,28 @@ const SuccessMintedForm = ({ onBack, hash, url, openSeaUrl, imageSrc }) => {
       <div className={styles.central}>
         <div className={styles.picture}>
           <div className={styles.imageContainer}>
-            {/* <img src="https://africageographic.com/wp-content/uploads/2014/09/Fascinating-Pangolin-Facts-gallery-1.jpg" /> */}
-            <img src={imageSrc} alt="image" />
-            <img className={styles.stamp} src="public/images/stamp.png" />
+            <img
+              src={imageSrc}
+              alt="image"
+              width={`${imgWidth}px`}
+              height={`${imgHeight}px`}
+            />
+            <img
+              className={styles.stamp}
+              src="public/images/stamp.png"
+              height={`${stampHeight}px`}
+              width={`${stampWidth}px`}
+              style={{ right: `${stampHorOffset}px`, top: `${stampVertOffset}px` }}
+            />
           </div>
         </div>
         <div className={styles.formGroup}>
-          <div className={styles.hashTitle}>
-            {t('successMintForm.hashTitle')}
-            {/* <button>{t('copyButtons.copyHash')}</button> */}
-          </div>
+          <div className={styles.hashTitle}>{t('successMintForm.hashTitle')}</div>
           <div className={styles.hash}>{hash}</div>
-          <div className={styles.urlTitle}>
-            {t('successMintForm.imageUrlTitle')}{' '}
-            {/* <button>{t('copyButtons.copySourceUrl')}</button> */}
-          </div>
+          <div className={styles.urlTitle}>{t('successMintForm.imageUrlTitle')}</div>
           <div className={styles.url}>{url}</div>
-          <div className={styles.urlTitle}>
-            {t('successMintForm.imageUrlTitle')}{' '}
-            {/* <button>{t('copyButtons.copyOpenSeaUrl')}</button> */}
-          </div>
-          <div className={styles.url}>{openSeaUrl}</div>
+          <div className={styles.urlTitle}>{t('successMintForm.imageUrlTitle')}</div>
+          <div className={styles.openSeaUrl}>{openSeaUrl}</div>
         </div>
       </div>
     </div>
