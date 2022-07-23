@@ -77,12 +77,12 @@ const en = {
       pasteButton: 'PASTE',
     },
     successForm: {
-      title: { l1: 'Image successfully uploaded.', l2: 'Your can mint it!' },
+      title: { l1: 'Web2 content accepted for verification.', l2: 'Your can mint a notarized screenshot!' },
       hashTitle: 'Hash',
       imageUrlTitle: 'Image URL',
     },
     successMintForm: {
-      title: { l1: 'Success mint!', l2: 'Verified by Quantum Oracle.' },
+      title: { l1: 'Mint successful!', l2: 'Verified by Quantum Oracle.' },
       hashTitle: 'Hash',
       imageUrlTitle: 'Source image URL',
       openSeaUrlTitle: 'Opensea URL',
@@ -94,7 +94,7 @@ const en = {
       copyOpenSeaUrl: 'Copy URL',
     },
     errors: {
-      urlError: 'Should input valid URL',
+      urlError: 'Provide a valid URL',
       required: 'URL is a required field',
     },
   },
