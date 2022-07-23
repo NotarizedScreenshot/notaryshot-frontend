@@ -5,7 +5,7 @@ import sha256 from 'crypto-js/sha256'
 import encHex from 'crypto-js/enc-hex'
 import CryptoJS from 'crypto-js'
 
-const HYPERDAPP_UI = "https://code.hyperdapp.dev/flow/QmcDWNZHWQdruYmKLjG8io5AdH4pm2gAtnBrqkVGu8wJ19"
+const HYPERDAPP_UI = "https://code.hyperdapp.dev/flow/QmTFtdPgiJB6W4AwQgAiBUdZzXfHJEH2Smfzi6kcqVdWfL"
 
 export class App extends React.Component {
 
