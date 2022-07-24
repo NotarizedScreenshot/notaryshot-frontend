@@ -8,30 +8,11 @@ import { GraphQLWsLink } from '@apollo/client/link/subscriptions';
 import { createClient } from 'graphql-ws';
 import './index.scss';
 
-const httpLink = new HttpLink({
-  uri: 'http://localhost:4000/graphql',
-});
 
-const wsLink = new GraphQLWsLink(
-  createClient({
-    url: 'wss://api.thegraph.com/subgraphs/name/notarizedscreenshot/notarized-screenshot',
-  }),
-);
-
-const splitLink = split(
-  ({ query }) => {
-    const definition = getMainDefinition(query);
-    return (
-      definition.kind === 'OperationDefinition' && definition.operation === 'subscription'
-    );
-  },
-  wsLink,
-  httpLink,
-);
-
+const cache = new InMemoryCache();
 const client = new ApolloClient({
-  link: splitLink,
-  cache: new InMemoryCache(),
+  uri: 'https://api.thegraph.com/subgraphs/name/notarizedscreenshot/notarized-screenshot',
+  cache,
 });
 
 const container = document.getElementById('root');

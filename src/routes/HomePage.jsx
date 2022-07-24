@@ -8,6 +8,7 @@ import {
   Verifiable,
   Web2ToWeb3,
   Footer,
+  Glitch,
 } from '../components';
 
 export const HomePage = () => {
