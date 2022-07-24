@@ -273,7 +273,8 @@ export class App extends React.Component {
             {isShowSuccessForm && (
               <SuccessUploadedForm
                 imageSrc={file.image}
-                onBack={this.showInput}
+                // onBack={this.showInput}
+                onBack={this.resetAll}
                 hash={file.imageHash}
                 url={val}
                 setPrevData={this.setPrevData}
