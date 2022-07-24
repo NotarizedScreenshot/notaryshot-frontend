@@ -1,13 +1,13 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import InputPart from './Input/InputPart';
-import sha256 from 'crypto-js/sha256';
-import encHex from 'crypto-js/enc-hex';
-import CryptoJS, { EvpKDF } from 'crypto-js';
+// import { Link } from 'react-router-dom';
+// import InputPart from './Input/InputPart';
+// import sha256 from 'crypto-js/sha256';
+// import encHex from 'crypto-js/enc-hex';
+// import CryptoJS, { EvpKDF } from 'crypto-js';
 import { useTranslation } from 'react-i18next';
 import { useQuery } from '@apollo/client';
 import * as yup from 'yup';
-import { Glitch } from '../../components';
+// import { Glitch } from '../../components';
 import { gql } from '@apollo/client';
 import { App } from './App2';
 
@@ -112,34 +112,13 @@ export const UrlInputGroup = ({ onSubmit, defaultUrl }) => {
 };
 
 export const SuccessUploadedForm = ({ imageSrc, onBack, hash, url, setPrevData }) => {
-  const hex1 = '0xe4066d1db579fd52d55933d37b70eb039519c';
+  // const hex1 = '0xe4066d1db579fd52d55933d37b70eb039519c';
   // console.log(BigInt('0xe4066d1db579fd52d55933d37b70eb039519c').toString(10));
   const { t } = useTranslation();
-  const query = gql`
-    {
-      notarizedScreenshots {
-        id
-        owner
-        metadataCID
-        uri
-      }
-    }
-  `;
-  const { data } = useQuery(query);
-
-  console.log('data  start', data);
 
   const copyToClipboardHandler = (value) => () => {
     navigator.clipboard.writeText(value);
   };
-
-  useEffect(() => {
-    if (data) {
-      console.log('got data');
-      console.log(setPrevData(data));
-    }
-  }, [data]);
-
   return (
     <div className={styles.successformGroup}>
       <div className={styles.backButton}>
@@ -211,64 +190,64 @@ export const SuccessMintedForm = ({
 
   const { t } = useTranslation();
   const [isMiniting, setIsMinting] = useState(false);
-  console.log('openSeaUrl.match(/Fetch/)', !!openSeaUrl.match(/Fetch/));
+  // console.log('openSeaUrl.match(/Fetch/)', !!openSeaUrl.match(/Fetch/));
 
-  useEffect(() => {
-    const timeouts = [];
-    if (data) {
-      const filtered = data.notarizedScreenshots.filter((el) => {
-        console.log(el.id);
-        return el.id === hash;
-        // return true;
-      });
-      // const filtered = [];
+  // useEffect(() => {
+  //   const timeouts = [];
+  //   if (data) {
+  //     const filtered = data.notarizedScreenshots.filter((el) => {
+  //       console.log(el.id);
+  //       return el.id === hash;
+  //       // return true;
+  //     });
+  // const filtered = [];
 
-      // filtered.push({
-      //   id: '0xc1ae9d3991e66ddab7e833018e47acc47ddbaf1347834999207b8094acc80d9d',
-      // });
-      // const t2 = setTimeout(
-      //   () =>
-      //     filtered.push({
-      //       id: '0xc1ae9d3991e66ddab7e833018e47acc47ddbaf1347834999207b8094acc80d9d',
-      //     }),
-      //   500,
-      // );
+  // filtered.push({
+  //   id: '0xc1ae9d3991e66ddab7e833018e47acc47ddbaf1347834999207b8094acc80d9d',
+  // });
+  // const t2 = setTimeout(
+  //   () =>
+  //     filtered.push({
+  //       id: '0xc1ae9d3991e66ddab7e833018e47acc47ddbaf1347834999207b8094acc80d9d',
+  //     }),
+  //   500,
+  // );
 
-      // timeouts.push(t2);
+  // timeouts.push(t2);
 
-      if (filtered.length > 0) {
-        console.log('flirered has');
-        const decimal = BigInt(filtered[0].id).toString(10);
-        setOpenSeaUrl(
-          `https://opensea.io/assets/matic/0xa567349bdd3d4f2c3e25f65745a020162c202ef2/${decimal}`,
-        );
-        return;
-      }
+  //     if (filtered.length > 0) {
+  //       console.log('flirered has');
+  //       const decimal = BigInt(filtered[0].id).toString(10);
+  //       setOpenSeaUrl(
+  //         `https://opensea.io/assets/matic/0xa567349bdd3d4f2c3e25f65745a020162c202ef2/${decimal}`,
+  //       );
+  //       return;
+  //     }
 
-      const check = () => {
-        console.log('check');
-        if (filtered.length > 0) {
-          console.log('check > 0, reutrn ');
-          const decimal = BigInt(filtered[0].id).toString(10);
-          setOpenSeaUrl(
-            `https://opensea.io/assets/matic/0xa567349bdd3d4f2c3e25f65745a020162c202ef2/${decimal}`,
-          );
-          return;
-        }
-        console.log('check settimeout');
-        const t1 = setTimeout(() => {
-          setRenders(renders + 1);
-          check();
-        }, 1000);
-        timeouts.push(t1);
-      };
-      check();
-    }
-    return () => {
-      console.log('timeouts', timeouts);
-      timeouts.forEach((t) => clearTimeout(t));
-    };
-  }, [data, renders]);
+  //     const check = () => {
+  //       console.log('check');
+  //       if (filtered.length > 0) {
+  //         console.log('check > 0, reutrn ');
+  //         const decimal = BigInt(filtered[0].id).toString(10);
+  //         setOpenSeaUrl(
+  //           `https://opensea.io/assets/matic/0xa567349bdd3d4f2c3e25f65745a020162c202ef2/${decimal}`,
+  //         );
+  //         return;
+  //       }
+  //       console.log('check settimeout');
+  //       const t1 = setTimeout(() => {
+  //         setRenders(renders + 1);
+  //         check();
+  //       }, 1000);
+  //       timeouts.push(t1);
+  //     };
+  //     check();
+  //   }
+  //   return () => {
+  //     console.log('timeouts', timeouts);
+  //     timeouts.forEach((t) => clearTimeout(t));
+  //   };
+  // }, [data, renders]);
 
   useEffect(() => {
     const stampRatio = 0.8177;
@@ -328,7 +307,7 @@ export const SuccessMintedForm = ({
         return;
       }
     };
-  }, []);
+  }, [data]);
 
   return (
     <div className={styles.successMintFormGroup}>
@@ -365,13 +344,14 @@ export const SuccessMintedForm = ({
           <div className={styles.url}>{url}</div>
           <div className={styles.urlTitle}>{t('successMintForm.openSeaUrlTitle')}</div>
           <div className={styles.openSeaUrl}>
-            {!!openSeaUrl.match(/Fetch/) ? (
-              openSeaUrl
-            ) : (
-              <a href={openSeaUrl} target="_blank">
-                {openSeaUrl}
-              </a>
-            )}
+            <a
+              href={`https://opensea.io/assets/matic/0xa567349bdd3d4f2c3e25f65745a020162c202ef2/${BigInt(
+                hash,
+              ).toString(10)}`}
+              target="_blank"
+            >{`https://opensea.io/assets/matic/0xa567349bdd3d4f2c3e25f65745a020162c202ef2/${BigInt(
+              hash,
+            ).toString(10)}`}</a>
           </div>
         </div>
       </div>
