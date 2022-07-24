@@ -137,7 +137,7 @@ export class App extends React.Component {
         isShowGlitch: false,
       });
 
-      test();
+      // test();
     }, 10000);
   };
 
