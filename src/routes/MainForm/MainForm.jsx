@@ -214,22 +214,30 @@ export const SuccessMintedForm = ({
   console.log('openSeaUrl.match(/Fetch/)', !!openSeaUrl.match(/Fetch/));
 
   useEffect(() => {
+    const timeouts = [];
     if (data) {
       const filtered = data.notarizedScreenshots.filter((el) => {
         console.log(el.id);
         return el.id === hash;
         // return true;
       });
+      // const filtered = [];
 
-      // setTimeout(
+      // filtered.push({
+      //   id: '0xc1ae9d3991e66ddab7e833018e47acc47ddbaf1347834999207b8094acc80d9d',
+      // });
+      // const t2 = setTimeout(
       //   () =>
       //     filtered.push({
       //       id: '0xc1ae9d3991e66ddab7e833018e47acc47ddbaf1347834999207b8094acc80d9d',
       //     }),
-      //   5000,
+      //   500,
       // );
 
+      // timeouts.push(t2);
+
       if (filtered.length > 0) {
+        console.log('flirered has');
         const decimal = BigInt(filtered[0].id).toString(10);
         setOpenSeaUrl(
           `https://opensea.io/assets/matic/0xa567349bdd3d4f2c3e25f65745a020162c202ef2/${decimal}`,
@@ -240,24 +248,31 @@ export const SuccessMintedForm = ({
       const check = () => {
         console.log('check');
         if (filtered.length > 0) {
+          console.log('check > 0, reutrn ');
           const decimal = BigInt(filtered[0].id).toString(10);
           setOpenSeaUrl(
             `https://opensea.io/assets/matic/0xa567349bdd3d4f2c3e25f65745a020162c202ef2/${decimal}`,
           );
           return;
         }
-        setTimeout(() => {
+        console.log('check settimeout');
+        const t1 = setTimeout(() => {
           setRenders(renders + 1);
           check();
         }, 1000);
+        timeouts.push(t1);
       };
       check();
     }
-  }, [data]);
+    return () => {
+      console.log('timeouts', timeouts);
+      timeouts.forEach((t) => clearTimeout(t));
+    };
+  }, [data, renders]);
 
   useEffect(() => {
     const stampRatio = 0.8177;
-    const picWidthLimit = 600;
+    const picWidthLimit = 440;
     const picWidthMin = 465;
     const pictHeightLimit = 710;
     const img = new Image();

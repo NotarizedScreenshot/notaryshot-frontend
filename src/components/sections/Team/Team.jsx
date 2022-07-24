@@ -68,6 +68,27 @@ export const Team = () => {
               </div>
             </div>
           </div>
+          <div className={styles.largeCard}>
+            <div className={styles.ava}>
+              <a href="https://t.me/utgardaloki" target="_blank">
+                <img src="public/images/nastia.png" alt="evgen" />
+              </a>
+            </div>
+            <div className={styles.info}>
+              <div className={styles.name}>Anastasia Busygina</div>
+              <div className={styles.position}>
+                Project Manager
+                <div>
+                  <a href="https://t.me/baramba">
+                    <img src="public/images/tg-icon.png"></img>
+                  </a>
+                </div>
+              </div>
+              <div className={styles.description}>
+                Interested in DAO and process optimization
+              </div>
+            </div>
+          </div>
         </div>
         <div className={styles.minorCards}>
           <div className={styles.smallCard}>
@@ -78,10 +99,10 @@ export const Team = () => {
             <div className={styles.name}>Tatyana Polunina</div>
             <div className={styles.position}>Frontend</div>
           </div>
-          <div className={styles.smallCard}>
-            <div className={styles.name}>Anastasia Busygina </div>
+          {/* <div className={styles.smallCard}>
+            <div className={styles.name}>Anastasia Busygina</div>
             <div className={styles.position}>Admin</div>
-          </div>
+          </div> */}
           <div className={styles.smallCard}>
             <div className={styles.name}>Alex Curtis</div>
             <div className={styles.position}>Designer</div>

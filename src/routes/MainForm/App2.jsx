@@ -74,7 +74,7 @@ export class App extends React.Component {
   getFile = (value) => {
     console.log('getFile', value);
     let proxy = window.location.host.match(/^localhost/)
-      ? 'public/1.webp'
+      ? 'public/pic2.jpeg'
       : '/proxy/?' + value;
 
     fetch(proxy)
@@ -297,12 +297,12 @@ export class App extends React.Component {
                 PRESS BUTTON TO SHOW MINTED RESULTS
               </button>
             )}
-            {isShowMintSuccessForm && (
+            {/* {isShowMintSuccessForm && (
               <div className={styles.successControl}>
                 <button>Save</button>
                 <button>Share</button>
               </div>
-            )}
+            )} */}
           </>
         )}
       </div>
