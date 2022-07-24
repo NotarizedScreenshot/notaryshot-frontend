@@ -23,7 +23,7 @@ const en = {
       },
     },
     web2ToWeb3: {
-      title: 'Web2>Web3',
+      title: 'Web2→Web3',
       description:
         'The age of integration of web2 into web3 is coming. QuantumOracle collapses wave functions of all the content that can be on a web2 server into a single state captured in a decentralized storage, pinpointed at a moment in time together with its retrieval history, such as:',
       list: {

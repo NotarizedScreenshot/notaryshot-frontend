@@ -112,6 +112,8 @@ export const UrlInputGroup = ({ onSubmit, defaultUrl }) => {
 };
 
 export const SuccessUploadedForm = ({ imageSrc, onBack, hash, url, setPrevData }) => {
+  const hex1 = '0xe4066d1db579fd52d55933d37b70eb039519c';
+  // console.log(BigInt('0xe4066d1db579fd52d55933d37b70eb039519c').toString(10));
   const { t } = useTranslation();
   const query = gql`
     {
@@ -189,6 +191,7 @@ export const SuccessMintedForm = ({
   const [stampHorOffset, setStampHorOffset] = useState(0);
   const [stampVertOffset, setStampVertOffset] = useState(0);
   const [openSeaUrl, setOpenSeaUrl] = useState('Fetching OpenseaUrl...');
+  const [renders, setRenders] = useState(0);
 
   console.log('prevData', prevData);
 
@@ -208,6 +211,7 @@ export const SuccessMintedForm = ({
 
   const { t } = useTranslation();
   const [isMiniting, setIsMinting] = useState(false);
+  console.log('openSeaUrl.match(/Fetch/)', !!openSeaUrl.match(/Fetch/));
 
   useEffect(() => {
     if (data) {
@@ -216,12 +220,38 @@ export const SuccessMintedForm = ({
         return el.id === hash;
         // return true;
       });
-      console.log('filtered', filtered);
+
+      // setTimeout(
+      //   () =>
+      //     filtered.push({
+      //       id: '0xc1ae9d3991e66ddab7e833018e47acc47ddbaf1347834999207b8094acc80d9d',
+      //     }),
+      //   5000,
+      // );
+
       if (filtered.length > 0) {
+        const decimal = BigInt(filtered[0].id).toString(10);
         setOpenSeaUrl(
-          ' https://opensea.io/assets/matic/0xa567349bdd3d4f2c3e25f65745a020162c202ef2/',
+          `https://opensea.io/assets/matic/0xa567349bdd3d4f2c3e25f65745a020162c202ef2/${decimal}`,
         );
+        return;
       }
+
+      const check = () => {
+        console.log('check');
+        if (filtered.length > 0) {
+          const decimal = BigInt(filtered[0].id).toString(10);
+          setOpenSeaUrl(
+            `https://opensea.io/assets/matic/0xa567349bdd3d4f2c3e25f65745a020162c202ef2/${decimal}`,
+          );
+          return;
+        }
+        setTimeout(() => {
+          setRenders(renders + 1);
+          check();
+        }, 1000);
+      };
+      check();
     }
   }, [data]);
 
@@ -319,7 +349,15 @@ export const SuccessMintedForm = ({
           <div className={styles.urlTitle}>{t('successMintForm.imageUrlTitle')}</div>
           <div className={styles.url}>{url}</div>
           <div className={styles.urlTitle}>{t('successMintForm.openSeaUrlTitle')}</div>
-          <div className={styles.openSeaUrl}>{openSeaUrl}</div>
+          <div className={styles.openSeaUrl}>
+            {!!openSeaUrl.match(/Fetch/) ? (
+              openSeaUrl
+            ) : (
+              <a href={openSeaUrl} target="_blank">
+                {openSeaUrl}
+              </a>
+            )}
+          </div>
         </div>
       </div>
     </div>
