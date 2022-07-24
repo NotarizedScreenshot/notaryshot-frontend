@@ -71,7 +71,7 @@ export const Team = () => {
           <div className={styles.largeCard}>
             <div className={styles.ava}>
               <a href="https://t.me/utgardaloki" target="_blank">
-                <img src="public/images/nastia.png" alt="evgen" />
+                <img src="public/images/nastia.png" alt="nasty" />
               </a>
             </div>
             <div className={styles.info}>

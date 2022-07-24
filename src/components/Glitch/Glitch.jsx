@@ -68,7 +68,6 @@ export const Glitch = () => {
 
     // Update the loaded value and render it to HTML
     const DrawLoadingBar = (values) => {
-      console.log('values', values);
       return new Promise((resolve) => {
         const loadingBarAnimation = setInterval(() => {
           if (!values.includes(unloadedCharacter)) {
