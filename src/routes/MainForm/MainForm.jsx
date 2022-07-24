@@ -272,7 +272,7 @@ export const SuccessMintedForm = ({
 
   useEffect(() => {
     const stampRatio = 0.8177;
-    const picWidthLimit = 500;
+    const picWidthLimit = 440;
     const picWidthMin = 465;
     const pictHeightLimit = 710;
     const img = new Image();
