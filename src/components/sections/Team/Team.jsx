@@ -96,14 +96,6 @@ export const Team = () => {
             <div className={styles.position}>Frontend</div>
           </div>
           <div className={styles.smallCard}>
-            <div className={styles.name}>Tatyana Polunina</div>
-            <div className={styles.position}>Frontend</div>
-          </div>
-          {/* <div className={styles.smallCard}>
-            <div className={styles.name}>Anastasia Busygina</div>
-            <div className={styles.position}>Admin</div>
-          </div> */}
-          <div className={styles.smallCard}>
             <div className={styles.name}>Alex Curtis</div>
             <div className={styles.position}>Designer</div>
           </div>
