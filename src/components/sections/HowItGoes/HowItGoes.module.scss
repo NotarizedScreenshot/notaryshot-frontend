@@ -1,9 +1,24 @@
 .container {
+  position: relative;
   background-image: url('../../../../public/images/img-04.png');
   background-color: #5e1a50;
   background-size: cover;
-  height: 1580px;
+  background-repeat: no-repeat;
+
   padding: 376px 105px;
+  z-index: 0;
+
+  .bgfade {
+    background-color: black;
+    display: none;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0.5;
+    z-index: -1;
+  }
 
   .title {
     margin-bottom: 105px;
@@ -14,16 +29,13 @@
     background: rgba(35, 25, 60, 0.7);
     border: 1px solid #0074ff;
     backdrop-filter: blur(25px);
-    /* Note: backdrop-filter has minimal browser support */
 
     border-radius: 20px;
     font-family: NeueMachina;
     padding: 40px;
-    // display: flex;
     margin-bottom: 41px;
 
     .step {
-      // background-color: aqua;
       display: flex;
       align-items: center;
       margin-bottom: 50px;
@@ -33,24 +45,106 @@
         font-size: 72px;
         line-height: 80px;
         flex: 0 0 120px;
-        /* identical to box height, or 50% */
-
         letter-spacing: 1px;
         padding-right: 30px;
       }
       .icon {
         flex-grow: 1;
-        // background-color: #5e1a50;
         flex: 0 0 250px;
         height: 200px;
         padding-top: 25px;
       }
-      .icon1 {
-        // width: 186px;
-      }
       p {
         font-size: 24px;
         line-height: 36px;
+      }
+    }
+  }
+  @media only screen and (max-width: 1680px) {
+    padding: 150px 105px;
+    .title {
+      margin-bottom: 105px;
+    }
+  }
+
+  @media only screen and (max-width: 1440px) {
+    padding: 100px 105px;
+    .box {
+      .step {
+        margin-bottom: 30px;
+      }
+    }
+  }
+
+  @media only screen and (max-width: 992px) {
+    padding: 100px 30px;
+    .box {
+      padding: 20px;
+    }
+  }
+
+  @media only screen and (max-width: 768px) {
+    padding: 50px 30px;
+    .title {
+      font-size: 80px;
+      line-height: 80px;
+      margin-bottom: 70px;
+    }
+    .box {
+      padding: 20px;
+      .step {
+        .icon {
+          flex: 0 0 150px;
+          height: 150px;
+          padding-top: 25px;
+          img {
+            height: 120px;
+          }
+        }
+        p {
+          font-size: 18px;
+          line-height: 24px;
+        }
+      }
+    }
+  }
+
+  @media only screen and (max-width: 576px) {
+    background-size: 480%;
+    background-position-x: 40%;
+    .bgfade {
+      display: block;
+    }
+    .title {
+      font-size: 40px;
+      line-height: 50px;
+      margin-bottom: 20px;
+    }
+    .box {
+      background: transparent;
+      border: none;
+      backdrop-filter: unset;
+      padding: 0;
+
+      .step {
+        flex-wrap: wrap;
+
+        .number {
+          font-size: 40px;
+          line-height: 36px;
+          flex: 0 0 70px;
+        }
+        .icon {
+          flex: 0 0 230px;
+          height: 230px;
+          padding-top: 25px;
+          img {
+            height: 190px;
+          }
+        }
+        p {
+          padding-left: 40px;
+        }
       }
     }
   }
