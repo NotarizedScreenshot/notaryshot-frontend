@@ -9,10 +9,15 @@ export const Intro = () => {
   return (
     <div className={styles.container}>
       <img className={styles.logo} src="public/images/spot_logo.png" alt="logo" />
-      <h1>{t('intro.title')}</h1>
+      <h1>
+        <div className={styles.titlebg} />
+        {t('intro.title')}
+      </h1>
+
       <nav>
         <Link to="/mainform">
-          <p>{t('intro.nav.launch')}</p>
+          <p className={styles.launch}>{t('intro.nav.launch')}</p>
+          <div className={styles.launchbg} />
         </Link>
         <p>{t('intro.nav.discord')}</p>
         <p>{t('intro.nav.github')}</p>
@@ -26,11 +31,15 @@ export const Intro = () => {
         <div>
           <img src="public/images/ipfs.png" />
         </div>
+
         <div>
           <img src="public/images/chainlink.png" />
         </div>
         <div>
           <img src="public/images/hyperdapp.png" />
+        </div>
+        <div>
+          <img src="public/images/graph-logo.png" />
         </div>
       </div>
     </div>
