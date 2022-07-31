@@ -17,4 +17,23 @@
     font-size: 30px;
     line-height: 30px;
   }
+
+  @media only screen and (max-width: 1280px) {
+    padding: 0 55px 75px;
+  }
+
+  @media only screen and (max-width: 1028px) {
+    padding: 25px 55px 75px;
+  }
+
+  @media only screen and (max-width: 576px) {
+    padding: 25px 20px 75px;
+    .logo {
+      margin-right: 15px;
+    }
+    .copyright {
+      line-height: 50px;
+      font-size: 20px;
+    }
+  }
 }
