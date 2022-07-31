@@ -368,5 +368,19 @@
 
   @media only screen and (max-width: 400px) {
     padding: 96px 20px;
+    .items {
+      padding: 0 20px;
+      .item {
+        img {
+          max-width: 105px;
+        }
+
+        &.nft {
+          img {
+            max-width: 170px;
+          }
+        }
+      }
+    }
   }
 }
