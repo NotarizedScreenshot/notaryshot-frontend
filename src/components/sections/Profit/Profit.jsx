@@ -6,6 +6,7 @@ export const Profit = () => {
   const { t } = useTranslation();
   return (
     <div className={styles.container}>
+      <div className={styles.bgfade} />
       <h3 className={styles.title}>{t('profit.title')}</h3>
       <p className={styles.description}>{t('profit.description')}</p>
       <div className={styles.list}>
