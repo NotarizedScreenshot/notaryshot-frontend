@@ -1,9 +1,7 @@
 .container {
-  // background-color: #401c52;
-  height: 1002px;
   position: relative;
-  padding-top: 96px;
   padding: 96px 68px;
+  padding-bottom: 0px;
 
   background: rgb(88, 34, 91);
   background: linear-gradient(
@@ -29,6 +27,11 @@
     line-height: 82px;
     font-weight: 500;
 
+    .releaseDate {
+      font-size: 20px;
+      line-height: 20px;
+    }
+
     .runningLine {
       display: flex;
       flex-direction: row;
@@ -42,12 +45,18 @@
 
   .title {
     padding: 108px 120px;
-    position: absolute;
+    padding-bottom: 20px;
+  }
+  .description {
+    padding: 0 120px;
+    font-size: 18px;
+    line-height: 36px;
+    max-width: 750px;
   }
 
   .items {
     position: relative;
-    top: 200px;
+    top: -80px;
     display: flex;
     align-items: flex-end;
     justify-content: space-between;
@@ -59,6 +68,7 @@
     .flexgroup {
       display: flex;
       justify-content: space-between;
+      flex-wrap: wrap;
       flex-grow: 1;
       padding: 0 35px 0 140px;
       max-width: 1300px;
@@ -72,5 +82,291 @@
         }
       }
     }
+  }
+
+  @media only screen and (max-width: 1900px) {
+    padding-bottom: 68px;
+    .items {
+      position: relative;
+      top: 0;
+      .flexgroup {
+        justify-content: space-around;
+        padding: 0;
+      }
+      .item {
+        img {
+          max-width: 190px;
+        }
+
+        &.nft {
+          img {
+            max-width: 490px;
+          }
+        }
+      }
+    }
+  }
+
+  @media only screen and (max-width: 1400px) {
+    .items {
+      .item {
+        img {
+          max-width: 160px;
+        }
+        h6 {
+          padding-top: 10px;
+          font-size: 26px;
+          line-height: 26px;
+        }
+
+        &.nft {
+          img {
+            max-width: 350px;
+          }
+        }
+      }
+    }
+  }
+
+  @media only screen and (max-width: 1200px) {
+    .items {
+      position: relative;
+      top: 0;
+      .flexgroup {
+        justify-content: space-around;
+        padding: 0;
+      }
+      .item {
+        img {
+          max-width: 120px;
+        }
+
+        &.nft {
+          img {
+            max-width: 260px;
+          }
+        }
+      }
+    }
+  }
+
+  @media only screen and (max-width: 992px) {
+    padding: 96px 68px;
+    .title {
+      padding: 60px 60px;
+      padding-bottom: 20px;
+    }
+    .description {
+      padding: 0 60px;
+      font-size: 18px;
+      line-height: 36px;
+      max-width: 600px;
+    }
+
+    .items {
+      position: relative;
+      top: 0;
+      .flexgroup {
+        justify-content: space-around;
+        padding: 0;
+      }
+      .item {
+        img {
+          max-width: 80px;
+        }
+        h6 {
+          padding-top: 10px;
+          font-size: 26px;
+          line-height: 26px;
+        }
+
+        &.nft {
+          img {
+            max-width: 180px;
+          }
+        }
+      }
+    }
+  }
+
+  @media only screen and (max-width: 768px) {
+    padding: 96px 116px;
+    .runningLineContainer {
+      height: 60px;
+      .releaseDate {
+        position: relative;
+        text-align: center;
+        margin: auto;
+        width: auto;
+        font-size: 20px;
+        line-height: 20px;
+        top: 50%;
+        transform: translate(0, -10px);
+      }
+    }
+    .title {
+      padding: 40px 0px;
+      padding-bottom: 0;
+    }
+    .description {
+      padding: 0;
+      font-size: 18px;
+      line-height: 36px;
+      max-width: 750px;
+    }
+
+    .items {
+      position: relative;
+      top: -20px;
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      flex-direction: row;
+      max-width: 1920px;
+      flex-wrap: wrap;
+      margin: auto;
+
+      .flexgroup {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        flex-grow: 1;
+        padding: 0 0px 0 0px;
+        max-width: 1300px;
+      }
+      .item {
+        img {
+          max-width: 180px;
+        }
+        h6 {
+          padding-top: 10px;
+          font-size: 26px;
+          line-height: 26px;
+        }
+
+        &.nft {
+          position: relative;
+          left: 46px;
+          top: 28px;
+          img {
+            max-width: 295px;
+          }
+          h6 {
+            padding-left: 15px;
+          }
+        }
+      }
+    }
+  }
+  @media only screen and (max-width: 710px) {
+    padding: 96px 106px;
+  }
+
+  @media only screen and (max-width: 690px) {
+    padding: 96px 96px;
+  }
+  @media only screen and (max-width: 670px) {
+    padding: 96px 86px;
+  }
+  @media only screen and (max-width: 650px) {
+    padding: 96px 76px;
+  }
+  @media only screen and (max-width: 630px) {
+    padding: 96px 46px;
+  }
+
+  @media only screen and (max-width: 576px) {
+    padding: 96px 96px;
+    padding-bottom: 28px;
+    .runningLineContainer {
+      height: 60px;
+    }
+
+    .title {
+      padding: 0px 0px;
+      position: relative;
+      font-size: 40px;
+      line-height: 44px;
+    }
+
+    .description {
+      padding: 26px 0;
+      font-size: 16px;
+      line-height: 26px;
+    }
+
+    .items {
+      top: -30px;
+      .flexgroup {
+        flex-wrap: wrap;
+        padding: 0 0px 0px 0;
+      }
+      .item {
+        img {
+          max-width: 130px;
+        }
+
+        &.nft {
+          left: 38px;
+          top: 16px;
+          img {
+            max-width: 220px;
+          }
+        }
+      }
+    }
+  }
+
+  @media only screen and (max-width: 542px) {
+    padding: 96px 78px;
+  }
+
+  @media only screen and (max-width: 500px) {
+    padding: 96px 65px;
+  }
+
+  @media only screen and (max-width: 480px) {
+    padding: 96px 65px;
+    .items {
+      top: -30px;
+      .flexgroup {
+        flex-wrap: wrap;
+        padding: 0 0px 0px 0;
+      }
+      .item {
+        img {
+          max-width: 120px;
+        }
+        h6 {
+          padding-top: 10px;
+          font-size: 26px;
+          line-height: 26px;
+        }
+
+        &.nft {
+          position: relative;
+          left: 30px;
+          top: 20px;
+          img {
+            max-width: 200px;
+          }
+          h6 {
+            padding-left: 15px;
+          }
+        }
+      }
+    }
+  }
+
+  @media only screen and (max-width: 440px) {
+    padding: 96px 45px;
+  }
+
+  @media only screen and (max-width: 420px) {
+    padding: 96px 35px;
+  }
+
+  @media only screen and (max-width: 400px) {
+    padding: 96px 20px;
   }
 }
