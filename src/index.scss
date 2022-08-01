@@ -83,5 +83,17 @@ html {
         text-decoration: none;
       }
     }
+    @media only screen and (max-width: 1200px) {
+      h1 {
+        font-size: 120px;
+      }
+    }
+
+    @media only screen and (max-width: 992px) {
+      h1 {
+        font-size: 100px;
+        line-height: 100px;
+      }
+    }
   }
 }

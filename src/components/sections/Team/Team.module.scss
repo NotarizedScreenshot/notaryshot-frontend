@@ -27,7 +27,6 @@
         width: 1065px;
         height: 370px;
         background: #0f0e2a;
-        // box-shadow: inset 0px 0px 100px 30px rgba(143, 0, 255, 0.6);
         border-radius: 16px;
         display: flex;
         flex-wrap: wrap;
@@ -122,11 +121,215 @@
       .smallCard:nth-child(3) {
         box-shadow: inset 0px 0px 100px 10px #a14f58;
       }
-      // .smallCard:nth-child(2) {
-      //   box-shadow: inset 0px 0px 100px 10px #eb7171;
-      // }
+
       .smallCard:nth-child(2) {
         box-shadow: inset 0px 0px 100px 10px rgba(0, 255, 25, 0.6);
+      }
+    }
+  }
+
+  @media only screen and (max-width: 1440px) {
+    padding: 55px 55px;
+    .title {
+      margin-bottom: 65px;
+    }
+    .cards {
+      .mainCards {
+        .largeCard {
+          width: 915px;
+          height: 320px;
+          .info {
+            padding: 20px 60px;
+            .name {
+              font-size: 40px;
+              line-height: 90px;
+            }
+          }
+        }
+      }
+      .minorCards {
+        max-width: 915px;
+
+        gap: 30px;
+
+        .smallCard {
+          width: 440px;
+        }
+      }
+    }
+  }
+
+  @media only screen and (max-width: 1028px) {
+    padding: 20px 20px;
+    .cards {
+      max-width: 750px;
+      .mainCards {
+        .largeCard {
+          width: calc(100%);
+          height: 320px;
+          .info {
+            padding: 50px 30px;
+            .name {
+              font-size: 30px;
+              line-height: 30px;
+            }
+            .position {
+              font-size: 22px;
+              line-height: 30px;
+            }
+            .description {
+              width: 345px;
+            }
+          }
+        }
+      }
+      .minorCards {
+        gap: 30px;
+
+        .smallCard {
+          width: 440px;
+          width: 47%;
+          height: auto;
+
+          padding: 20px;
+
+          .name {
+            font-size: 30px;
+            line-height: 36px;
+            margin-bottom: 10px;
+          }
+        }
+      }
+    }
+  }
+  @media only screen and (max-width: 768px) {
+    padding: 20px 20px;
+    .title {
+      margin-bottom: 45px;
+    }
+    .cards {
+      max-width: 600px;
+      .mainCards {
+        .largeCard {
+          width: 100%;
+          height: 250px;
+          .info {
+            padding: 20px 20px;
+            .name {
+              font-size: 23px;
+              line-height: 25px;
+            }
+            .position {
+              font-size: 22px;
+              line-height: 30px;
+              margin: 5px 0;
+              div {
+                position: relative;
+                margin-left: 10px;
+                top: -3px;
+                img {
+                  width: 40px;
+                }
+              }
+            }
+            .description {
+              font-size: 16px;
+              line-height: 24px;
+              width: 250px;
+            }
+          }
+        }
+      }
+      .minorCards {
+        gap: 30px;
+
+        .smallCard {
+          width: 440px;
+          width: 47%;
+          height: auto;
+          padding: 20px;
+
+          .name {
+
+            font-size: 23px;
+            line-height: 23px;
+            margin-bottom: 10px;
+          }
+          .position {
+
+            font-size: 20px;
+            line-height: 20px;
+          }
+        }
+
+
+      }
+    }
+  }
+  @media only screen and (max-width: 576px) {
+    padding: 20px 20px;
+    .title {
+      margin-bottom: 25px;
+    }
+    .cards {
+      max-width: 600px;
+      .mainCards {
+        .largeCard {
+          width: 100%;
+          height: calc(100vw - 20px * 2);
+          margin-bottom: 70vw;
+          .info {
+            padding: 20px 0px;
+            .name {
+              font-size: 36px;
+              line-height: 36px;
+            }
+            .position {
+              display: flex;
+              justify-content: space-between;
+              font-size: 26px;
+              line-height: 30px;
+
+              margin: 10px 0;
+              div {
+                position: relative;
+                margin-left: 10px;
+                top: -3px;
+                img {
+                  width: 50px;
+                }
+              }
+            }
+            .description {
+              font-size: 16px;
+              line-height: 24px;
+              width: 330px;
+            }
+          }
+        }
+      }
+      .minorCards {
+        gap: 30px;
+
+        .smallCard {
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+          width: 100%;
+          height: 200px;
+
+          padding: 30px;
+
+          .name {
+            font-size: 36px;
+            line-height: 42px;
+            margin-bottom: 35px;
+          }
+          .position {
+            font-size: 26px;
+            line-height: 26px;
+          }
+        }
       }
     }
   }

@@ -3,6 +3,7 @@
   background-image: url('../../../../public/images/img-01.png');
   background-size: cover;
   background-position: right;
+  background-repeat: no-repeat;
   background-color: #040d2c;
   padding: 50px 120px 70px;
 
@@ -14,9 +15,21 @@
   }
 
   h1 {
+    position: relative;
     max-width: 800px;
     padding-top: 480px;
     padding-bottom: 50px;
+    z-index: 1000;
+    .titlebg {
+      z-index: -1;
+      position: absolute;
+      width: 427px;
+      height: 113px;
+      border-radius: 50%;
+      background-color: rgba(0, 255, 41, 0.8);
+      filter: blur(30px);
+      transform: rotate(12.6deg);
+    }
   }
 
   nav {
@@ -24,27 +37,208 @@
     right: 0;
     top: 0;
     display: flex;
+    .launchbg {
+      position: absolute;
+      top: 50px;
+      left: 24px;
+      z-index: 0;
+      width: 200px;
+      height: 60px;
+      background-color: #ff9900;
+      border-radius: 50%;
+      filter: blur(20px);
+    }
     p {
+      position: relative;
       padding: 50px;
       font-weight: 700;
       font-size: 24px;
       line-height: 60px;
+      z-index: 1000;
     }
   }
 
   p {
     font-size: 30px;
     line-height: 42px;
-    font-weight: 400px;
+    font-weight: 400;
   }
 
   .partners {
-    max-width: 550px;
+    max-width: 680px;
     display: flex;
     flex-wrap: wrap;
     gap: 50px;
+    padding-top: 15px;
     div {
-      width: 240px;
+      max-width: 240px;
+      flex-grow: 1;
+    }
+  }
+
+  @media only screen and (max-width: 1900px) {
+    background-position-x: 0;
+  }
+
+  @media only screen and (max-width: 1400px) {
+    background-position-x: -150px;
+  }
+
+  @media only screen and (max-width: 1200px) {
+    background-position-x: -100px;
+    padding: 30px 60px 50px;
+
+    .logo {
+      width: 450px;
+      left: -40px;
+      top: -40px;
+    }
+
+    h1 {
+      max-width: 800px;
+      padding-top: 340px;
+      padding-bottom: 40px;
+    }
+
+    nav {
+      p {
+        padding: 30px;
+        font-weight: 400;
+      }
+      .launchbg {
+        height: 54px;
+        filter: blur(22px);
+        top: 36px;
+        left: 0;
+      }
+    }
+  }
+
+  @media only screen and (max-width: 992px) {
+    h1 {
+      max-width: 800px;
+      padding-top: 300px;
+      padding-bottom: 15px;
+    }
+
+    background-position-x: -90px;
+    nav {
+      p {
+        padding: 20px;
+        font-size: 18px;
+      }
+      .launchbg {
+        width: 150px;
+        height: 44px;
+        filter: blur(22px);
+        top: 32px;
+      }
+    }
+
+    p {
+      font-size: 24px;
+      line-height: 36px;
+    }
+
+    .partners {
+      max-width: 500px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      div {
+        max-width: 200px;
+        img {
+          max-height: 40px;
+        }
+      }
+    }
+  }
+
+  @media only screen and (max-width: 768px) {
+    background-image: none;
+    padding: 60px 90px 70px;
+
+    h1 {
+      padding-top: 350px;
+      padding-bottom: 15px;
+      .titlebg {
+        width: 300px;
+        height: 80px;
+        left: -16px;
+      }
+    }
+
+    nav {
+      padding-right: 50px;
+      padding-top: 25px;
+      flex-direction: column;
+      .launchbg {
+        width: 156px;
+        height: 44px;
+        filter: blur(25px);
+        top: 44px;
+        right: 50px;
+      }
+
+      p {
+        padding: 10px;
+        font-size: 24px;
+      }
+    }
+  }
+
+  @media only screen and (max-width: 650px) {
+    padding: 60px 50px 70px;
+  }
+
+  @media only screen and (max-width: 576px) {
+    padding: 60px 20px 70px;
+    .logo {
+      width: 330px;
+      left: -45px;
+      top: -45px;
+    }
+    h1 {
+      font-size: 60px;
+      padding-top: 220px;
+      padding-bottom: 0;
+      line-height: 75px;
+
+      .titlebg {
+        width: 190px;
+        height: 70px;
+        left: -16px;
+        filter: blur(20px);
+      }
+    }
+
+    p {
+      font-size: 18px;
+    }
+    nav {
+      padding-right: 20px;
+      flex-direction: column;
+      .launchbg {
+        width: 130px;
+        height: 38px;
+        filter: blur(16px);
+        top: 38px;
+        right: 16px;
+      }
+      p {
+        text-align: end;
+        font-size: 18px;
+        line-height: 40px;
+      }
+    }
+    .partners {
+      padding-top: 15px;
+      div {
+        max-width: 200px;
+        img {
+          max-height: 35px;
+        }
+      }
     }
   }
 }
