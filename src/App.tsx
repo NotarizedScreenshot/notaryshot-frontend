@@ -3,7 +3,9 @@ import classes from 'App.module.scss';
 function App() {
   return (
     <div className={classes.App}>
-      Welcome to Quantum Oracle
+      <h1>
+        Welcome to Quantum Oracle
+      </h1>
     </div>
   );
 }
