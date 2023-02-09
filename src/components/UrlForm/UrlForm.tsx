@@ -1,0 +1,1 @@
+import {IUrlFormProps} from './UrlFormProps'; import styles from './UrlForm.module.scss'; export const UrlForm: React.FC<IUrlFormProps> = () => { return <div className={styles.container}>UrlForm</div> }
