@@ -1,3 +1,89 @@
 .App {
   text-align: center;
+  height: 100vh;
+  position: relative;
+  transition: all 0.2s;
+
+  .h1 {
+    position: relative;
+    left: 50%;
+    top: 40%;
+    transform: translate(-50%, -50%);
+    font-size: 4rem;
+    transition: all 0.2s;
+  }
+
+  .urlForm {
+    position: relative;
+    left: 50%;
+    top: 40%;
+    transform: translateX(-50%);
+  }
+
+  &.requesting {
+    justify-content: flex-start;
+
+    .h1 {
+      display: none;
+    }
+
+    .urlForm {
+      top: 0rem;
+    }
+  }
+
+  .progress {
+    position: absolute;
+    font-size: 3rem;
+    font-weight: bold;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .results {
+    display: grid;
+    margin: auto;
+    width: 70rem;
+    grid-template-columns: 1fr 200px;
+    column-gap: 1rem;
+    .status {
+      &.failure {
+        border: 1px solid red;
+      }
+      align-self: start;
+      font-family: monospace;
+      border: 1px solid green;
+      border-radius: 5px;
+      padding: 1rem;
+      text-align: start;
+      .h3 {
+        font-size: 1.1rem;
+        font-weight: 500;
+        padding-bottom: 1rem;
+      }
+      .succeed {
+        color: green;
+      }
+      .errorMessage {
+        font-size: 1rem;
+        color: red;
+
+        padding: 0.5em 0;
+      }
+    }
+
+    .screenshot {
+      align-self: center;
+      .failure {
+        color: red;
+        font-family: monospace;
+        font-size: 1.5rem;
+      }
+
+      img {
+        width: 50rem;
+      }
+    }
+  }
 }
