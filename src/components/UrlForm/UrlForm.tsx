@@ -14,15 +14,14 @@ export const UrlForm: React.FC<IUrlFormProps> = ({ onSubmit, inline }) => {
   const inputRef = useRef<HTMLInputElement>(null);
 
   const urlValidationSchema = { url: yup.string().required().url() };
-  const validate = (
-    url: string,
-  ) => yup.object().shape(urlValidationSchema).validate({ url });
+  const validate = (url: string) => yup.object().shape(urlValidationSchema).validate({ url });
 
   const clearHandler: React.MouseEventHandler<HTMLButtonElement> = () => {
     setDirty(false);
     setUrlInputValue('');
     setInvalid(false);
     setValidating(false);
+    setError(null);
     inputRef.current?.focus();
   };
 
