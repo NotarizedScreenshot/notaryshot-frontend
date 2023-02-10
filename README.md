@@ -8,7 +8,7 @@ The amazing Notarized Screenshot UI is here. Generate a certified copy of what y
 nvm use 16
 yarn install
 yarn build
-ls dist
+
 # index.html  index.js
 ```
 
