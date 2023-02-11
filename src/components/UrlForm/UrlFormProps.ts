@@ -1,8 +1,7 @@
 import React from 'react';
 
-export interface IUrlFormProps { 
+export interface IUrlFormProps {
   children?: React.ReactNode;
-  onSubmit: (url: string) => void | Promise<void>;
+  onSubmit: (url: string) => Promise<boolean>;
   inline?: boolean;
-  
-};
+}
