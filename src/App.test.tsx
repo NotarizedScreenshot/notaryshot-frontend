@@ -1,11 +1,22 @@
 /* eslint-disable testing-library/no-unnecessary-act */
-import { render, screen } from '@testing-library/react';
+import { findByAltText, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import exp from 'constants';
+import nock from 'nock';
 import { act } from 'react-dom/test-utils';
 import App from './App';
 
-test('index page rendered', async () => {
+beforeEach(async () => {
+  nock.disableNetConnect();
+});
+
+afterEach(() => {
+  nock.cleanAll();
+});
+
+test('if index page rendered', async () => {
   render(<App />);
+
   const headerElement = screen.getByText('Welcome to Quantum Oracle');
   expect(headerElement).toBeInTheDocument();
 
@@ -14,9 +25,21 @@ test('index page rendered', async () => {
 
   const inputElement = screen.getByPlaceholderText('URL');
   const submitButtonElement = screen.getByRole('button', { name: 'submit-button' });
+  expect(inputElement).toBeInTheDocument();
+  expect(submitButtonElement).toBeInTheDocument();
+});
 
+test('if requested screenshot successfully', async () => {
+  window.URL.createObjectURL = () => '__fixtures__/twitter-com.png';
+  nock('http://localhost')
+    .post('/send', JSON.stringify({ url: 'https://twitter.com' }))
+    .reply(200, 'testInsteadOfblob');
+
+  render(<App />);
+  const headerElement = screen.getByText('Welcome to Quantum Oracle');
+  const inputElement = screen.getByPlaceholderText('URL');
+  const submitButtonElement = screen.getByRole('button', { name: 'submit-button' });
   userEvent.type(inputElement, 'https://twitter.com');
-
   await act(async () => {
     await userEvent.click(submitButtonElement);
   });
@@ -26,4 +49,8 @@ test('index page rendered', async () => {
   const requestingElement = screen.getByText('Requesting...');
   expect(requestingElement).toBeVisible();
   expect(submitButtonElement).toBeDisabled();
+
+  expect(await screen.findByAltText('screenshot')).toBeInTheDocument();
+  expect(await screen.findByText('succeed')).toBeInTheDocument();
+
 });

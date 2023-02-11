@@ -53,7 +53,6 @@ export const UrlForm: React.FC<IUrlFormProps> = ({ onSubmit, inline }) => {
         setSubmitting(true);
 
         onSubmit(urlInputValue).then((bool) => {
-          console.log('bool', bool);
           setSubmitting(!bool);
         });
       })
