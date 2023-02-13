@@ -1,7 +1,6 @@
 /* eslint-disable testing-library/no-unnecessary-act */
-import { findByAltText, render, screen } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import exp from 'constants';
 import nock from 'nock';
 import { act } from 'react-dom/test-utils';
 import App from './App';

@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import cn from 'classnames';
-import { ConnectButton, useConnectModal } from '@rainbow-me/rainbowkit';
+import { useConnectModal } from '@rainbow-me/rainbowkit';
 import { useAccount } from 'wagmi';
-import { UrlForm } from 'components';
+import { UrlForm, Header } from 'components';
 import classes from 'App.module.scss';
 
 function App() {
@@ -66,7 +66,7 @@ function App() {
 
   return (
     <div className={cn(classes.App, requesting || requested ? classes.requesting : null)}>
-      <ConnectButton />
+      <Header />
       <h1 className={classes.h1} hidden={requesting || requested}>
         Welcome to Quantum Oracle
       </h1>
