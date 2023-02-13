@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import cn from 'classnames';
+import { ConnectButton, useConnectModal } from '@rainbow-me/rainbowkit';
+import { useAccount } from 'wagmi';
 import { UrlForm } from 'components';
 import classes from 'App.module.scss';
 
@@ -9,8 +11,18 @@ function App() {
   const [errors, setErrors] = useState<string[]>([]);
   const [screenshot, setScreenshot] = useState<string | null>(null);
 
+  const { address, isConnected } = useAccount();
+  const { openConnectModal } = useConnectModal();
+
   const getScreenShot = async (url: string): Promise<boolean> => {
     try {
+      if (!isConnected) {
+        openConnectModal!();
+        return true;
+      }
+      if (!address) {
+        throw new Error('can not get address');
+      }
       setRequesting(true);
       setRequested(false);
       setScreenshot(null);
@@ -54,6 +66,7 @@ function App() {
 
   return (
     <div className={cn(classes.App, requesting || requested ? classes.requesting : null)}>
+      <ConnectButton />
       <h1 className={classes.h1} hidden={requesting || requested}>
         Welcome to Quantum Oracle
       </h1>
