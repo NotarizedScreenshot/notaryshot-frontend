@@ -3,6 +3,7 @@
   height: 100vh;
   position: relative;
   transition: all 0.2s;
+  padding-bottom: 2rem;
 
   .h1 {
     position: relative;
@@ -22,6 +23,8 @@
 
   &.requesting {
     justify-content: flex-start;
+    height: unset;
+    min-height: 100vh;
 
     .urlForm {
       top: 0rem;
@@ -41,8 +44,9 @@
     display: grid;
     margin: auto;
     width: 70rem;
-    grid-template-columns: 1fr 200px;
+    grid-template-columns: 1fr 190px;
     column-gap: 1rem;
+    row-gap: 1rem;
     .status {
       &.failure {
         border: 1px solid red;
@@ -66,19 +70,6 @@
         color: red;
 
         padding: 0.5em 0;
-      }
-    }
-
-    .screenshot {
-      align-self: center;
-      .failure {
-        color: red;
-        font-family: monospace;
-        font-size: 1.5rem;
-      }
-
-      img {
-        width: 50rem;
       }
     }
   }
