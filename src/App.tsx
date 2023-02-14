@@ -3,9 +3,15 @@ import cn from 'classnames';
 import { useConnectModal } from '@rainbow-me/rainbowkit';
 import { useAccount } from 'wagmi';
 import * as yup from 'yup';
+import { Contract } from 'ethers';
+import { fetchSigner } from '@wagmi/core';
+import encHex from 'crypto-js/enc-hex';
+import sha256 from 'crypto-js/sha256';
+import CryptoJS from 'crypto-js';
+import notaryShotContract from 'contracts/screenshot-manager.json';
 import { UrlForm, Header, ScreenshotPreview } from 'components';
-import classes from 'App.module.scss';
 import { getPreviewMetadata, convertImageSize, getOffset } from 'utils';
+import classes from 'App.module.scss';
 
 const Home: React.FC<{ address: string | undefined; isConnected: boolean }> = memo(
   ({ address, isConnected }) => {
@@ -15,6 +21,12 @@ const Home: React.FC<{ address: string | undefined; isConnected: boolean }> = me
     const [screenshot, setScreenshot] = useState<string | null>(null);
     const [stampedScreenshot, setStampedScreenshot] = useState<string | null>(null);
     const [requestUrl, setRequestUtl] = useState<string | null>(null);
+    const [hashCheckSum, setHashCheckSum] = useState<string | null>(null);
+    const [notorizeTxResult, setNotorizeTxResult] = useState<{
+      status: 'confirmed' | 'error';
+      gasUsed: BigInt | null;
+      error: string | null;
+    } | null>(null);
 
     const { openConnectModal } = useConnectModal();
 
@@ -60,6 +72,10 @@ const Home: React.FC<{ address: string | undefined; isConnected: boolean }> = me
         }
 
         const blob = await response.blob();
+        const buffer = await blob.arrayBuffer();
+        // @ts-ignore
+        const hash = '0x' + encHex.stringify(sha256(CryptoJS.lib.WordArray.create(buffer)));
+        setHashCheckSum(hash);
         const objectURL = URL.createObjectURL(blob);
         setScreenshot(objectURL);
 
@@ -72,6 +88,29 @@ const Home: React.FC<{ address: string | undefined; isConnected: boolean }> = me
         setRequested(true);
         setRequesting(false);
         return true;
+      }
+    };
+
+    const notoriseHandler: React.MouseEventHandler<HTMLButtonElement> = async (event) => {
+      try {
+        const signer = await fetchSigner();
+        if (!signer) return;
+
+        const contract = new Contract(
+          notaryShotContract.address,
+          notaryShotContract.abi,
+          signer,
+        );
+
+        const transaction = await contract.submitMint(requestUrl, hashCheckSum);
+        const receipt = await transaction.wait();
+        const gasUsed = receipt.gasUsed as BigInt;
+        setNotorizeTxResult({ status: 'confirmed', gasUsed, error: null });
+      } catch (error) {
+        if (error instanceof Error) {
+          setNotorizeTxResult({ status: 'error', gasUsed: null, error: error.message });
+        }
+        console.error(error);
       }
     };
 
@@ -202,6 +241,22 @@ const Home: React.FC<{ address: string | undefined; isConnected: boolean }> = me
               </div>
             }
             <ScreenshotPreview screenshot={stampedScreenshot} />
+            <div className={classes.controls}>
+              <button className={classes.notorizeButton} onClick={notoriseHandler}>
+                Notorize
+              </button>
+              {!!notorizeTxResult && (
+                <div className={classes.txStatus}>
+                  <div>Status: {notorizeTxResult?.status}</div>
+                  {!!notorizeTxResult?.gasUsed && (
+                    <div>Gas used: {notorizeTxResult?.gasUsed?.toString()}</div>
+                  )}
+                  {!!notorizeTxResult?.error && (
+                    <div className={classes.txError}>Erorr: {notorizeTxResult?.error}</div>
+                  )}
+                </div>
+              )}
+            </div>
           </div>
         )}
       </div>
