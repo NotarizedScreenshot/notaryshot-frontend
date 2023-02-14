@@ -6,10 +6,11 @@ import classes from './UrlForm.module.scss';
 
 export const UrlForm: React.FC<IUrlFormProps> = ({ onSubmit, inline }) => {
   const [urlInputValue, setUrlInputValue] = useState<string>('');
-  const [isValidating, setValidating] = useState<boolean>(false);
+  const [validating, setValidating] = useState<boolean>(false);
   const [isInvalid, setInvalid] = useState<boolean>(false);
   const [error, setError] = useState<string | null>('');
   const [dirtry, setDirty] = useState<boolean>(false);
+  const [submitting, setSubmitting] = useState<boolean>(false);
 
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -49,19 +50,24 @@ export const UrlForm: React.FC<IUrlFormProps> = ({ onSubmit, inline }) => {
       .then(() => {
         setValidating(false);
         setInvalid(false);
-        onSubmit(urlInputValue);
+        setSubmitting(true);
+
+        onSubmit(urlInputValue).then((bool) => {
+          setSubmitting(!bool);
+        });
       })
       .catch((error: yup.ValidationError) => {
         setInvalid(true);
         setError(error.message);
+        inputRef.current?.focus();
       });
   };
 
   return (
-    <div className={cn(classes.container, inline ? classes.inline : null)}>
+    <div className={cn(classes.container, inline ? classes.inline : null)} role='form'>
       <form onSubmit={submitHandler} className={classes.form}>
         <div className={classes.inputGroup}>
-          <label className={classes.label} htmlFor='url'>
+          <label className={classes.label} htmlFor='url' hidden={true}>
             URL
           </label>
           <input
@@ -75,25 +81,23 @@ export const UrlForm: React.FC<IUrlFormProps> = ({ onSubmit, inline }) => {
           ></input>
           <button
             type='button'
+            aria-label='clear-button'
             className={classes.clearButton}
             onClick={clearHandler}
+            disabled={submitting}
           ></button>
         </div>
         <div className={classes.controls}>
           <button
             type='submit'
+            aria-label='submit-button'
             className={classes.submitButton}
-            disabled={isValidating || isInvalid}
+            disabled={validating || isInvalid || submitting}
           >
             Submit
           </button>
         </div>
-        {
-          <div className={cn(classes.error, isInvalid ? null : classes.hidden)}>
-            <div className={classes.arrow}></div>
-            {error}
-          </div>
-        }
+        <div className={cn(classes.error, isInvalid ? null : classes.hidden)}>{error}</div>
       </form>
     </div>
   );

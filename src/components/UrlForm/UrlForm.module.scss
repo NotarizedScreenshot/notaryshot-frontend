@@ -1,11 +1,10 @@
-.container { 
+.container {
   position: relative;
   padding: 2rem;
   text-align: center;
 
   .form {
     background-color: white;
-    
     position: relative;
     width: 40rem;
     margin: auto;
@@ -27,9 +26,9 @@
       align-items: center;
 
       & > :first-child {
-      margin-bottom: 0rem;
-      margin-right: 1rem;
-    }
+        margin-bottom: 0rem;
+        margin-right: 1rem;
+      }
     }
   }
 
@@ -78,7 +77,15 @@
       background-color: transparent;
       z-index: 1000;
 
-      &::after, &::before {
+      &:disabled,
+      &:disabled:hover,
+      &:disabled::after,
+      &:disabled::before {
+        cursor: not-allowed;
+      }
+
+      &::after,
+      &::before {
         content: '';
         display: block;
         position: absolute;
@@ -87,9 +94,9 @@
         border: 1px solid lightgray;
         width: 1.8rem;
         height: 0;
-        cursor: pointer; 
+        cursor: pointer;
       }
-        
+
       &::after {
         transform: rotate(45deg);
       }
@@ -98,20 +105,18 @@
         transform: rotate(-45deg);
       }
 
-      &:hover, &:active {
-        &::after, &::before {
+      &:hover,
+      &:active {
+        &::after,
+        &::before {
           border-color: black;
         }
       }
-      
     }
-    
-     
+
     .label {
       visibility: hidden;
-      display: block;
-      width: 0;
-      height: 0;
+      display: none;
     }
 
     .input {
@@ -133,7 +138,7 @@
         transition: all 0.2s;
       }
 
-      &:focus::placeholder{
+      &:focus::placeholder {
         opacity: 0;
       }
     }
@@ -149,15 +154,15 @@
       height: 3.6rem;
       cursor: pointer;
 
-      &:disabled, &:disabled:hover {
+      &:disabled,
+      &:disabled:hover {
         cursor: not-allowed;
         background-color: lightgray;
         color: gray;
-
       }
 
-
-      &:hover, :active {
+      &:hover,
+      :active {
         color: white;
         background-color: black;
         border-color: black;

@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import cn from 'classnames';
-import { UrlForm } from 'components';
+import { useConnectModal } from '@rainbow-me/rainbowkit';
+import { useAccount } from 'wagmi';
+import { UrlForm, Header } from 'components';
 import classes from 'App.module.scss';
 
 function App() {
@@ -9,45 +11,65 @@ function App() {
   const [errors, setErrors] = useState<string[]>([]);
   const [screenshot, setScreenshot] = useState<string | null>(null);
 
-  const getScreenShot = (url: string) => {
-    console.log('url for screenshot: ', url);
-    setRequesting(true);
-    setRequested(false);
-    setScreenshot(null);
-    setErrors([]);
+  const { address, isConnected } = useAccount();
+  const { openConnectModal } = useConnectModal();
 
-    fetch('/send', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ url }),
-    })
-      .then((response) => {
-        console.log(response);
-        if (!response.ok) {
-          response.json().then(({ error }) => {
-            setErrors((prev) => [...prev, error]);
-          });
-          return;
-        }
-        response.blob().then((blob) => {
-          const objectURL = URL.createObjectURL(blob);
-          setScreenshot(objectURL);
-        });
-      })
-      .catch((error) => {
-        console.log('error', error);
-        if (error instanceof Error) {
+  const getScreenShot = async (url: string): Promise<boolean> => {
+    try {
+      if (!isConnected) {
+        openConnectModal!();
+        return true;
+      }
+      if (!address) {
+        throw new Error('can not get address');
+      }
+      setRequesting(true);
+      setRequested(false);
+      setScreenshot(null);
+      setErrors([]);
+      const response = await fetch('/send', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ url }),
+      });
+
+      if (!response.ok) {
+        try {
+          if (response.status === 404) {
+            setErrors((prev) => [...prev, 'can not find server']);
+          }
+          const data = await response.json();
+          setErrors((prev) => [...prev, data.error]);
+        } catch (error: any) {
+          if (response.status === 500) {
+            setErrors((prev) => [...prev, 'Internal Server Error']);
+          }
           setErrors((prev) => [...prev, error.message]);
         }
-      })
-      .finally(() => {
-        setRequested(true);
-        setRequesting(false);
-      });
+        return true;
+      }
+
+      const blob = await response.blob();
+      const objectURL = URL.createObjectURL(blob);
+      setScreenshot(objectURL);
+
+      setRequested(true);
+      setRequesting(false);
+    } catch (error: any) {
+      setErrors((prev) => [...prev, error.message]);
+    } finally {
+      setRequested(true);
+      setRequesting(false);
+      return true;
+    }
   };
+
   return (
     <div className={cn(classes.App, requesting || requested ? classes.requesting : null)}>
-      <h1 className={classes.h1}>Welcome to Quantum Oracle</h1>
+      <Header />
+      <h1 className={classes.h1} hidden={requesting || requested}>
+        Welcome to Quantum Oracle
+      </h1>
       <div className={classes.urlForm}>
         <UrlForm onSubmit={getScreenShot} inline={requested || requesting} />
       </div>
