@@ -15,6 +15,7 @@
     "@types/react": "^18.0.27",
     "@types/react-dom": "^18.0.10",
     "classnames": "^2.3.2",
+    "crypto-js": "^4.1.1",
     "ethers": "^5",
     "nock": "^13.3.0",
     "react": "^18.2.0",
@@ -50,5 +51,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@types/crypto-js": "^4.1.1"
   }
 }

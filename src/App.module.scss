@@ -72,5 +72,38 @@
         padding: 0.5em 0;
       }
     }
+    .notorizeButton {
+      background-color: #7048e8;
+      color: white;
+      font-weight: bold;
+      font-size: 2rem;
+      border: none;
+      padding: 1rem 2rem;
+      border-radius: 5px;
+      cursor: pointer;
+
+      &:disabled,
+      &:disabled:hover,
+      &:disabled:active {
+        cursor: not-allowed;
+        background-color: lightgray;
+        color: gray;
+        transform: none;
+      }
+
+      &:hover,
+      &:active {
+        transform: scale(1.05);
+      }
+    }
+    .txStatus {
+      text-align: start;
+      font-size: 1.6rem;
+      padding: 1rem 0.5rem;
+
+      .txError {
+        word-wrap: break-word;
+      }
+    }
   }
 }
