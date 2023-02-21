@@ -10,6 +10,7 @@
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
+    "@types/chrome": "^0.0.217",
     "@types/jest": "^27.5.2",
     "@types/node": "^16.18.12",
     "@types/react": "^18.0.27",
@@ -29,10 +30,14 @@
   },
   "proxy": "http://localhost:9000",
   "scripts": {
+
     "start": "GENERATE_SOURCEMAP=false react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "ext:dev": "BABEL_ENV=development webpack --watch --progress --config ./config/webpack.extConfig.js",
+    "ext:build": "BABEL_ENV=production webpack --config ./config/webpack.extConfig.js"
+
   },
   "eslintConfig": {
     "extends": [
