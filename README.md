@@ -1,6 +1,7 @@
 # notaryshot-frontend
 
-The amazing Notarized Screenshot UI is here. Generate a certified copy of what you can see on your screen
+The amazing Notarized Screenshot UI is here. Generate a certified copy of what you can see on
+your screen
 
 ## Dev Run
 
@@ -14,7 +15,7 @@ Firstly run external adapter localy on port 9000, or remove proxy from package.j
   "scripts": {
 ```
 
-Then run frontend (port 3000): 
+Then run frontend (port 3000):
 
 ```
 nvm use 16
@@ -22,8 +23,28 @@ yarn install
 yarn start
 ```
 
-
 ## Build
 
+```
 nvm use 16
+yarn install
 yarn build
+```
+
+## Extension dev run
+
+```
+nvm use 16
+yarn install
+yarn ext:dev
+```
+
+## Extension build
+
+```
+nvm use 16
+yarn install
+yarn ext:dev
+```
+
+the extension is available in ./build-ext
