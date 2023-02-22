@@ -106,7 +106,7 @@ const Popup: React.FC = () => {
         </form>
       </div>
       <div className='send-url-container'>
-        <h3 className='h3'>Press button to notorize current page</h3>
+        <h3 className='h3'>Press button to notarize current page</h3>
         <div>
           <button onClick={notarizeHandler} className='btn-notarize'>
             Notarize current page
