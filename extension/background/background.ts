@@ -11,6 +11,12 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
           sendResponse('Service worker response: url handled');
         });
     }
+    if (msg.url === null) {
+      chrome.tabs.create({
+        url: `https://quantumoracle.app`,
+        index: activeTabIndex + 1,
+      });
+    }
   });
   return true;
 });
