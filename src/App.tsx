@@ -22,7 +22,7 @@ const Home: React.FC<{ address: string | undefined; isConnected: boolean }> = me
     const [stampedScreenshot, setStampedScreenshot] = useState<string | null>(null);
     const [requestUrl, setRequestUtl] = useState<string | null>(null);
     const [hashCheckSum, setHashCheckSum] = useState<string | null>(null);
-    const [notorizeTxResult, setNotorizeTxResult] = useState<{
+    const [notarizeTxResult, setNotarizeTxResult] = useState<{
       status: 'confirmed' | 'error';
       gasUsed: BigInt | null;
       error: string | null;
@@ -91,7 +91,7 @@ const Home: React.FC<{ address: string | undefined; isConnected: boolean }> = me
       }
     };
 
-    const notoriseHandler: React.MouseEventHandler<HTMLButtonElement> = async (event) => {
+    const notariseHandler: React.MouseEventHandler<HTMLButtonElement> = async (event) => {
       try {
         const signer = await fetchSigner();
         if (!signer) return;
@@ -105,10 +105,10 @@ const Home: React.FC<{ address: string | undefined; isConnected: boolean }> = me
         const transaction = await contract.submitMint(requestUrl, hashCheckSum);
         const receipt = await transaction.wait();
         const gasUsed = receipt.gasUsed as BigInt;
-        setNotorizeTxResult({ status: 'confirmed', gasUsed, error: null });
+        setNotarizeTxResult({ status: 'confirmed', gasUsed, error: null });
       } catch (error) {
         if (error instanceof Error) {
-          setNotorizeTxResult({ status: 'error', gasUsed: null, error: error.message });
+          setNotarizeTxResult({ status: 'error', gasUsed: null, error: error.message });
         }
         console.error(error);
       }
@@ -243,17 +243,17 @@ const Home: React.FC<{ address: string | undefined; isConnected: boolean }> = me
             }
             <ScreenshotPreview screenshot={stampedScreenshot} />
             <div className={classes.controls}>
-              <button className={classes.notorizeButton} onClick={notoriseHandler}>
-                Notorize
+              <button className={classes.notarizeButton} onClick={notariseHandler}>
+                Notarize
               </button>
-              {!!notorizeTxResult && (
+              {!!notarizeTxResult && (
                 <div className={classes.txStatus}>
-                  <div>Status: {notorizeTxResult?.status}</div>
-                  {!!notorizeTxResult?.gasUsed && (
-                    <div>Gas used: {notorizeTxResult?.gasUsed?.toString()}</div>
+                  <div>Status: {notarizeTxResult?.status}</div>
+                  {!!notarizeTxResult?.gasUsed && (
+                    <div>Gas used: {notarizeTxResult?.gasUsed?.toString()}</div>
                   )}
-                  {!!notorizeTxResult?.error && (
-                    <div className={classes.txError}>Erorr: {notorizeTxResult?.error}</div>
+                  {!!notarizeTxResult?.error && (
+                    <div className={classes.txError}>Erorr: {notarizeTxResult?.error}</div>
                   )}
                 </div>
               )}
