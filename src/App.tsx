@@ -128,6 +128,7 @@ const Home: React.FC<{ address: string | undefined; isConnected: boolean }> = me
             setRequested(true);
           });
       }
+      // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     useEffect(() => {
