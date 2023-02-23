@@ -4,7 +4,7 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
     if (!!msg.url) {
       chrome.tabs
         .create({
-          url: `https://quantumoracle.app?url=${msg.url}`,
+          url: `http://localhost:3000?url=${msg.url}`,
           index: activeTabIndex + 1,
         })
         .then(() => {
