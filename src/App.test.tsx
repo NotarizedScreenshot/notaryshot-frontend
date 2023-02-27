@@ -5,6 +5,20 @@ import nock from 'nock';
 import { act } from 'react-dom/test-utils';
 import App from './App';
 
+jest.mock('@rainbow-me/rainbowkit', () => ({
+  ConnectButton: jest.fn(() => `<div>Conntect</div>`),
+  useConnectModal: () => ({
+    openConnectModal: jest.fn(),
+  }),
+}));
+
+jest.mock('wagmi', () => ({
+  useAccount: () => ({
+    address: '0x0',
+    isConnected: true,
+  }),
+}));
+
 beforeEach(async () => {
   nock.disableNetConnect();
 });
@@ -51,5 +65,4 @@ test('if requested screenshot successfully', async () => {
 
   expect(await screen.findByAltText('screenshot')).toBeInTheDocument();
   expect(await screen.findByText('succeed')).toBeInTheDocument();
-
 });
