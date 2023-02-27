@@ -4,14 +4,17 @@ import { useConnectModal } from '@rainbow-me/rainbowkit';
 import { useAccount } from 'wagmi';
 import { UrlForm, Header, ScreenshotPreview } from 'components';
 import classes from 'App.module.scss';
-import { getPreviewMetadata, convertImageSize, getOffset } from 'utils';
+import { getPreviewMetadata, getStampedImagePreviewDataUrl } from 'utils';
+
+const PREVIEW_IMG_DEFAULT_WIDTH = 500;
+const WATERMARK_URL = 'stamp.png';
 
 function App() {
   const [requesting, setRequesting] = useState<boolean>(false);
   const [requested, setRequested] = useState<boolean>(false);
   const [errors, setErrors] = useState<string[]>([]);
-  const [screenshot, setScreenshot] = useState<string | null>(null);
-  const [stampedScreenshot, setStampedScreenshot] = useState<string | null>(null);
+  const [screenshotUrl, setScreenshotUrl] = useState<string | null>(null);
+  const [stampedScreenshotUrl, setStampedScreenshotUrl] = useState<string | null>(null);
   const [requestUrl, setRequestUtl] = useState<string | null>(null);
 
   const { address, isConnected } = useAccount();
@@ -23,13 +26,12 @@ function App() {
         openConnectModal!();
         return false;
       }
-      console.log('tests');
       if (!address) {
         throw new Error('can not get address');
       }
       setRequesting(true);
       setRequested(false);
-      setScreenshot(null);
+      setScreenshotUrl(null);
       setErrors([]);
       setRequestUtl(url);
       const response = await fetch('/send', {
@@ -56,94 +58,53 @@ function App() {
 
       const blob = await response.blob();
       const objectURL = URL.createObjectURL(blob);
-      setScreenshot(objectURL);
+      setScreenshotUrl(objectURL);
 
       setRequested(true);
       setRequesting(false);
     } catch (error: any) {
       setErrors((prev) => [...prev, error.message]);
     } finally {
-      if (!address) return true;
-      setRequested(true);
-      setRequesting(false);
+      if (!!address) {
+        setRequested(true);
+        setRequesting(false);
+      }
       return true;
     }
   };
 
   useEffect(() => {
-    if (!!screenshot && !!requestUrl) {
+    if (!!screenshotUrl && !!requestUrl) {
       const img = new Image();
-      img.src = screenshot;
-      console.log('img', img.width, img.height, img.sizes);
+      img.src = screenshotUrl;
 
       const stamp = new Image();
-      stamp.src = 'stamp.png';
+      stamp.src = WATERMARK_URL;
 
-      stamp.onload = () =>
-        (img.onload = () => {
-          const canvas = document.createElement('canvas');
-          const maxWidth = 500;
+      const loadImage = (src: string): Promise<HTMLImageElement> =>
+        new Promise((resolve, reject) => {
+          const img = new Image();
+          img.onload = () => resolve(img);
+          img.onerror = () => reject(new Error(`Error on loading image src: ${img.src}`));
+          img.src = src;
+        });
 
-          const imgWidth = img.width;
-          const imgHeight = img.height;
-          const imgRatio = imgWidth / imgHeight;
-
-          const stampWidth = stamp.width;
-          const stampHeight = stamp.height;
-
-          const CANVAS_WIDTH = maxWidth;
-          const CANVAS_HEIGHT = CANVAS_WIDTH / imgRatio;
-
-          canvas.setAttribute('width', String(CANVAS_WIDTH));
-          canvas.setAttribute('height', String(CANVAS_HEIGHT));
-
-          const ctx = canvas.getContext('2d')!;
-
-          ctx.drawImage(img, 0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
-
-          const stampFitCanvasSizes = convertImageSize(
-            stampWidth,
-            stampHeight,
-            CANVAS_WIDTH,
-            CANVAS_HEIGHT,
+      Promise.all([loadImage(screenshotUrl), loadImage(WATERMARK_URL)])
+        .then(([backgroundImage, watermarkImage]) => {
+          setStampedScreenshotUrl(
+            getStampedImagePreviewDataUrl(
+              backgroundImage,
+              watermarkImage,
+              getPreviewMetadata(requestUrl),
+              PREVIEW_IMG_DEFAULT_WIDTH,
+            ),
           );
-
-          const offset = getOffset(
-            CANVAS_WIDTH,
-            CANVAS_HEIGHT,
-            stampFitCanvasSizes.width,
-            stampFitCanvasSizes.height,
-          );
-          ctx.drawImage(
-            stamp,
-            offset.x,
-            offset.y,
-            stampFitCanvasSizes.width,
-            stampFitCanvasSizes.height,
-          );
-
-          ctx.font = '5px monospace';
-          ctx.fillStyle = 'red';
-          const ctxFillTextX = 10;
-          const ctxFillTextY = 5;
-
-          const metaPreview = getPreviewMetadata(requestUrl);
-
-          metaPreview.forEach((string, index) => {
-            const stringWidth = ctx.measureText(string).width;
-            if (stringWidth > 480) {
-              const maxLength = Math.floor(480 / (stringWidth / string.length));
-              ctx.fillText(string.substring(0, maxLength), ctxFillTextX, ctxFillTextY * index);
-              return;
-            }
-            ctx.fillText(string, ctxFillTextX, ctxFillTextY * index);
-          });
-
-          const buf = canvas.toDataURL();
-          setStampedScreenshot(buf);
-        })();
+        })
+        .catch((error) => {
+          setErrors((prev) => [...prev, error.message]);
+        });
     }
-  }, [screenshot, requestUrl]);
+  }, [screenshotUrl, requestUrl]);
 
   return (
     <div className={cn(classes.App, requesting || requested ? classes.requesting : null)}>
@@ -157,7 +118,7 @@ function App() {
       {requesting && <div className={classes.progress}>Requesting...</div>}
       {requested && (
         <div className={classes.results}>
-          <ScreenshotPreview screenshot={screenshot} />
+          <ScreenshotPreview screenshotUrl={screenshotUrl} />
           {
             <div className={cn(classes.status, errors.length > 0 ? classes.failure : null)}>
               <h3 className={classes.h3}>status:</h3>
@@ -172,7 +133,7 @@ function App() {
               )}
             </div>
           }
-          <ScreenshotPreview screenshot={stampedScreenshot} />
+          <ScreenshotPreview screenshotUrl={stampedScreenshotUrl} />
         </div>
       )}
     </div>

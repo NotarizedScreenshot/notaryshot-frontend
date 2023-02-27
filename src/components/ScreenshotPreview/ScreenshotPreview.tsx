@@ -1,13 +1,13 @@
 import { IScreenshotPreviewProps } from './ScreenshotPreviewProps';
 import classes from './ScreenshotPreview.module.scss';
 export const ScreenshotPreview: React.FC<IScreenshotPreviewProps> = ({
-  screenshot,
+  screenshotUrl,
   errors,
 }) => {
   return (
     <div className={classes.container}>
-      {screenshot ? (
-        <img src={screenshot} alt='screenshot'></img>
+      {screenshotUrl ? (
+        <img src={screenshotUrl} alt='screenshot'></img>
       ) : (
         <div className={classes.failure}>
           {!!errors && errors.length > 0
