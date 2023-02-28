@@ -31,7 +31,7 @@ describe('getOffset', () => {
   });
 });
 
-describe('converImageSize', () => {
+describe('convertImageSize', () => {
   test('if canvas vertical', () => {
     const w1 = 1000;
     const h1 = 2000;
