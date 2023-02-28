@@ -1,6 +1,8 @@
 export const getPreviewMetadata = (url: string, ip: string = '0.0.0.0') => {
-  const date = new Date(Date.now()).toString();
 
+  //TODO: to be removed once real metadata obtainalbe
+
+  const date = new Date(Date.now()).toString();
   const headers: { [id: string]: string } = {
     'accept-ch':
       'Sec-CH-UA-Bitness, Sec-CH-UA-Arch, Sec-CH-UA-Full-Version, Sec-CH-UA-Mobile, Sec-CH-UA-Model, Sec-CH-UA-Platform-Version, Sec-CH-UA-Full-Version-List, Sec-CH-UA-Platform, Sec-CH-UA, UA-Bitness, UA-Arch, UA-Full-Version, UA-Mobile, UA-Model, UA-Platform-Version, UA-Platform, UA',
@@ -14,6 +16,7 @@ export const getPreviewMetadata = (url: string, ip: string = '0.0.0.0') => {
     'x-req-id':
       '1676310742355222-10222453901922640994-sas2-0311-sas-l7-balancer-8080-BAL-9322',
   };
+
   // const url = new URL(sourceUrl);
   const host = new URL(url).host;
   const dns = {
@@ -85,7 +88,82 @@ export const getOffset = (
 
   const xDiff = canvasWidth - imageWidth;
   const yDiff = canvasHeight - imageHeight;
-  
 
   return { x: (xDiff / 2) * (1 + offsetXRatio), y: (yDiff / 2) * (1 + offsetYRatio) };
+};
+
+export const getStampedImagePreviewDataUrl = (
+  backgroundImage: HTMLImageElement,
+  watermarkImgae: HTMLImageElement,
+  metadata: string[] = [],
+  canvasWidth: number = 500,
+  metadataOptions: {
+    stringMaxWidth: number;
+    leftPadding: number;
+    lineHeight: number;
+    font: string;
+    color: string;
+  } = {
+    stringMaxWidth: 400,
+    leftPadding: 10,
+    lineHeight: 5,
+    font: '5px monospace',
+    color: 'red',
+  },
+): string => {
+  const canvas = document.createElement('canvas');
+
+  const imgWidth = backgroundImage.width;
+  const imgHeight = backgroundImage.height;
+  const imgRatio = imgWidth / imgHeight;
+
+  const stampWidth = watermarkImgae.width;
+  const stampHeight = watermarkImgae.height;
+
+  const canvasHeight = canvasWidth / imgRatio;
+
+  canvas.setAttribute('width', String(canvasWidth));
+  canvas.setAttribute('height', String(canvasHeight));
+
+  const ctx = canvas.getContext('2d')!;
+
+  ctx.drawImage(backgroundImage, 0, 0, canvasWidth, canvasHeight);
+
+  const stampFitCanvasSizes = convertImageSize(
+    stampWidth,
+    stampHeight,
+    canvasWidth,
+    canvasHeight,
+  );
+
+  const offset = getOffset(
+    canvasWidth,
+    canvasHeight,
+    stampFitCanvasSizes.width,
+    stampFitCanvasSizes.height,
+  );
+  ctx.drawImage(
+    watermarkImgae,
+    offset.x,
+    offset.y,
+    stampFitCanvasSizes.width,
+    stampFitCanvasSizes.height,
+  );
+
+  const { font, color, leftPadding, lineHeight, stringMaxWidth } = metadataOptions;
+
+  ctx.font = font;
+  ctx.fillStyle = color;
+
+  metadata.forEach((string, index) => {
+    const stringWidth = ctx.measureText(string).width;
+    if (stringWidth > stringMaxWidth) {
+      const maxLength = Math.floor(stringMaxWidth / (stringWidth / string.length));
+      ctx.fillText(string.substring(0, maxLength), leftPadding, lineHeight * index);
+      return;
+    }
+    ctx.fillText(string, leftPadding, lineHeight * index);
+  });
+
+  return canvas.toDataURL();
 };
