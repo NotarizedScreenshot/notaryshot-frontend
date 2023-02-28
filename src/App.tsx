@@ -9,10 +9,9 @@ import sha256 from 'crypto-js/sha256';
 import CryptoJS from 'crypto-js';
 import notaryShotContract from 'contracts/screenshot-manager.json';
 import { UrlForm, Header, ScreenshotPreview } from 'components';
-import { getPreviewMetadata, convertImageSize, getOffset } from 'utils';
-import { UrlForm, Header, ScreenshotPreview } from 'components';
+import { getPreviewMetadata, convertImageSize, getOffset, getStampedImagePreviewDataUrl } from 'utils';
 import classes from 'App.module.scss';
-import { getPreviewMetadata, getStampedImagePreviewDataUrl } from 'utils';
+
 
 const PREVIEW_IMG_DEFAULT_WIDTH = 500;
 const WATERMARK_URL = 'stamp.png';
@@ -32,7 +31,6 @@ function App() {
   } | null>(null);
   const [screenshotUrl, setScreenshotUrl] = useState<string | null>(null);
   const [stampedScreenshotUrl, setStampedScreenshotUrl] = useState<string | null>(null);
-  const [requestUrl, setRequestUtl] = useState<string | null>(null);
 
   const { address, isConnected } = useAccount();
   const { openConnectModal } = useConnectModal();
