@@ -19,6 +19,10 @@ jest.mock('wagmi', () => ({
   }),
 }));
 
+jest.mock('@wagmi/core', () => ({
+  fetchSigner: jest.fn()
+}));
+
 beforeEach(async () => {
   nock.disableNetConnect();
 });
