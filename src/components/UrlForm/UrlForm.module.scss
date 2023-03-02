@@ -1,0 +1,172 @@
+.container {
+  position: relative;
+  padding: 2rem;
+  text-align: center;
+
+  .form {
+    background-color: white;
+    position: relative;
+    width: 40rem;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    & > :first-child {
+      margin-bottom: 1rem;
+    }
+  }
+
+  &.inline {
+    .form {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+
+      & > :first-child {
+        margin-bottom: 0rem;
+        margin-right: 1rem;
+      }
+    }
+  }
+
+  .error {
+    max-width: 40rem;
+    word-wrap: break-word;
+    position: absolute;
+    top: 4rem;
+    left: 0;
+    color: red;
+    border: 1px solid red;
+    border-radius: 5px;
+    padding: 0.4rem 0.8rem;
+    background-color: white;
+    overflow: hidden;
+    transition: all 0.4s;
+
+    .arrow {
+      position: absolute;
+      width: 1px;
+      height: 0.5rem;
+      background-color: red;
+      top: -5px;
+      left: 50%;
+    }
+
+    &.hidden {
+      top: 0rem;
+      height: 0;
+      width: 0;
+      border: none;
+      visibility: hidden;
+    }
+  }
+  .inputGroup {
+    position: relative;
+    width: 40rem;
+
+    .clearButton {
+      position: absolute;
+      right: 0.8rem;
+      top: 0.8rem;
+      height: 1.8rem;
+      width: 1.8rem;
+      border: 0;
+      background-color: transparent;
+      z-index: 1000;
+
+      &:disabled,
+      &:disabled:hover,
+      &:disabled::after,
+      &:disabled::before {
+        cursor: not-allowed;
+      }
+
+      &::after,
+      &::before {
+        content: '';
+        display: block;
+        position: absolute;
+        left: 0px;
+        top: 9px;
+        border: 1px solid lightgray;
+        width: 1.8rem;
+        height: 0;
+        cursor: pointer;
+      }
+
+      &::after {
+        transform: rotate(45deg);
+      }
+
+      &::before {
+        transform: rotate(-45deg);
+      }
+
+      &:hover,
+      &:active {
+        &::after,
+        &::before {
+          border-color: black;
+        }
+      }
+    }
+
+    .label {
+      visibility: hidden;
+      display: none;
+    }
+
+    .input {
+      position: relative;
+      z-index: 1000;
+      height: 3.6rem;
+      width: 40rem;
+      border: 1px solid lightgray;
+      border-radius: 5px;
+      padding: 1rem;
+      padding-right: 3rem;
+      outline: 0;
+
+      &.invalid {
+        border-color: red;
+      }
+
+      &::placeholder {
+        transition: all 0.2s;
+      }
+
+      &:focus::placeholder {
+        opacity: 0;
+      }
+    }
+  }
+
+  .controls {
+    .submitButton {
+      background-color: white;
+      border: 1px solid lightgray;
+      border-radius: 5px;
+      padding: 0.8rem 1.5rem;
+      transition: all 0.2s;
+      height: 3.6rem;
+      cursor: pointer;
+
+      &:disabled,
+      &:disabled:hover {
+        cursor: not-allowed;
+        background-color: lightgray;
+        color: gray;
+      }
+
+      &:hover,
+      :active {
+        color: white;
+        background-color: black;
+        border-color: black;
+      }
+    }
+  }
+}
