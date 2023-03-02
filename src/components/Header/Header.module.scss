@@ -1,7 +1,35 @@
 .container {
-  max-width: 100rem;
-  margin: auto;
-  padding: 1rem;
-  display: flex;
-  justify-content: flex-end;
+  background-color: #040416;
+  box-shadow: 0 1px 3px #171723;
+  color: white;
+  width: 100%;
+  position: fixed;
+  z-index: 9000;
+  .content {
+    width: 140rem;
+    height: 6rem;
+    margin: auto;
+    padding: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 2rem;
+
+    .logo {
+      margin: 0 1rem;
+      width: 4rem;
+      img {
+        width: 100%;
+      }
+    }
+
+    .navigation {
+      margin-right: auto;
+    }
+
+    .connect {
+      height: 4rem;
+      font-size: 1.5rem;
+    }
+  }
 }

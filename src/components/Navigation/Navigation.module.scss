@@ -1,0 +1,12 @@
+.container {
+  background-color: #040416;
+  color: white;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+
+  .navElement {
+    padding: 0 2rem;
+    font-weight: 700;
+  }
+}

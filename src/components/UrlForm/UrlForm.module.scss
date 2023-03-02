@@ -1,12 +1,13 @@
 .container {
   position: relative;
-  padding: 2rem;
+  // padding: 2rem;
   text-align: center;
+  background-color: #0d0c27;
 
   .form {
-    background-color: white;
+    // background-color: white;
     position: relative;
-    width: 40rem;
+    // width: 40rem;
     margin: auto;
     display: flex;
     flex-direction: column;
@@ -14,7 +15,7 @@
     align-items: center;
 
     & > :first-child {
-      margin-bottom: 1rem;
+      margin-bottom: 3rem;
     }
   }
 
@@ -27,24 +28,27 @@
 
       & > :first-child {
         margin-bottom: 0rem;
-        margin-right: 1rem;
+        margin-right: 3rem;
       }
     }
   }
 
   .error {
-    max-width: 40rem;
+    // max-width: 40rem;
     word-wrap: break-word;
     position: absolute;
-    top: 4rem;
+    top: 7rem;
     left: 0;
     color: red;
-    border: 1px solid red;
+    // border: 1px solid red;
     border-radius: 5px;
-    padding: 0.4rem 0.8rem;
-    background-color: white;
+    padding: 1.4rem 2rem;
+    // background-color: white;
     overflow: hidden;
     transition: all 0.4s;
+    font-size: 2.5rem;
+    line-height: 2.5rem;
+    font-weight: 700;
 
     .arrow {
       position: absolute;
@@ -65,17 +69,18 @@
   }
   .inputGroup {
     position: relative;
-    width: 40rem;
-
+    flex: 1 1 40rem;
+    // width: 40rem;
     .clearButton {
       position: absolute;
-      right: 0.8rem;
-      top: 0.8rem;
+      right: 2.8rem;
+      top: 1.8rem;
       height: 1.8rem;
       width: 1.8rem;
       border: 0;
       background-color: transparent;
       z-index: 1000;
+      color: #4666ff;
 
       &:disabled,
       &:disabled:hover,
@@ -91,8 +96,8 @@
         position: absolute;
         left: 0px;
         top: 9px;
-        border: 1px solid lightgray;
-        width: 1.8rem;
+        border: 1px solid gray;
+        width: 2.8rem;
         height: 0;
         cursor: pointer;
       }
@@ -109,7 +114,7 @@
       &:active {
         &::after,
         &::before {
-          border-color: black;
+          border-color: #4666ff;
         }
       }
     }
@@ -121,14 +126,19 @@
 
     .input {
       position: relative;
+      background-color: #0d0c27;
       z-index: 1000;
-      height: 3.6rem;
-      width: 40rem;
-      border: 1px solid lightgray;
+      height: 6rem;
+      width: 100%;
+      border: 2px solid #4666ff;
+      color: white;
+      font-size: 2.5rem;
+      line-height: 2.5rem;
       border-radius: 5px;
-      padding: 1rem;
-      padding-right: 3rem;
+      padding: 1rem 2rem;
+      padding-right: 5rem;
       outline: 0;
+      font-family: monospace;
 
       &.invalid {
         border-color: red;
@@ -146,26 +156,33 @@
 
   .controls {
     .submitButton {
-      background-color: white;
-      border: 1px solid lightgray;
+      background-color: #4666ff;
+      border: 2px solid #4666ff;
+
       border-radius: 5px;
-      padding: 0.8rem 1.5rem;
+      padding: 1rem 3.5rem;
       transition: all 0.2s;
-      height: 3.6rem;
+      height: 6rem;
       cursor: pointer;
+      font-family: monospace;
+      text-transform: uppercase;
+      color: white;
+      font-size: 2.5rem;
+      line-height: 2.5rem;
+      font-weight: 700;
 
       &:disabled,
       &:disabled:hover {
         cursor: not-allowed;
-        background-color: lightgray;
+        background-color: darkgray;
         color: gray;
       }
 
       &:hover,
       :active {
         color: white;
-        background-color: black;
-        border-color: black;
+        background-color: #0d0c27;
+        border: 2px solid #4666ff;
       }
     }
   }

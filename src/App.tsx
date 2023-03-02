@@ -20,6 +20,8 @@ function App() {
   const { address, isConnected } = useAccount();
   const { openConnectModal } = useConnectModal();
 
+  
+
   const getScreenShot = async (url: string): Promise<boolean> => {
     try {
       if (!isConnected) {

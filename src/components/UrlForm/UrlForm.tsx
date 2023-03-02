@@ -1,11 +1,13 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import cn from 'classnames';
 import * as yup from 'yup';
 import { IUrlFormProps } from './UrlFormProps';
 import classes from './UrlForm.module.scss';
 
-export const UrlForm: React.FC<IUrlFormProps> = ({ onSubmit, inline }) => {
-  const [urlInputValue, setUrlInputValue] = useState<string>('');
+export const UrlForm: React.FC<IUrlFormProps> = ({ onSubmit, inline, initialInputData }) => {
+  const [urlInputValue, setUrlInputValue] = useState<string>(
+    initialInputData ? initialInputData : '',
+  );
   const [validating, setValidating] = useState<boolean>(false);
   const [isInvalid, setInvalid] = useState<boolean>(false);
   const [error, setError] = useState<string | null>('');
@@ -63,6 +65,10 @@ export const UrlForm: React.FC<IUrlFormProps> = ({ onSubmit, inline }) => {
       });
   };
 
+  useEffect(() => {
+    if (!!initialInputData) setUrlInputValue(initialInputData);
+  }, [initialInputData]);
+
   return (
     <div className={cn(classes.container, inline ? classes.inline : null)} role='form'>
       <form onSubmit={submitHandler} className={classes.form}>
@@ -94,7 +100,7 @@ export const UrlForm: React.FC<IUrlFormProps> = ({ onSubmit, inline }) => {
             className={classes.submitButton}
             disabled={validating || isInvalid || submitting}
           >
-            Submit
+            Check
           </button>
         </div>
         <div className={cn(classes.error, isInvalid ? null : classes.hidden)}>{error}</div>

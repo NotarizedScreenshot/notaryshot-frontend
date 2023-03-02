@@ -4,4 +4,5 @@ export interface IUrlFormProps {
   children?: React.ReactNode;
   onSubmit: (url: string) => Promise<boolean>;
   inline?: boolean;
+  initialInputData?: string | null;
 }
