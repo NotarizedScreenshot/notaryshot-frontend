@@ -20,6 +20,12 @@
       text-transform: lowercase;
     }
 
+    .advise {
+      font-size: 4rem;
+      text-align: center;
+      padding: 2rem;
+    }
+
     .requestForm {
       padding: 2rem 0;
     }
@@ -33,22 +39,39 @@
 
       .getting {
         font-size: 5rem;
-        color: #adbbff;
-        padding-top: 20rem;
-        height: 20vh;
-        opacity: 0.7;
+        color: #adbbff76;
       }
 
       .image {
+        text-align: center;
+        min-height: 50rem;
+
         img {
           width: 100%;
         }
       }
+
+      .empty {
+        border: 10px dashed #adbbff76;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
       .qr {
         justify-self: center;
         width: 30rem;
+        min-height: 30rem;
         overflow: hidden;
         padding: 3rem 0;
+
+        .empty {
+          height: 30rem;
+          font-size: 3rem;
+          color: #adbbff76;
+          text-align: center;
+          padding: 1rem;
+        }
 
         & *:not(:last-child) {
           margin-bottom: 2rem;
@@ -57,10 +80,15 @@
           width: 100%;
           border-radius: 10px;
         }
-        .qrDescription {
+        .qrDescription,
+        .notice {
           padding: 1rem;
           font-size: 1.8rem;
           font-weight: 700;
+        }
+        .notice {
+          color: #adbbff76;
+          text-align: center;
         }
         .notarize {
           .button {
@@ -77,10 +105,13 @@
             transition: all 0.2s;
 
             &:disabled,
-            &:disabled:hover {
+            &:disabled:hover,
+            &:disabled:active {
               cursor: not-allowed;
-              background-color: darkgray;
+              background-color: #adbbff76;
+              border: none;
               color: gray;
+              opacity: 0.6;
             }
 
             &:hover,

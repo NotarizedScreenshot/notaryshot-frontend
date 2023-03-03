@@ -3,7 +3,7 @@ import cn from 'classnames';
 import { IMetadataPreviewProps } from './MetadataPreviewProps';
 import classes from './MetadataPreview.module.scss';
 
-export const MetadataPreview: React.FC<IMetadataPreviewProps> = memo(({ data }) => {
+export const MetadataPreview: React.FC<IMetadataPreviewProps> = memo(({ data, preview }) => {
   const { ip, url, headers, dns } = data;
   const headersKeys = Object.keys(headers);
   const dnsData = dns.data
@@ -24,7 +24,7 @@ export const MetadataPreview: React.FC<IMetadataPreviewProps> = memo(({ data }) 
     }, {});
 
   return (
-    <div className={classes.container}>
+    <div className={cn(classes.container, preview ? classes.preview : null)}>
       <div className={classes.dataBlock}>
         <span className={classes.header}>ip</span>
         <span className={classes.value}>{ip}</span>

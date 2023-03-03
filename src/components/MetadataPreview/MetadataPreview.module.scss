@@ -1,5 +1,6 @@
 .container {
   font-size: 1.8rem;
+  color: white;
 
   .dataBlock {
     padding: 0.5rem 0;
@@ -34,6 +35,16 @@
     .value {
       word-wrap: break-word;
       word-break: break-all;
+    }
+  }
+
+  &.preview {
+    .dataBlock,
+    .dataSubBlock {
+      * {
+        color: #adbbff76;
+        border: none;
+      }
     }
   }
 }

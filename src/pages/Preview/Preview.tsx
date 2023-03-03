@@ -1,17 +1,24 @@
 import { useEffect, useState } from 'react';
 import QRCode from 'qrcode';
 import { Header, UrlForm, MetadataPreview } from 'components';
+import cn from 'classnames';
 import { IPreviewProps } from './PreviewProps';
 import classes from './Preview.module.scss';
 import { fetchMetadataById, fetchPreviewImageByID, submitNotarization } from 'lib/apiClient';
 import { IMetadata } from 'types';
+import { getSampleMetadata } from 'lib';
 
 // import metadata from 'meta-preview.json';
 
 export const Preview: React.FC<IPreviewProps> = () => {
   const [qrUrl, setQrUrl] = useState<string | null>(null);
   const [metadata, setMetadata] = useState<IMetadata | null>(null);
+  const [fetchingMetaData, setFetchingMetadata] = useState<boolean>(false);
+  const [fetchingImageError, setFetchingImageError] = useState<Error | null>(null);
+  const [fetchingMetadataError, setFetchingMetadataError] = useState<Error | null>(null);
+  const [qrCodeError, setQrCodeError] = useState<Error | null>(null);
   const [prviewImageUrl, setPreviewImageUrl] = useState<string | null>(null);
+  const [fetchingPreviewImage, setFetchingPreviewImage] = useState<boolean>(false);
   const [notarizing, setNotarizing] = useState<boolean>(false);
 
   const tweetId = new URLSearchParams(document.location.search).get('tweetid');
@@ -28,16 +35,26 @@ export const Preview: React.FC<IPreviewProps> = () => {
 
   useEffect(() => {
     if (!!tweetId) {
+      setFetchingMetadata(true);
+      setFetchingPreviewImage(true);
       fetchMetadataById(tweetId)
         .then(setMetadata)
         .catch((error) => {
-          console.error('Fetching metadata error:', error); //TODO: add error handler and error component
+          console.error('Fetching metadata error:', error);
+          setFetchingMetadataError(error);
+        })
+        .finally(() => {
+          setFetchingMetadata(false);
         });
 
       fetchPreviewImageByID(tweetId)
         .then(setPreviewImageUrl)
         .catch((error) => {
-          console.error('Fetching previewIamge error:', error); //TODO: add error handler and error component
+          console.error('Fetching previewIamge error:', error);
+          setFetchingImageError(error);
+        })
+        .finally(() => {
+          setFetchingPreviewImage(false);
         });
     }
   }, [tweetId]);
@@ -45,7 +62,12 @@ export const Preview: React.FC<IPreviewProps> = () => {
   useEffect(() => {
     if (!!metadata) {
       //TODO: add qr code info compiler
-      QRCode.toDataURL(`https://twitter.com/twitter/status/${tweetId}`).then(setQrUrl);
+      QRCode.toDataURL(`https://twitter.com/twitter/status/${tweetId}`)
+        .then(setQrUrl)
+        .catch((error) => {
+          console.log('qr error', error);
+          setQrCodeError(error);
+        });
     }
   }, [metadata, tweetId]);
 
@@ -57,36 +79,69 @@ export const Preview: React.FC<IPreviewProps> = () => {
         <div className={classes.requestForm}>
           <UrlForm onSubmit={async (str: string) => true} inline initialInputData={tweetId} />
         </div>
+        {!tweetId && (
+          <div className={classes.advise}>Enter a tweet id to start notarizing!</div>
+        )}
+        {(!!fetchingMetadataError || !!fetchingImageError || !!qrCodeError) && (
+          <div className={classes.advise}>
+            Something goes wrong. Please try another tweet id or come back a little bit later.
+          </div>
+        )}
         <div className={classes.preview}>
-          <div className={classes.image}>
-            {prviewImageUrl ? (
+          <div className={cn(classes.image, !prviewImageUrl ? classes.empty : null)}>
+            {!tweetId && <div className={classes.getting}>Screenshot preview</div>}
+            {tweetId && prviewImageUrl ? (
               <img src={prviewImageUrl} alt='screenshot' />
             ) : (
-              <div className={classes.getting}>Getting preview...</div>
+              <div className={classes.getting}>
+                {fetchingPreviewImage ? 'Getting preview...' : fetchingImageError?.message}
+              </div>
             )}
           </div>
           <div className={classes.qr}>
-            {prviewImageUrl && qrUrl && (
+            {!tweetId && (
               <>
-                <img className={classes.qrImage} src={qrUrl} alt='meat qr' />
-                <div className={classes.qrDescription}>Scan to get your metadata</div>
-                <div className={classes.notarize}>
-                  <button
-                    className={classes.button}
-                    disabled={notarizing}
-                    onClick={notarizeHandler}
-                  >
-                    Notarize!
-                  </button>
-                </div>
+                <div className={classes.empty}>QR code</div>
+                <div className={classes.notice}>Here will be your QR</div>
               </>
             )}
+            {tweetId && (!prviewImageUrl || !metadata) && (
+              <>
+                <div className={classes.empty}>
+                  {fetchingImageError || fetchingMetadataError
+                    ? 'Unable to build QR'
+                    : 'Building QR code...'}
+                </div>
+                <div className={classes.notice}>Here will be your QR</div>
+              </>
+            )}
+
+            {tweetId && prviewImageUrl && qrUrl && (
+              <>
+                <img className={classes.qrImage} src={qrUrl} alt='meta qr' />
+                {tweetId && (
+                  <div className={classes.qrDescription}>Scan to get your metadata</div>
+                )}
+              </>
+            )}
+            <div className={classes.notarize}>
+              <button
+                className={classes.button}
+                disabled={
+                  !tweetId || !prviewImageUrl || notarizing || !prviewImageUrl || !metadata
+                }
+                onClick={notarizeHandler}
+              >
+                Notarize!
+              </button>
+            </div>
           </div>
           <div className={classes.meta}>
-            {metadata ? (
-              <MetadataPreview data={metadata} />
-            ) : (
-              <div className={classes.getting}>Getting metadata...</div>
+            {!tweetId && <MetadataPreview data={getSampleMetadata()} preview={!tweetId} />}
+            {tweetId && metadata && <MetadataPreview data={metadata} preview={!tweetId} />}
+            {fetchingMetaData && <div className={classes.getting}>Fetching metadata...</div>}
+            {fetchingMetadataError && (
+              <div className={classes.getting}>Failed to fetch meta</div>
             )}
           </div>
         </div>
