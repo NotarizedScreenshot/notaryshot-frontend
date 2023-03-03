@@ -30,14 +30,12 @@
   },
   "proxy": "http://localhost:9000",
   "scripts": {
-
     "start": "GENERATE_SOURCEMAP=false react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "ext:dev": "BABEL_ENV=development webpack --watch --progress --config ./config/webpack.extConfig.js",
     "ext:build": "BABEL_ENV=production webpack --config ./config/webpack.extConfig.js"
-
   },
   "eslintConfig": {
     "extends": [
@@ -58,6 +56,9 @@
     ]
   },
   "devDependencies": {
-    "@types/crypto-js": "^4.1.1"
+    "@types/crypto-js": "^4.1.1",
+    "clean-webpack-plugin": "^4.0.0",
+    "webpack-cli": "^5.0.1",
+    "copy-webpack-plugin": "^11.0.0"
   }
 }
