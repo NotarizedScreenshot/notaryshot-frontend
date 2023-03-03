@@ -164,3 +164,11 @@ export const getStampedImagePreviewDataUrl = (
 
   return canvas.toDataURL();
 };
+
+export const validateBigInt = (data: string): Promise<boolean> =>
+  new Promise((resovle, reject) => {
+    if (data.length === 0) reject(new Error('should not be empty'));
+    if (!/^\d+$/.test(data)) reject(new Error('should contain only digits'));
+    if (BigInt(data) > BigInt(2 ** 64 - 1)) reject(new Error('should be a valid 64-bit UInt'));
+    resovle(true);
+  });

@@ -3,15 +3,18 @@ import { metadataStub1 } from '__fixtures__/metadata';
 
 export const fetchMetadataById = async (tweetId: string): Promise<IMetadata> => {
   //TODO: add metadata fetcher
-  return new Promise((res) => {
-    setTimeout(() => res(metadataStub1), 2000);
+  // console.log('run fetch');
+  return new Promise((res, rej) => {
+    setTimeout(() => rej(new Error('Failed to fetch metadata')), 3000);
+    setTimeout(() => res(metadataStub1), 1000);
   });
 };
 
 export const fetchPreviewImageByID = async (tweetId: string): Promise<string> => {
   //TODO: add preview image fetcher
-  return new Promise((res) => {
-    setTimeout(() => res('screenshot-sample-1.png'), 1000);
+  return new Promise((res, rej) => {
+    // setTimeout(() => rej(new Error('Failed to fetch image')), 1500);
+    setTimeout(() => res('screenshot-sample-1.png'), 500);
   });
 };
 

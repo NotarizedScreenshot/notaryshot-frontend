@@ -1,14 +1,15 @@
 import { useEffect, useState } from 'react';
 import QRCode from 'qrcode';
-import { Header, UrlForm, MetadataPreview } from 'components';
+import { Header, MetadataPreview, TwitterIdForm } from 'components';
 import cn from 'classnames';
 import { IPreviewProps } from './PreviewProps';
 import classes from './Preview.module.scss';
 import { fetchMetadataById, fetchPreviewImageByID, submitNotarization } from 'lib/apiClient';
 import { IMetadata } from 'types';
 import { getSampleMetadata } from 'lib';
-
-// import metadata from 'meta-preview.json';
+import { validateBigInt } from 'utils';
+import { useAccount } from 'wagmi';
+import { useConnectModal } from '@rainbow-me/rainbowkit';
 
 export const Preview: React.FC<IPreviewProps> = () => {
   const [qrUrl, setQrUrl] = useState<string | null>(null);
@@ -20,8 +21,12 @@ export const Preview: React.FC<IPreviewProps> = () => {
   const [prviewImageUrl, setPreviewImageUrl] = useState<string | null>(null);
   const [fetchingPreviewImage, setFetchingPreviewImage] = useState<boolean>(false);
   const [notarizing, setNotarizing] = useState<boolean>(false);
+  const [tweetId, setTweetId] = useState<string | null>(
+    new URLSearchParams(document.location.search).get('tweetid'),
+  );
 
-  const tweetId = new URLSearchParams(document.location.search).get('tweetid');
+  const { isConnected } = useAccount();
+  const { openConnectModal } = useConnectModal();
 
   const notarizeHandler = () => {
     if (!!tweetId) {
@@ -31,6 +36,11 @@ export const Preview: React.FC<IPreviewProps> = () => {
         setNotarizing(false);
       });
     }
+  };
+
+  const submitCheckHandler = async (value: string): Promise<boolean> => {
+    isConnected ? setTweetId(value) : openConnectModal!();
+    return true;
   };
 
   useEffect(() => {
@@ -77,7 +87,12 @@ export const Preview: React.FC<IPreviewProps> = () => {
       <div className={classes.content}>
         <h1 className={classes.h1}>Quantum oracle</h1>
         <div className={classes.requestForm}>
-          <UrlForm onSubmit={async (str: string) => true} inline initialInputData={tweetId} />
+          <TwitterIdForm
+            onSubmit={submitCheckHandler}
+            inline
+            initialInputData={tweetId}
+            validate={validateBigInt}
+          />
         </div>
         {!tweetId && (
           <div className={classes.advise}>Enter a tweet id to start notarizing!</div>

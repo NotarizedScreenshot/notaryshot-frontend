@@ -1,6 +1,22 @@
 import { expect, test, describe } from '@jest/globals';
-import { convertImageSize, getOffset } from 'utils';
+import { convertImageSize, getOffset, validateBigInt } from 'utils';
 import stamps from '__fixtures__/stamps';
+
+describe('validateBigin', () => {
+  test('get error if invalid', async () => {
+    await expect(validateBigInt('')).rejects.toEqual(new Error('should not be empty'));
+    await expect(validateBigInt('1234asdfsaf')).rejects.toEqual(
+      new Error('should contain only digits'),
+    );
+    await expect(validateBigInt('9631031262847836161199')).rejects.toEqual(
+      new Error('should be a valid 64-bit UInt'),
+    );
+  });
+  test('if valid', async () => {
+    expect(await validateBigInt('16310312628478361611')).toBe(true);
+    expect(await validateBigInt('1631653001248268289')).toBe(true);
+  });
+});
 
 describe('getOffset', () => {
   test('if throw when image bigger than canvas', () => {
@@ -42,7 +58,7 @@ describe('converImageSize', () => {
     expect(sqResult1.width).toBeGreaterThan(0);
     expect(sqResult1.height).toBeLessThanOrEqual(h1);
     expect(sqResult1.width).toBe(w1);
-    expect(sqResult1.height / sqResult1.width).toBe(1); 
+    expect(sqResult1.height / sqResult1.width).toBe(1);
 
     const sqResult2 = convertImageSize(squareStamp2.width, squareStamp2.height, w1, h1);
     expect(sqResult2.height).toBeGreaterThan(0);
