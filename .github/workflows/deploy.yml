@@ -51,7 +51,7 @@ jobs:
           path: build
           key: ${{github.run_id}}-build
       - name: LS
-        run: ls /home/link/github_actions/build
+        run: pwd; ls -l
       - name: rsync over ssh
         run: rsync -r ${{ github.workspace }}/build/ link@quantumoracle.app:/home/link/github_actions/build/build/ && rsync -r ${{ github.workspace }}/public/ link@quantumoracle.app:/home/link/github_actions/build/public/
       - name: copy to /var/www/html
