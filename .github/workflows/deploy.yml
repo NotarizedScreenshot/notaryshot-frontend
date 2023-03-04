@@ -4,7 +4,7 @@ on:
   push:
     branches: '*'
   pull_request:
-    branches: [ main, 86-actions-deploy ]
+    branches: [ main ]
 
 jobs:
   build:
@@ -30,7 +30,7 @@ jobs:
 
   deploy:
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/86-actions-deploy'
+    if: github.ref == 'refs/heads/main'
     needs: build
     steps:
       - uses: actions/checkout@v3
