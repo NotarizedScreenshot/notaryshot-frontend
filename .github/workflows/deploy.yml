@@ -21,13 +21,9 @@ jobs:
         run: yarn test
       - name: Build
         run: yarn build
-      - name: LS
-        run: ls ./
-      - name: PWD
-        run: pwd
-      - name: Cache Production Build
-        id: cache-build
-        uses: actions/cache@v3
+      - name: Save Build Cache
+        id: cache-build-save
+        uses: actions/cache/save@v3
         with:
           path: build
           key: ${{github.run_id}}-build
@@ -44,14 +40,12 @@ jobs:
           key: ${{ secrets.FRONTEND_DEPLOY_SSH_PRIVATE_KEY }}
           name: id_rsa
           known_hosts: ${{ secrets.KNOWN_HOSTS }}
-      - name: Cache Dist
-        id: cache-build
-        uses: actions/cache@v3
+      - name: Restore Build Cache
+        id: cache-build-restore
+        uses: actions/cache/restore@v3
         with:
           path: build
           key: ${{github.run_id}}-build
-      - name: LS
-        run: pwd; ls -l
       - name: rsync over ssh
         run: rsync -r ${{ github.workspace }}/build/ link@quantumoracle.app:/home/link/github_actions/build/build/ && rsync -r ${{ github.workspace }}/public/ link@quantumoracle.app:/home/link/github_actions/build/public/
       - name: copy to /var/www/html
