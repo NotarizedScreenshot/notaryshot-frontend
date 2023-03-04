@@ -21,12 +21,14 @@ jobs:
         run: yarn test
       - name: Build
         run: yarn build
-      - name: Cache Dist
-        id: cache-dist
+        run: ls ./
+        run: pwd
+      - name: Cache Production Build
+        id: cache-build
         uses: actions/cache@v3
         with:
-          path: dist
-          key: ${{github.run_id}}-dist
+          path: build
+          key: ${{github.run_id}}-build
 
   deploy:
     runs-on: ubuntu-latest
@@ -41,12 +43,13 @@ jobs:
           name: id_rsa
           known_hosts: ${{ secrets.KNOWN_HOSTS }}
       - name: Cache Dist
-        id: cache-dist
+        id: cache-build
         uses: actions/cache@v3
         with:
-          path: dist
-          key: ${{github.run_id}}-dist
+          path: build
+          key: ${{github.run_id}}-build
       - name: rsync over ssh
-        run: rsync -r ${{ github.workspace }}/dist/ link@quantumoracle.app:/home/link/github_actions/build/dist/ && rsync -r ${{ github.workspace }}/public/ link@quantumoracle.app:/home/link/github_actions/build/public/
+        run: ls /home/link/github_actions/build
+        run: rsync -r ${{ github.workspace }}/build/ link@quantumoracle.app:/home/link/github_actions/build/build/ && rsync -r ${{ github.workspace }}/public/ link@quantumoracle.app:/home/link/github_actions/build/public/
       - name: copy to /var/www/html
         run: ssh link@quantumoracle.app "~/github_actions/deploy_frontend.sh"
