@@ -34,7 +34,7 @@ jobs:
 
   deploy:
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main'
+    if: github.ref == 'refs/heads/86-actions-deploy'
     needs: build
     steps:
       - uses: actions/checkout@v3
