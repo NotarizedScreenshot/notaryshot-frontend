@@ -1,0 +1,12 @@
+.btn-test {
+  position: absolute;
+  right: 2px;
+  bottom: 2px;
+  background-color: #5f3dc4;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
