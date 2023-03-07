@@ -7,7 +7,7 @@ export const Header: React.FC<IHeaderProps> = () => {
     <div className={classes.container}>
       <div className={classes.content}>
         <div className={classes.logo}>
-          <img alt='logo' src='logo192.png' />
+          <img alt='logo' src='/logo192.png' />
         </div>
         <div className={classes.navigation}>
           <Navigation />

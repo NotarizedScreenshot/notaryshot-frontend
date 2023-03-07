@@ -1,17 +1,23 @@
-import { useEffect, useState } from 'react';
+/* eslint-disable no-restricted-globals */
+import { memo, useEffect, useState } from 'react';
 import QRCode from 'qrcode';
-import { Header, MetadataPreview, TwitterIdForm } from 'components';
+import { Header, MetadataPreview, TweetDetailsPreview, TwitterIdForm } from 'components';
 import cn from 'classnames';
 import { IPreviewProps } from './PreviewProps';
 import classes from './Preview.module.scss';
-import { fetchMetadataById, fetchPreviewImageByID, submitNotarization } from 'lib/apiClient';
-import { IMetadata } from 'types';
+import { submitNotarization, fetchPreviewDataByTweetId } from 'lib/apiClient';
+import { IMetadata, ITweetData } from 'types';
 import { getSampleMetadata } from 'lib';
 import { validateBigInt } from 'utils';
 import { useAccount } from 'wagmi';
 import { useConnectModal } from '@rainbow-me/rainbowkit';
+import { createBrowserHistory } from 'history';
 
-export const Preview: React.FC<IPreviewProps> = () => {
+import encHex from 'crypto-js/enc-hex';
+import sha256 from 'crypto-js/sha256';
+import CryptoJS from 'crypto-js';
+
+export const PreviewComponent: React.FC<IPreviewProps> = memo(({ isConnected }) => {
   const [qrUrl, setQrUrl] = useState<string | null>(null);
   const [metadata, setMetadata] = useState<IMetadata | null>(null);
   const [fetchingMetaData, setFetchingMetadata] = useState<boolean>(false);
@@ -24,8 +30,17 @@ export const Preview: React.FC<IPreviewProps> = () => {
   const [tweetId, setTweetId] = useState<string | null>(
     new URLSearchParams(document.location.search).get('tweetid'),
   );
+  const [tweetData, setTweetData] = useState<ITweetData | null>(null);
 
-  const { isConnected } = useAccount();
+  const [previewImageHash, setPreviewImageHash] = useState<string | null>(null);
+
+  //TODO: add creating hashes
+  const dnsHash = '0x4fb2eb368ada78c4c8f4f25839ec6a0c5c4b47eb9c70a87860783122c949c201';
+  const headersHash = '0x4fb2eb368ada78c4c8f4f25839ec6a0c5c4b47eb9c70a87860783122c949c202';
+  const tweetStatsHash = '0x4fb2eb368ada78c4c8f4f25839ec6a0c5c4b47eb9c70a87860783122c949c202';
+  const tweetUserInfoHash = '0x4fb2eb368ada78c4c8f4f25839ec6a0c5c4b47eb9c70a87860783122c949c202';
+  const tweetBodyDetailsHash = '0x4fb2eb368ada78c4c8f4f25839ec6a0c5c4b47eb9c70a87860783122c949c202';
+
   const { openConnectModal } = useConnectModal();
 
   const notarizeHandler = () => {
@@ -40,6 +55,8 @@ export const Preview: React.FC<IPreviewProps> = () => {
 
   const submitCheckHandler = async (value: string): Promise<boolean> => {
     isConnected ? setTweetId(value) : openConnectModal!();
+    const history = createBrowserHistory();
+    history.replace(`/preview?tweetid=${value}`);
     return true;
   };
 
@@ -47,31 +64,43 @@ export const Preview: React.FC<IPreviewProps> = () => {
     if (!!tweetId) {
       setFetchingMetadata(true);
       setFetchingPreviewImage(true);
-      fetchMetadataById(tweetId)
-        .then(setMetadata)
-        .catch((error) => {
-          console.error('Fetching metadata error:', error);
-          setFetchingMetadataError(error);
-        })
-        .finally(() => {
-          setFetchingMetadata(false);
-        });
+      setPreviewImageUrl(null);
+      setMetadata(null);
+      setPreviewImageHash(null);
+      fetchPreviewDataByTweetId(tweetId)
+        .then((data) => {
+          if (!data) {
+            setFetchingImageError(new Error('failed to fetch image'));
+            setFetchingMetadataError(new Error('failed to fetch metadata'));
+            return;
+          }
+          const { imageBlob, metaData, tweetData } = data;
 
-      fetchPreviewImageByID(tweetId)
-        .then(setPreviewImageUrl)
-        .catch((error) => {
-          console.error('Fetching previewIamge error:', error);
-          setFetchingImageError(error);
+          const objectURL = URL.createObjectURL(imageBlob);
+          imageBlob
+            .arrayBuffer()
+            .then((buffer) => {
+              // @ts-ignore
+              const hash = '0x' + encHex.stringify(sha256(CryptoJS.lib.WordArray.create(buffer)));
+              setPreviewImageHash(hash);
+            })
+            .catch((error) => {
+              console.error(error);
+            });
+
+          setPreviewImageUrl(objectURL!);
+          setMetadata(metaData);
+          setTweetData(tweetData);
         })
         .finally(() => {
           setFetchingPreviewImage(false);
+          setFetchingMetadata(false);
         });
     }
   }, [tweetId]);
 
   useEffect(() => {
     if (!!metadata) {
-      //TODO: add qr code info compiler
       QRCode.toDataURL(`https://twitter.com/twitter/status/${tweetId}`)
         .then(setQrUrl)
         .catch((error) => {
@@ -94,9 +123,7 @@ export const Preview: React.FC<IPreviewProps> = () => {
             validate={validateBigInt}
           />
         </div>
-        {!tweetId && (
-          <div className={classes.advise}>Enter a tweet id to start notarizing!</div>
-        )}
+        {!tweetId && <div className={classes.advise}>Enter a tweet id to start notarizing!</div>}
         {(!!fetchingMetadataError || !!fetchingImageError || !!qrCodeError) && (
           <div className={classes.advise}>
             Something goes wrong. Please try another tweet id or come back a little bit later.
@@ -106,13 +133,17 @@ export const Preview: React.FC<IPreviewProps> = () => {
           <div className={cn(classes.image, !prviewImageUrl ? classes.empty : null)}>
             {!tweetId && <div className={classes.getting}>Screenshot preview</div>}
             {tweetId && prviewImageUrl ? (
-              <img src={prviewImageUrl} alt='screenshot' />
+              <>
+                <img src={prviewImageUrl} alt='screenshot' />
+              </>
             ) : (
               <div className={classes.getting}>
                 {fetchingPreviewImage ? 'Getting preview...' : fetchingImageError?.message}
               </div>
             )}
+            {previewImageHash && <div className={classes.hash}>hashSum: {previewImageHash}</div>}
           </div>
+
           <div className={classes.qr}>
             {!tweetId && (
               <>
@@ -134,17 +165,13 @@ export const Preview: React.FC<IPreviewProps> = () => {
             {tweetId && prviewImageUrl && qrUrl && (
               <>
                 <img className={classes.qrImage} src={qrUrl} alt='meta qr' />
-                {tweetId && (
-                  <div className={classes.qrDescription}>Scan to get your metadata</div>
-                )}
+                {tweetId && <div className={classes.qrDescription}>Scan to get your metadata</div>}
               </>
             )}
             <div className={classes.notarize}>
               <button
                 className={classes.button}
-                disabled={
-                  !tweetId || !prviewImageUrl || notarizing || !prviewImageUrl || !metadata
-                }
+                disabled={!tweetId || !prviewImageUrl || notarizing || !prviewImageUrl || !metadata}
                 onClick={notarizeHandler}
               >
                 Notarize!
@@ -152,15 +179,36 @@ export const Preview: React.FC<IPreviewProps> = () => {
             </div>
           </div>
           <div className={classes.meta}>
-            {!tweetId && <MetadataPreview data={getSampleMetadata()} preview={!tweetId} />}
-            {tweetId && metadata && <MetadataPreview data={metadata} preview={!tweetId} />}
-            {fetchingMetaData && <div className={classes.getting}>Fetching metadata...</div>}
-            {fetchingMetadataError && (
-              <div className={classes.getting}>Failed to fetch meta</div>
+            {!fetchingMetaData && tweetData && (
+              <TweetDetailsPreview
+                tweetData={tweetData}
+                tweetStatsHash={tweetStatsHash}
+                tweetUserInfoHash={tweetUserInfoHash}
+                tweetBodyDetailsHash={tweetBodyDetailsHash}
+              />
             )}
+            {!fetchingMetaData && !tweetData && (
+              <div className={classes.getting}>Failed to fetch tweet data</div>
+            )}
+            {!tweetId && <MetadataPreview data={getSampleMetadata()} preview={!tweetId} />}
+            {tweetId && metadata && (
+              <MetadataPreview
+                data={metadata}
+                preview={!tweetId}
+                dnsHash={dnsHash}
+                headersHash={headersHash}
+              />
+            )}
+            {fetchingMetaData && <div className={classes.getting}>Fetching metadata...</div>}
+            {fetchingMetadataError && <div className={classes.getting}>Failed to fetch meta</div>}
           </div>
         </div>
       </div>
     </div>
   );
+});
+
+export const Preview = () => {
+  const { isConnected, address } = useAccount();
+  return <PreviewComponent isConnected={isConnected} address={address} />;
 };

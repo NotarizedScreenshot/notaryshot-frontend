@@ -1,7 +1,6 @@
 .container {
   position: relative;
   text-align: center;
-  background-color: #0d0c27;
 
   .form {
     position: relative;
@@ -22,6 +21,7 @@
       flex-direction: row;
       justify-content: center;
       align-items: center;
+      width: 65rem;
 
       & > :first-child {
         margin-bottom: 0rem;
@@ -54,7 +54,7 @@
     }
 
     &.hidden {
-      top: 0rem;
+      top: 4rem;
       height: 0;
       width: 0;
       border: none;
@@ -120,7 +120,7 @@
 
     .input {
       position: relative;
-      background-color: #0d0c27;
+      background-color: transparent;
       z-index: 1000;
       height: 6rem;
       width: 100%;

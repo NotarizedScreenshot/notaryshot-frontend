@@ -8,8 +8,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
 import '@rainbow-me/rainbowkit/styles.css';
 import './index.css';
-import App from './App';
-import { Preview } from 'pages';
+import { Preview, Home } from 'pages';
 
 const { chains, provider } = configureChains([polygon], [publicProvider()]);
 
@@ -27,7 +26,7 @@ const wagmiClient = createClient({
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <App />,
+    element: <Home />,
   },
   {
     path: 'preview/',

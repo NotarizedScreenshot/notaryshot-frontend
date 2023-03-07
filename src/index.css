@@ -5,11 +5,13 @@
 }
 
 html {
+  background-color: #0d0c27;
   box-sizing: border-box;
   font-size: 62.5%;
 }
 
 body {
+  background-color: #0d0c27;
   margin: 0;
   font-family: sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -17,6 +19,12 @@ body {
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+}
+
+a:link,
+a:active,
+a:visited {
+  color: white;
+  text-decoration: none;
 }

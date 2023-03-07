@@ -1,21 +1,63 @@
-import { IMetadata } from 'types';
-import { metadataStub1 } from '__fixtures__/metadata';
+import { IMetadata, ITweetData } from 'types';
 
-export const fetchMetadataById = async (tweetId: string): Promise<IMetadata> => {
-  //TODO: add metadata fetcher
-  // console.log('run fetch');
-  return new Promise((res, rej) => {
-    setTimeout(() => rej(new Error('Failed to fetch metadata')), 3000);
-    setTimeout(() => res(metadataStub1), 1000);
-  });
+export const fetchMetadataById = async (tweetId: string): Promise<IMetadata | null> => {
+  try {
+    const response = await fetch(`/metaData?tweetId=${tweetId}`);
+    if (!response.ok) {
+      throw new Error('Error when fetching tweet data');
+    }
+    return await response.json();
+  } catch (error) {
+    console.error('fetchTweetDatabyId error', error);
+    return null;
+  }
 };
 
-export const fetchPreviewImageByID = async (tweetId: string): Promise<string> => {
-  //TODO: add preview image fetcher
-  return new Promise((res, rej) => {
-    // setTimeout(() => rej(new Error('Failed to fetch image')), 1500);
-    setTimeout(() => res('screenshot-sample-1.png'), 500);
-  });
+export const fetchTweetDatabyId = async (tweetId: string): Promise<ITweetData | null> => {
+  try {
+    const response = await fetch(`/tweetData?tweetId=${tweetId}`);
+    if (!response.ok) {
+      throw new Error('Error when fetching tweet data');
+    }
+    return await response.json();
+  } catch (error) {
+    console.error('fetchTweetDatabyId error', error);
+    return null;
+  }
+};
+
+export const fetchPreviewImageByID = async (tweetId: string): Promise<Blob | null> => {
+  try {
+    const response = await fetch('/send', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ tweetId }),
+    });
+    if (!response.ok) {
+      throw new Error('Error when fetching image');
+    }
+    const blob = await response.blob();
+    return blob;
+  } catch (error) {
+    console.log('fetching error image', error);
+    return null;
+  }
+};
+
+export const fetchPreviewDataByTweetId = async (tweetId: string) => {
+  try {
+    const imageBlob = await fetchPreviewImageByID(tweetId);
+    if (!imageBlob) {
+      return null;
+    }
+    const metaData = await fetchMetadataById(tweetId);
+    const tweetData = await fetchTweetDatabyId(tweetId);
+
+    return { imageBlob, metaData, tweetData };
+  } catch (error) {
+    console.error('fetchPreviewData error', error);
+    return null;
+  }
 };
 
 export const submitNotarization = async (tweetId: string) => {

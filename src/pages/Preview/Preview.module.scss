@@ -1,19 +1,26 @@
 .container {
-  background-color: aquamarine;
   position: relative;
   background-color: #0d0c27;
 
   font-family: monospace;
+  color: white;
 
   .content {
     position: relative;
     background-color: #0d0c27;
 
-    color: white;
     margin: auto;
     max-width: 140rem;
     min-height: 100vh;
     padding: 8rem 2rem 2rem;
+    .hash {
+      padding: 1rem 0;
+      font-size: 1.8rem;
+      line-height: 1.8rem;
+      display: inline-block;
+      color: yellow;
+      font-weight: 700;
+    }
 
     .h1 {
       font-size: 3rem;
@@ -31,6 +38,7 @@
     }
 
     .preview {
+      position: relative;
       display: grid;
       padding: 3rem;
       grid-template-columns: 65% 30%;
@@ -40,11 +48,19 @@
       .getting {
         font-size: 5rem;
         color: #adbbff76;
+        padding: 2rem 0;
       }
 
       .image {
+        position: relative;
         text-align: center;
         min-height: 50rem;
+
+        .hash {
+          position: absolute;
+          bottom: -3rem;
+          left: 0;
+        }
 
         img {
           width: 100%;
