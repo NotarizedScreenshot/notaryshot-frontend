@@ -1,5 +1,5 @@
 export interface IScreenshotPreviewProps {
   children?: React.ReactNode;
-  screenshotUrl: string | null;
+  screenshot: string | null; 
   errors?: any[];
 }

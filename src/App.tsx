@@ -1,24 +1,39 @@
-import { useEffect, useState } from 'react';
+import { memo, useEffect, useState } from 'react';
 import cn from 'classnames';
 import { useConnectModal } from '@rainbow-me/rainbowkit';
 import { useAccount } from 'wagmi';
+import { Contract } from 'ethers';
+import { fetchSigner } from '@wagmi/core';
+import encHex from 'crypto-js/enc-hex';
+import sha256 from 'crypto-js/sha256';
+import CryptoJS from 'crypto-js';
+import notaryShotContract from 'contracts/screenshot-manager.json';
 import { UrlForm, Header, ScreenshotPreview } from 'components';
+import {
+  getPreviewMetadata,
+  getStampedImagePreviewDataUrl,
+} from 'utils';
 import classes from 'App.module.scss';
-import { getPreviewMetadata, getStampedImagePreviewDataUrl } from 'utils';
 
 const PREVIEW_IMG_DEFAULT_WIDTH = 500;
 const WATERMARK_URL = 'stamp.png';
 
-function App() {
-  const [requesting, setRequesting] = useState<boolean>(false);
-  const [requested, setRequested] = useState<boolean>(false);
-  const [errors, setErrors] = useState<string[]>([]);
-  const [screenshotUrl, setScreenshotUrl] = useState<string | null>(null);
-  const [stampedScreenshotUrl, setStampedScreenshotUrl] = useState<string | null>(null);
-  const [requestUrl, setRequestUtl] = useState<string | null>(null);
+const Home: React.FC<{ address: string | undefined; isConnected: boolean }> = memo(
+  ({ address, isConnected }) => {
+    const [requesting, setRequesting] = useState<boolean>(false);
+    const [requested, setRequested] = useState<boolean>(false);
+    const [errors, setErrors] = useState<string[]>([]);
+    const [requestUrl, setRequestUtl] = useState<string | null>(null);
+    const [hashCheckSum, setHashCheckSum] = useState<string | null>(null);
+    const [notorizeTxResult, setNotorizeTxResult] = useState<{
+      status: 'confirmed' | 'error';
+      gasUsed: BigInt | null;
+      error: string | null;
+    } | null>(null);
+    const [screenshotUrl, setScreenshotUrl] = useState<string | null>(null);
+    const [stampedScreenshotUrl, setStampedScreenshotUrl] = useState<string | null>(null);
 
-  const { address, isConnected } = useAccount();
-  const { openConnectModal } = useConnectModal();
+    const { openConnectModal } = useConnectModal();
 
   
 
@@ -42,104 +57,154 @@ function App() {
         body: JSON.stringify({ url }),
       });
 
-      if (!response.ok) {
-        try {
-          if (response.status === 404) {
-            setErrors((prev) => [...prev, 'can not find server']);
+        if (!response.ok) {
+          try {
+            if (response.status === 404) {
+              setErrors((prev) => [...prev, 'can not find server']);
+            }
+            const data = await response.json();
+            setErrors((prev) => [...prev, data.error]);
+          } catch (error: any) {
+            if (response.status === 500) {
+              setErrors((prev) => [...prev, 'Internal Server Error']);
+            }
+            setErrors((prev) => [...prev, error.message]);
           }
-          const data = await response.json();
-          setErrors((prev) => [...prev, data.error]);
-        } catch (error: any) {
-          if (response.status === 500) {
-            setErrors((prev) => [...prev, 'Internal Server Error']);
-          }
-          setErrors((prev) => [...prev, error.message]);
+          return true;
+        }
+
+        const blob = await response.blob();
+        const buffer = await blob.arrayBuffer();
+        // @ts-ignore
+        const hash = '0x' + encHex.stringify(sha256(CryptoJS.lib.WordArray.create(buffer)));
+        setHashCheckSum(hash);
+
+        const objectURL = URL.createObjectURL(blob);
+        setScreenshotUrl(objectURL);
+
+        setRequested(true);
+        setRequesting(false);
+      } catch (error: any) {
+        setErrors((prev) => [...prev, error.message]);
+      } finally {
+        if (!!address) {
+          setRequested(true);
+          setRequesting(false);
         }
         return true;
       }
+    };
 
-      const blob = await response.blob();
-      const objectURL = URL.createObjectURL(blob);
-      setScreenshotUrl(objectURL);
+    const notoriseHandler: React.MouseEventHandler<HTMLButtonElement> = async (event) => {
+      try {
+        const signer = await fetchSigner();
+        if (!signer) return;
 
-      setRequested(true);
-      setRequesting(false);
-    } catch (error: any) {
-      setErrors((prev) => [...prev, error.message]);
-    } finally {
-      if (!!address) {
-        setRequested(true);
-        setRequesting(false);
+        const contract = new Contract(
+          notaryShotContract.address,
+          notaryShotContract.abi,
+          signer,
+        );
+
+        const transaction = await contract.submitMint(requestUrl, hashCheckSum);
+        const receipt = await transaction.wait();
+        const gasUsed = receipt.gasUsed as BigInt;
+        setNotorizeTxResult({ status: 'confirmed', gasUsed, error: null });
+      } catch (error) {
+        if (error instanceof Error) {
+          setNotorizeTxResult({ status: 'error', gasUsed: null, error: error.message });
+        }
+        console.error(error);
       }
-      return true;
-    }
-  };
+    };
 
-  useEffect(() => {
-    if (!!screenshotUrl && !!requestUrl) {
-      const img = new Image();
-      img.src = screenshotUrl;
+    useEffect(() => {
+      if (!!screenshotUrl && !!requestUrl) {
+        const img = new Image();
+        img.src = screenshotUrl;
 
-      const stamp = new Image();
-      stamp.src = WATERMARK_URL;
+        const stamp = new Image();
+        stamp.src = WATERMARK_URL;
 
-      const loadImage = (src: string): Promise<HTMLImageElement> =>
-        new Promise((resolve, reject) => {
-          const img = new Image();
-          img.onload = () => resolve(img);
-          img.onerror = () => reject(new Error(`Error on loading image src: ${img.src}`));
-          img.src = src;
-        });
+        const loadImage = (src: string): Promise<HTMLImageElement> =>
+          new Promise((resolve, reject) => {
+            const img = new Image();
+            img.onload = () => resolve(img);
+            img.onerror = () => reject(new Error(`Error on loading image src: ${img.src}`));
+            img.src = src;
+          });
 
-      Promise.all([loadImage(screenshotUrl), loadImage(WATERMARK_URL)])
-        .then(([backgroundImage, watermarkImage]) => {
-          setStampedScreenshotUrl(
-            getStampedImagePreviewDataUrl(
-              backgroundImage,
-              watermarkImage,
-              getPreviewMetadata(requestUrl),
-              PREVIEW_IMG_DEFAULT_WIDTH,
-            ),
-          );
-        })
-        .catch((error) => {
-          setErrors((prev) => [...prev, error.message]);
-        });
-    }
-  }, [screenshotUrl, requestUrl]);
+        Promise.all([loadImage(screenshotUrl), loadImage(WATERMARK_URL)])
+          .then(([backgroundImage, watermarkImage]) => {
+            setStampedScreenshotUrl(
+              getStampedImagePreviewDataUrl(
+                backgroundImage,
+                watermarkImage,
+                getPreviewMetadata(requestUrl),
+                PREVIEW_IMG_DEFAULT_WIDTH,
+              ),
+            );
+          })
+          .catch((error) => {
+            setErrors((prev) => [...prev, error.message]);
+          });
+      }
+    }, [screenshotUrl, requestUrl]);
 
-  return (
-    <div className={cn(classes.App, requesting || requested ? classes.requesting : null)}>
-      <Header />
-      <h1 className={classes.h1} hidden={requesting || requested}>
-        Welcome to Quantum Oracle
-      </h1>
-      <div className={classes.urlForm}>
-        <UrlForm onSubmit={getScreenShot} inline={requested || requesting} />
-      </div>
-      {requesting && <div className={classes.progress}>Requesting...</div>}
-      {requested && (
-        <div className={classes.results}>
-          <ScreenshotPreview screenshotUrl={screenshotUrl} />
-          {
-            <div className={cn(classes.status, errors.length > 0 ? classes.failure : null)}>
-              <h3 className={classes.h3}>status:</h3>
-              {errors.length > 0 ? (
-                errors.map((error, index) => (
-                  <div key={error + index} className={classes.errorMessage}>
-                    {'error: ' + error}
-                  </div>
-                ))
-              ) : (
-                <div className={classes.succeed}>succeed</div>
+    return (
+      <div className={cn(classes.App, requesting || requested ? classes.requesting : null)}>
+        <Header />
+        <h1 className={classes.h1} hidden={requesting || requested}>
+          Welcome to Quantum Oracle
+        </h1>
+        <div className={classes.urlForm}>
+          <UrlForm onSubmit={getScreenShot} inline={requested || requesting} />
+        </div>
+        {requesting && <div className={classes.progress}>Requesting...</div>}
+        {requested && (
+          <div className={classes.results}>
+            <ScreenshotPreview screenshot={screenshotUrl} />
+            {
+              <div className={cn(classes.status, errors.length > 0 ? classes.failure : null)}>
+                <h3 className={classes.h3}>status:</h3>
+                {errors.length > 0 ? (
+                  errors.map((error, index) => (
+                    <div key={error + index} className={classes.errorMessage}>
+                      {'error: ' + error}
+                    </div>
+                  ))
+                ) : (
+                  <div className={classes.succeed}>succeed</div>
+                )}
+              </div>
+            }
+            <ScreenshotPreview screenshot={stampedScreenshotUrl} />
+            <div className={classes.controls}>
+              <button className={classes.notorizeButton} onClick={notoriseHandler}>
+                Notorize
+              </button>
+              {!!notorizeTxResult && (
+                <div className={classes.txStatus}>
+                  <div>Status: {notorizeTxResult?.status}</div>
+                  {!!notorizeTxResult?.gasUsed && (
+                    <div>Gas used: {notorizeTxResult?.gasUsed?.toString()}</div>
+                  )}
+                  {!!notorizeTxResult?.error && (
+                    <div className={classes.txError}>Erorr: {notorizeTxResult?.error}</div>
+                  )}
+                </div>
               )}
             </div>
-          }
-          <ScreenshotPreview screenshotUrl={stampedScreenshotUrl} />
-        </div>
-      )}
-    </div>
-  );
+          </div>
+        )}
+      </div>
+    );
+  },
+);
+
+function App() {
+  const { address, isConnected } = useAccount();
+  return <Home address={address} isConnected={isConnected} />;
 }
 
 export default App;

@@ -1,7 +1,8 @@
 export const getPreviewMetadata = (url: string, ip: string = '0.0.0.0') => {
-  //TODO: to be removed once real metadata obtainalbe
-  const date = new Date(Date.now()).toString();
 
+  //TODO: to be removed once real metadata obtainalbe
+
+  const date = new Date(Date.now()).toString();
   const headers: { [id: string]: string } = {
     'accept-ch':
       'Sec-CH-UA-Bitness, Sec-CH-UA-Arch, Sec-CH-UA-Full-Version, Sec-CH-UA-Mobile, Sec-CH-UA-Model, Sec-CH-UA-Platform-Version, Sec-CH-UA-Full-Version-List, Sec-CH-UA-Platform, Sec-CH-UA, UA-Bitness, UA-Arch, UA-Full-Version, UA-Mobile, UA-Model, UA-Platform-Version, UA-Platform, UA',
@@ -15,6 +16,8 @@ export const getPreviewMetadata = (url: string, ip: string = '0.0.0.0') => {
     'x-req-id':
       '1676310742355222-10222453901922640994-sas2-0311-sas-l7-balancer-8080-BAL-9322',
   };
+
+  // const url = new URL(sourceUrl);
   const host = new URL(url).host;
   const dns = {
     host,
