@@ -1,19 +1,21 @@
+const ENDPOINT_HOST = 'https://quantumoracle.app';
+
 chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
   chrome.tabs.query({ active: true }).then((tabs) => {
     const activeTabIndex = tabs[0].index ?? 0;
-    if (!!msg.url) {
+    if (!!msg.tweetId) {
       chrome.tabs
         .create({
-          url: `https://quantumoracle.app?url=${msg.url}`,
+          url: `${ENDPOINT_HOST}/preview?tweetid=${msg.tweetId}`,
           index: activeTabIndex + 1,
         })
         .then(() => {
           sendResponse('Service worker response: url handled');
         });
     }
-    if (msg.url === null) {
+    if (msg.tweetId === null) {
       chrome.tabs.create({
-        url: `https://quantumoracle.app`,
+        url: `${ENDPOINT_HOST}`,
         index: activeTabIndex + 1,
       });
     }

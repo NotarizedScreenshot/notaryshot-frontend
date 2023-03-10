@@ -1,7 +1,8 @@
 import './content.css';
 
-const buttonHandler = (url: string) => () => {
-  chrome.runtime.sendMessage({ url }, (response) => {
+const buttonHandler = (url: string) => () => {  
+  const tweetId = new URL(url).pathname.split('/').at(-1);  
+  chrome.runtime.sendMessage({ tweetId }, (response) => {
     console.log('button handler sendMessage response: ', response);
   });
 };
