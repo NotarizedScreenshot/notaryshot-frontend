@@ -4,7 +4,7 @@ import { IHeaderProps } from './HeaderProps';
 import classes from './Header.module.scss';
 export const Header: React.FC<IHeaderProps> = () => {
   return (
-    <div className={classes.container}>
+    <div className={classes.container} data-testid='header'>
       <div className={classes.content}>
         <div className={classes.logo}>
           <img alt='logo' src='/logo192.png' />

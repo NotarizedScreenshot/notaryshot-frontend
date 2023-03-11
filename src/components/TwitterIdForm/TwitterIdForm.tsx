@@ -68,15 +68,15 @@ export const TwitterIdForm: React.FC<ITwitterIdFormProps> = ({
     <div className={cn(classes.container, inline ? classes.inline : null)} role='form'>
       <form onSubmit={submitHandler} className={classes.form}>
         <div className={classes.inputGroup}>
-          <label className={classes.label} htmlFor='url' hidden={true}>
+          <label className={classes.label} htmlFor='tweetid' hidden={true}>
             URL
           </label>
           <input
             ref={inputRef}
             className={cn(classes.input, isInvalid ? classes.invalid : null)}
-            name='url'
+            name='tweetid'
             autoComplete='off'
-            placeholder='URL'
+            placeholder='tweet id'
             value={urlInputValue}
             onChange={changeInputHandler}
           ></input>
