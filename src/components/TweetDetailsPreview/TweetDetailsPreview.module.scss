@@ -65,11 +65,18 @@
         }
       }
       .image {
+        padding: 1rem 0;
+        display: flex;
         max-width: 250px;
         min-height: 50px;
 
         img {
-          width: 100%;
+          width: 320px;
+          margin-right: 1rem;
+        }
+
+        video {
+          width: 320px;
         }
       }
     }

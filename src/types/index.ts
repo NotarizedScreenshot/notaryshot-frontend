@@ -18,7 +18,7 @@ export interface ITweetBody {
   urls: string[] | null;
   hashtags: string[] | null;
   symbols: string[] | null;
-  media: string[] | null;
+  media: { type: 'photo' | 'video'; src: string; thumb: string }[] | null;
   user_mentions: string[] | null;
 }
 

@@ -5,7 +5,6 @@ import { number } from 'yup';
 import { ITweetBody, ITweetUser, ITweetDetails } from 'types';
 
 const renderBodyElements = (key: keyof ITweetBody, body: ITweetBody) => {
-
   const bodyCardKeys = body.card ? (Object.keys(body.card) as [keyof typeof body.card]) : [];
   return (
     <div className={classes.dataSubBlock} key={key + String(number)}>
@@ -13,13 +12,29 @@ const renderBodyElements = (key: keyof ITweetBody, body: ITweetBody) => {
       <div className={classes.value}>
         {key === 'media' &&
           (!!body[key] && body[key]!.length > 0 ? (
-            body[key]?.map((url: string, index: number) => {
+            body[key]?.map((mediaEl, index: number) => {
               return (
-                <Fragment key={url + String(index)}>
-                  <div className={classes.link}>{url}</div>
-                  <div className={classes.image}>
-                    <img src={url} alt={key} />
-                  </div>
+                <Fragment key={mediaEl.src + String(index)}>
+                  {mediaEl.type === 'photo' && (
+                    <>
+                      <div className={classes.link}>{mediaEl.src}</div>
+                      <div className={classes.image}>
+                        <img src={mediaEl.src} alt={key} />
+                      </div>
+                    </>
+                  )}
+                  {mediaEl.type === 'video' && (
+                    <>
+                      <div className={classes.link}>{mediaEl.src}</div>
+                      <div className={classes.image}>
+                        <img src={mediaEl.thumb} alt={key} />
+                        <video controls>
+                          <source src={mediaEl.src} type='video/mp4' />
+                          Your browser does not support the video tag.
+                        </video>
+                      </div>
+                    </>
+                  )}
                 </Fragment>
               );
             })
