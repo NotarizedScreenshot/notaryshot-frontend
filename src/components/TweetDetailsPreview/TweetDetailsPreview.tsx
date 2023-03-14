@@ -3,16 +3,16 @@ import classes from './TweetDetailsPreview.module.scss';
 import { Fragment } from 'react';
 import { number } from 'yup';
 import { ITweetBody, ITweetUser, ITweetDetails } from 'types';
+import { isTweetBodyElementEmpty } from 'utils';
 
 const renderBodyElements = (key: keyof ITweetBody, body: ITweetBody) => {
-
   const bodyCardKeys = body.card ? (Object.keys(body.card) as [keyof typeof body.card]) : [];
   return (
     <div className={classes.dataSubBlock} key={key + String(number)}>
       <div className={classes.header}>{key}</div>
       <div className={classes.value}>
         {key === 'media' &&
-          (!!body[key] && body[key]!.length > 0 ? (
+          (!isTweetBodyElementEmpty(key, body) ? (
             body[key]?.map((url: string, index: number) => {
               return (
                 <Fragment key={url + String(index)}>
@@ -27,13 +27,13 @@ const renderBodyElements = (key: keyof ITweetBody, body: ITweetBody) => {
             <div className={classes.unavailable}>unavailable</div>
           ))}
         {key === 'full_text' &&
-          (!!body[key] ? (
+          (!isTweetBodyElementEmpty(key, body) ? (
             <div className={classes.value}>{body[key]}</div>
           ) : (
             <div className={classes.unavailable}>unavailable</div>
           ))}
         {key === 'urls' &&
-          (!!body[key] && body[key]!.length > 0 ? (
+          (!isTweetBodyElementEmpty(key, body) ? (
             body[key]?.map((data: string, index: number) => {
               return (
                 <div className={classes.link} key={data + String(index)}>
@@ -45,7 +45,7 @@ const renderBodyElements = (key: keyof ITweetBody, body: ITweetBody) => {
             <div className={classes.unavailable}>unavailable</div>
           ))}
         {(key === 'user_mentions' || key === 'hashtags' || key === 'symbols') &&
-          (!!body[key] && body[key]!.length > 0 ? (
+          (!isTweetBodyElementEmpty(key, body) ? (
             body[key]?.map((data: string, index: number) => {
               return (
                 <div className={classes.link} key={data + String(index)}>

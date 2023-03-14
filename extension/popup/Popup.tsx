@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import ReactDOM from 'react-dom/client';
 import * as yup from 'yup';
 import './popup.css';
-import { validateBigInt } from '../../src/utils';
+import { isValidBigInt, validateBigInt } from '../../src/utils';
 
 const Popup: React.FC = () => {
   const [inputValue, setInputValue] = useState<string>('');
@@ -73,24 +73,24 @@ const Popup: React.FC = () => {
 
   useEffect(() => {
     chrome.tabs.query({ active: true, lastFocusedWindow: true }, (tabs) => {
-      const url = new URL(tabs[0].url!);
+      if (!tabs[0].url) {
+        console.log('can not get url from tab: ', tabs);
+        return;
+      }
+      const url = new URL(tabs[0].url);
       const host = url.host;
       const currentPath = url.pathname;
-      const urlTweetId = currentPath.split('/').at(-1) ?? '';
 
       if (host !== 'twitter.com' || !currentPath.includes('status')) {
         setTweetId(null);
+        console.log('not a single tweet url');
         return;
       }
-      validateBigInt(urlTweetId)
-        .then(() => {
-          setTweetId(urlTweetId);
-        })
-        .catch(() => {
-          setTweetId(null);
-        });
+      
+      const urlTweetId = currentPath.split('/').at(-1) ?? '';
+      setTweetId(isValidBigInt(urlTweetId) ? urlTweetId : null);
     });
-  }, []);
+  });
 
   return (
     <div className='container'>

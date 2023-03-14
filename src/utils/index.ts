@@ -1,5 +1,6 @@
-export const getPreviewMetadata = (url: string, ip: string = '0.0.0.0') => {
+import { ITweetBody } from 'types';
 
+export const getPreviewMetadata = (url: string, ip: string = '0.0.0.0') => {
   //TODO: to be removed once real metadata obtainalbe
 
   const date = new Date(Date.now()).toString();
@@ -13,8 +14,7 @@ export const getPreviewMetadata = (url: string, ip: string = '0.0.0.0') => {
     nel: '{"report_to": "network-errors", "max_age": 100, "success_fraction": 0.001, "failure_fraction": 0.1}',
     p3p: 'policyref="/w3c/p3p.xml", CP="NON DSP ADM DEV PSD IVDo OUR IND STP PHY PRE NAV UNI"',
     'x-content-type-options': 'nosniff',
-    'x-req-id':
-      '1676310742355222-10222453901922640994-sas2-0311-sas-l7-balancer-8080-BAL-9322',
+    'x-req-id': '1676310742355222-10222453901922640994-sas2-0311-sas-l7-balancer-8080-BAL-9322',
   };
 
   // const url = new URL(sourceUrl);
@@ -44,9 +44,7 @@ export const getPreviewMetadata = (url: string, ip: string = '0.0.0.0') => {
     ],
   };
 
-  const headersStrings = Object.keys(headers).map(
-    (title: string) => `${title} ${headers[title]}`,
-  );
+  const headersStrings = Object.keys(headers).map((title: string) => `${title} ${headers[title]}`);
   return [...headersStrings, ip, url, dns.host, ...dns.data];
 };
 
@@ -74,17 +72,12 @@ export const getOffset = (
   offsetXRatio: number = 0,
   offsetYRatio: number = 0,
 ): { x: number; y: number } => {
-  if (imageWidth > canvasWidth || imageHeight > canvasHeight)
-    throw new Error('image bigger that canvas');
+  if (imageWidth > canvasWidth || imageHeight > canvasHeight) throw new Error('image bigger that canvas');
 
-  if (
-    (imageWidth === canvasWidth && offsetXRatio !== 0) ||
-    (imageHeight === canvasHeight && offsetYRatio !== 0)
-  )
+  if ((imageWidth === canvasWidth && offsetXRatio !== 0) || (imageHeight === canvasHeight && offsetYRatio !== 0))
     throw new Error('cannot offset if equal sizes');
 
-  if (Math.abs(offsetXRatio) > 1 || Math.abs(offsetYRatio) > 1)
-    throw new Error('offsetRaion more than 1');
+  if (Math.abs(offsetXRatio) > 1 || Math.abs(offsetYRatio) > 1) throw new Error('offsetRaion more than 1');
 
   const xDiff = canvasWidth - imageWidth;
   const yDiff = canvasHeight - imageHeight;
@@ -129,26 +122,10 @@ export const getStampedImagePreviewDataUrl = (
 
   ctx.drawImage(backgroundImage, 0, 0, canvasWidth, canvasHeight);
 
-  const stampFitCanvasSizes = convertImageSize(
-    stampWidth,
-    stampHeight,
-    canvasWidth,
-    canvasHeight,
-  );
+  const stampFitCanvasSizes = convertImageSize(stampWidth, stampHeight, canvasWidth, canvasHeight);
 
-  const offset = getOffset(
-    canvasWidth,
-    canvasHeight,
-    stampFitCanvasSizes.width,
-    stampFitCanvasSizes.height,
-  );
-  ctx.drawImage(
-    watermarkImgae,
-    offset.x,
-    offset.y,
-    stampFitCanvasSizes.width,
-    stampFitCanvasSizes.height,
-  );
+  const offset = getOffset(canvasWidth, canvasHeight, stampFitCanvasSizes.width, stampFitCanvasSizes.height);
+  ctx.drawImage(watermarkImgae, offset.x, offset.y, stampFitCanvasSizes.width, stampFitCanvasSizes.height);
 
   const { font, color, leftPadding, lineHeight, stringMaxWidth } = metadataOptions;
 
@@ -175,3 +152,13 @@ export const validateBigInt = (data: string): Promise<boolean> =>
     if (BigInt(data) > BigInt(2 ** 64 - 1)) reject(new Error('should be a valid 64-bit UInt'));
     resovle(true);
   });
+
+export const isValidBigInt = (data: string) => {
+  if (data.length === 0) return false;
+  if (!/^\d+$/.test(data)) return false;
+  if (BigInt(data) > BigInt(2 ** 64 - 1)) return false;
+  return true;
+};
+
+export const isTweetBodyElementEmpty = (key: keyof ITweetBody, body: ITweetBody): boolean =>
+  key === 'card' ? false : !body[key] || body[key]!.length === 0;
