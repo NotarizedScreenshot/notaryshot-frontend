@@ -1,10 +1,13 @@
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import cn from 'classnames';
-import * as yup from 'yup';
-import { IUrlFormProps } from './UrlFormProps';
-import classes from './UrlForm.module.scss';
-
-export const UrlForm: React.FC<IUrlFormProps> = ({ onSubmit, inline, initialInputData }) => {
+import { ITwitterIdFormProps } from './TwitterIdFormProps';
+import classes from './TwitterIdForm.module.scss';
+export const TwitterIdForm: React.FC<ITwitterIdFormProps> = ({
+  onSubmit,
+  inline,
+  initialInputData,
+  validate,
+}) => {
   const [urlInputValue, setUrlInputValue] = useState<string>(
     initialInputData ? initialInputData : '',
   );
@@ -13,11 +16,7 @@ export const UrlForm: React.FC<IUrlFormProps> = ({ onSubmit, inline, initialInpu
   const [error, setError] = useState<string | null>('');
   const [dirtry, setDirty] = useState<boolean>(false);
   const [submitting, setSubmitting] = useState<boolean>(false);
-
   const inputRef = useRef<HTMLInputElement>(null);
-
-  const urlValidationSchema = { url: yup.string().required().url() };
-  const validate = (url: string) => yup.object().shape(urlValidationSchema).validate({ url });
 
   const clearHandler: React.MouseEventHandler<HTMLButtonElement> = () => {
     setDirty(false);
@@ -37,7 +36,7 @@ export const UrlForm: React.FC<IUrlFormProps> = ({ onSubmit, inline, initialInpu
           setError(null);
           setValidating(false);
         })
-        .catch((error: yup.ValidationError) => {
+        .catch((error: Error) => {
           setInvalid(true);
           setError(error.message);
         });
@@ -58,30 +57,26 @@ export const UrlForm: React.FC<IUrlFormProps> = ({ onSubmit, inline, initialInpu
           setSubmitting(!bool);
         });
       })
-      .catch((error: yup.ValidationError) => {
+      .catch((error: Error) => {
         setInvalid(true);
         setError(error.message);
         inputRef.current?.focus();
       });
   };
 
-  useEffect(() => {
-    if (!!initialInputData) setUrlInputValue(initialInputData);
-  }, [initialInputData]);
-
   return (
     <div className={cn(classes.container, inline ? classes.inline : null)} role='form'>
       <form onSubmit={submitHandler} className={classes.form}>
         <div className={classes.inputGroup}>
-          <label className={classes.label} htmlFor='url' hidden={true}>
+          <label className={classes.label} htmlFor='tweetid' hidden={true}>
             URL
           </label>
           <input
             ref={inputRef}
             className={cn(classes.input, isInvalid ? classes.invalid : null)}
-            name='url'
+            name='tweetid'
             autoComplete='off'
-            placeholder='URL'
+            placeholder='tweet id'
             value={urlInputValue}
             onChange={changeInputHandler}
           ></input>

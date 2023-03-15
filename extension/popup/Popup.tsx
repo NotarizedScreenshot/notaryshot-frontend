@@ -1,20 +1,21 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import ReactDOM from 'react-dom/client';
 import * as yup from 'yup';
 import './popup.css';
+import { isValidBigInt, validateBigInt } from '../../src/utils';
 
 const Popup: React.FC = () => {
-  const [urlInputValue, setUrlInputValue] = useState<string>('');
+  const [inputValue, setInputValue] = useState<string>('');
   const [validating, setValidating] = useState<boolean>(false);
   const [isInvalid, setInvalid] = useState<boolean>(false);
   const [error, setError] = useState<string | null>('');
   const [dirtry, setDirty] = useState<boolean>(false);
   const [submitting, setSubmitting] = useState<boolean>(false);
+  const [tweetId, setTweetId] = useState<string | null>(null);
 
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const urlValidationSchema = { url: yup.string().required().url() };
-  const validate = (url: string) => yup.object().shape(urlValidationSchema).validate({ url });
+  const validate = validateBigInt;
 
   const buttonHandler = () => {
     chrome.runtime.sendMessage({ url: null }, (response) => {
@@ -26,14 +27,14 @@ const Popup: React.FC = () => {
     event.preventDefault();
 
     chrome.tabs.query({ active: true, lastFocusedWindow: true }, (tabs) => {
-      chrome.runtime.sendMessage({ url: tabs[0].url }, (response) => {
+      chrome.runtime.sendMessage({ tweetId }, (response) => {
         console.log('button handler sendMessage response: ', response);
       });
     });
   };
 
   const changeInputHandler: React.ChangeEventHandler<HTMLInputElement> = (event) => {
-    setUrlInputValue(event.currentTarget.value);
+    setInputValue(event.currentTarget.value);
     if (dirtry) {
       validate(event.currentTarget.value)
         .then((data) => {
@@ -52,13 +53,13 @@ const Popup: React.FC = () => {
     event.preventDefault();
     setDirty(true);
     setValidating(true);
-    validate(urlInputValue)
+    validate(inputValue)
       .then(() => {
         setValidating(false);
         setInvalid(false);
         setSubmitting(true);
 
-        chrome.runtime.sendMessage({ url: urlInputValue }, (response) => {
+        chrome.runtime.sendMessage({ tweetId: inputValue }, (response) => {
           console.log('button handler sendMessage response: ', response);
           setSubmitting(false);
         });
@@ -70,6 +71,27 @@ const Popup: React.FC = () => {
       });
   };
 
+  useEffect(() => {
+    chrome.tabs.query({ active: true, lastFocusedWindow: true }, (tabs) => {
+      if (!tabs[0].url) {
+        console.log('can not get url from tab: ', tabs);
+        return;
+      }
+      const url = new URL(tabs[0].url);
+      const host = url.host;
+      const currentPath = url.pathname;
+
+      if (host !== 'twitter.com' || !currentPath.includes('status')) {
+        setTweetId(null);
+        console.log('not a single tweet url');
+        return;
+      }
+      
+      const urlTweetId = currentPath.split('/').at(-1) ?? '';
+      setTweetId(isValidBigInt(urlTweetId) ? urlTweetId : null);
+    });
+  });
+
   return (
     <div className='container'>
       <div className='background'></div>
@@ -77,19 +99,31 @@ const Popup: React.FC = () => {
         <img src='icon-header.png' alt='icon' className='icon-container__icon' />
       </div>
       <h1 className='h1'>Save your evidence</h1>
-      <div className='send-url-container'>
-        <h3 className='h3'>Submit a url of a resource you want to be saved forever:</h3>
-        <form className='send-url-container_form' onSubmit={submitHandler}>
-          <label htmlFor='url' hidden={true}>
-            URL
+      <div className='send-tweetid-container'>
+        <h3 className='h3'>
+          {tweetId
+            ? 'Press button to notarize current tweet'
+            : 'Please follow up to a tweet page to notarize the tweet'}
+        </h3>
+        <div>
+          <button onClick={notarizeHandler} className='btn-notarize' disabled={!tweetId}>
+            Notarize current tweet
+          </button>
+        </div>
+      </div>
+      <div className='send-tweetid-container'>
+        <h3 className='h3'>Or submit an id of a tweet you want to be saved forever:</h3>
+        <form className='send-tweetid-container_form' onSubmit={submitHandler}>
+          <label htmlFor='tweet-id' hidden={true}>
+            Tweet Id
           </label>
           <input
-            className='send-url-container_input'
+            className='send-tweetid-container_input'
             ref={inputRef}
-            name='url'
+            name='tweet-id'
             autoComplete='off'
-            placeholder='url'
-            value={urlInputValue}
+            placeholder='tweet id'
+            value={inputValue}
             onChange={changeInputHandler}
           ></input>
           <button
@@ -100,18 +134,10 @@ const Popup: React.FC = () => {
           >
             Submit
           </button>
-          <div className='send-url-container_error' hidden={!isInvalid}>
+          <div className='send-tweetid-container_error' hidden={!isInvalid}>
             {error}
           </div>
         </form>
-      </div>
-      <div className='send-url-container'>
-        <h3 className='h3'>Press button to notarize current page</h3>
-        <div>
-          <button onClick={notarizeHandler} className='btn-notarize'>
-            Notarize current page
-          </button>
-        </div>
       </div>
     </div>
   );

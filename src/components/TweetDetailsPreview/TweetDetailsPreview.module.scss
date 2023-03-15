@@ -1,0 +1,77 @@
+.container {
+  font-size: 1.8rem;
+  line-height: 1.8rem;
+  color: white;
+
+  .hash {
+    padding: 0 1rem;
+    font-size: 1.8rem;
+    line-height: 1.8rem;
+    display: inline-block;
+    color: yellow;
+    font-weight: 700;
+  }
+
+  .dataBlock {
+    padding: 0.5rem 0;
+    margin-bottom: 1.5rem;
+    .header {
+      color: #ff6565;
+      display: inline-block;
+      width: 35rem;
+      font-weight: 780;
+    }
+  }
+
+  .unavailable {
+    color: orange;
+  }
+
+  .dataSubBlock {
+    display: flex;
+
+    .header {
+      color: #65ff8e;
+      padding: 1rem 0;
+      font-weight: 780;
+      margin-right: 1rem;
+      flex: 0 0 35rem;
+      padding: 0.5rem 0;
+    }
+    &.headers {
+      display: flex;
+
+      .header {
+        flex: 0 0 35rem;
+        border: none;
+        padding: 0.5rem 0;
+      }
+    }
+
+    .value {
+      word-wrap: break-word;
+      word-break: break-all;
+      padding: 1rem 0;
+      .link {
+        margin-bottom: 1rem;
+
+        a {
+          color: white;
+          &:link,
+          &:visited,
+          &:active {
+            color: white;
+          }
+        }
+      }
+      .image {
+        max-width: 250px;
+        min-height: 50px;
+
+        img {
+          width: 100%;
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,62 @@
+.container {
+  font-size: 1.8rem;
+  color: white;
+
+  .header {
+    color: #ff6565;
+    display: inline-block;
+    width: 35rem;
+    font-weight: 780;
+    margin-right: 1rem;
+    margin-bottom: 1.5rem;
+  }
+  .hash {
+    font-size: 1.8rem;
+    line-height: 1.8rem;
+    display: inline-block;
+    color: yellow;
+    font-weight: 700;
+  }
+
+  .dataBlock {
+    padding: 0.5rem 0;
+    margin-bottom: 1.5rem;
+    .value {
+      display: inline-block;
+    }
+  }
+
+  .dataSubBlock {
+    .header {
+      color: #65ff8e;
+      border-bottom: 1px solid #65ff8e6c;
+      padding: 1rem 0;
+      width: 100%;
+      font-weight: 780;
+      margin-right: 1rem;
+    }
+    &.headers {
+      display: flex;
+
+      .header {
+        flex: 0 0 35rem;
+        border: none;
+        padding: 0.5rem 0;
+      }
+    }
+
+    .value {
+      word-wrap: break-word;
+      word-break: break-all;
+    }
+  }
+
+  &.preview {
+    *,
+    .dataBlock > *,
+    .dataSubBlock > * {
+      color: #adbbff76;
+      border: none;
+    }
+  }
+}

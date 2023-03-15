@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Chivo+Mono:wght@400;700&display=swap');
+
 * {
   padding: 0;
   margin: 0;
@@ -9,21 +11,25 @@ html {
   font-size: 62.5%;
 }
 body {
-  font-family: sans-serif;
+  font-family: 'Chivo Mono', monospace;
   color: #f8f9fa;
   width: 350px;
   padding: 10px 20px 20px;
   background-color: #0d0c27;
+  min-height: 370px;
 }
 
 .h1 {
-  font-size: 2.5rem;
+  font-size: 2.2rem;
   font-weight: 700;
   margin: 2rem 0;
 }
 
 .h3 {
   font-size: 1.5rem;
+  line-height: 2rem;
+  letter-spacing: 1px;
+  font-weight: 400;
   margin: 1.5rem 0;
 }
 
@@ -71,14 +77,20 @@ body {
   padding: 1rem 2rem;
   border: none;
   border-radius: 5px;
+  font-family: 'Chivo Mono', monospace;
   font-weight: 500;
   font-size: 1.6rem;
+  letter-spacing: 1px;
   cursor: pointer;
   transition: all 0.2s;
+  width: 100%;
 }
 
 .btn-notarize:disabled {
   background-color: darkgray;
+  background-color: transparent;
+  border: 1px solid darkgray;
+  color: grey;
   cursor: not-allowed;
   transform: scale(1) !important;
 }
@@ -88,37 +100,39 @@ body {
   transform: scale(1.03);
 }
 
-.send-url-container {
+.send-tweetid-container {
   padding: 7px;
 }
 
-.send-url-container_form {
+.send-tweetid-container_form {
   position: relative;
   display: flex;
 }
 
-.send-url-container_input {
-  flex: 1 0;
+.send-tweetid-container_input {
+  font-family: 'Chivo Mono', monospace;
+  background-color: transparent;
+  color: white;
+  letter-spacing: 1px;
+  flex: 1 0 20rem;
   margin-right: 5px;
   padding: 10px;
-  border: none;
+  border: 1px solid #5f3dc4;
   border-radius: 5px;
 }
 
-.send-url-container:focus,
-.send-url-container_input:focus-visible {
-  outline: double #5f3dc4;
+.send-tweetid-container:focus,
+.send-tweetid-container_input:focus-visible {
+  outline: #5f3dc4;
 }
 
-.send-url-container_error {
+.send-tweetid-container_error {
   position: absolute;
-  bottom: -44px;
-  border: 1px solid red;
+  bottom: -3rem;
   border-radius: 5px;
-  background-color: red;
-  color: white;
+  background-color: transparent;
+  color: red;
   font-weight: 700;
   font-size: 1.6rem;
   text-align: center;
-  padding: 1rem 2rem;
 }
