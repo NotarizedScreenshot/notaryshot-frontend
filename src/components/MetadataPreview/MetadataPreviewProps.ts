@@ -4,6 +4,5 @@ export interface IMetadataPreviewProps {
   children?: React.ReactNode;
   data: IMetadata;
   preview?: boolean;
-  dnsHash?: string;
-  headersHash?: string;
+  hashsum?: string | null;
 }

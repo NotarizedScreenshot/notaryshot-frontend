@@ -101,11 +101,9 @@ const renderBodyElements = (key: keyof ITweetBody, body: ITweetBody) => {
 };
 
 export const TweetDetailsPreview: React.FC<ITweetDetailsPreviewProps> = ({
-  tweetData,
-  tweetStatsHash,
-  tweetUserInfoHash,
-  tweetBodyDetailsHash,
-}) => {
+  tweetData, 
+  tweetDataHash,
+ }) => {
   const { details, user, body } = tweetData;
   const detailsKeys = !!details ? (Object.keys(details) as [keyof ITweetDetails]) : null;
   const userKeys = !!user ? (Object.keys(user) as [keyof ITweetUser]) : null;
@@ -115,7 +113,7 @@ export const TweetDetailsPreview: React.FC<ITweetDetailsPreviewProps> = ({
     <div className={classes.container}>
       <div className={classes.dataBlock}>
         <div className={classes.header}>Tweet stat details</div>
-        {!!detailsKeys && <div className={classes.hash}>hashSum: {tweetStatsHash}</div>}
+        {!!detailsKeys && <div className={classes.hash}>hashSum: 0x{tweetDataHash}</div>}
         {!!detailsKeys ? (
           detailsKeys.map((key, index) => (
             <div className={classes.dataSubBlock} key={key + String(index)}>
@@ -129,7 +127,6 @@ export const TweetDetailsPreview: React.FC<ITweetDetailsPreviewProps> = ({
       </div>
       <div className={classes.dataBlock}>
         <div className={classes.header}>Tweet user info</div>
-        {!!userKeys && <div className={classes.hash}>hashSum: {tweetUserInfoHash}</div>}
         {!!userKeys ? (
           userKeys.map((key, index) => (
             <div className={classes.dataSubBlock} key={key + String(index)}>
@@ -152,7 +149,6 @@ export const TweetDetailsPreview: React.FC<ITweetDetailsPreviewProps> = ({
       </div>
       <div className={classes.dataBlock}>
         <div className={classes.header}>Tweet body details</div>
-        {!!bodyKeys && <div className={classes.hash}>hashSum: {tweetBodyDetailsHash}</div>}
         {!!bodyKeys ? (
           bodyKeys.map((key) => {
             return renderBodyElements(key, body);

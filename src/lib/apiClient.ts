@@ -1,4 +1,4 @@
-import { IMetadata, ITweetData } from 'types';
+import { IMetadata } from 'types';
 
 export const fetchMetadataById = async (tweetId: string): Promise<IMetadata | null> => {
   try {
@@ -13,7 +13,7 @@ export const fetchMetadataById = async (tweetId: string): Promise<IMetadata | nu
   }
 };
 
-export const fetchTweetDatabyId = async (tweetId: string): Promise<ITweetData | null> => {
+export const fetchTweetDatabyId = async (tweetId: string): Promise<any | null> => {
   try {
     const response = await fetch(`/tweetData?tweetId=${tweetId}`);
     if (!response.ok) {
@@ -47,13 +47,14 @@ export const fetchPreviewImageByID = async (tweetId: string): Promise<Blob | nul
 export const fetchPreviewDataByTweetId = async (tweetId: string) => {
   try {
     const imageBlob = await fetchPreviewImageByID(tweetId);
+    const imageBuffer = await imageBlob!.arrayBuffer();
     if (!imageBlob) {
       return null;
     }
     const metaData = await fetchMetadataById(tweetId);
     const tweetData = await fetchTweetDatabyId(tweetId);
 
-    return { imageBlob, metaData, tweetData };
+    return { imageBlob, metaData, tweetData, imageBuffer };
   } catch (error) {
     console.error('fetchPreviewData error', error);
     return null;

@@ -5,6 +5,13 @@ export interface IMetadata {
   dns: { host: string; data: string[] };
 }
 
+export interface ITweetResults {
+  legacy: any;
+  views: any;
+  core: any;
+  card: any;
+}
+
 export interface ITweetBody {
   full_text: string;
   card: {

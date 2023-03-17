@@ -4,7 +4,7 @@ import { IMetadataPreviewProps } from './MetadataPreviewProps';
 import classes from './MetadataPreview.module.scss';
 
 export const MetadataPreview: React.FC<IMetadataPreviewProps> = memo(
-  ({ data, preview, dnsHash, headersHash }) => {
+  ({ data, preview, hashsum }) => {
     const { ip, url, headers, dns } = data;
     const headersKeys = Object.keys(headers);
     const dnsData = dns.data
@@ -27,8 +27,7 @@ export const MetadataPreview: React.FC<IMetadataPreviewProps> = memo(
     return (
       <div className={cn(classes.container, preview ? classes.preview : null)}>
         <div className={classes.header}>HTTP Request data</div>
-        <div className={classes.hash}>hashSum: {headersHash}</div>
-
+        <div className={classes.hash}>hashSum: 0x{hashsum}</div>
         <div className={classes.dataBlock} data-testid='ip-block'>
           <div className={classes.header}>ip</div>
           <div className={classes.value}>{ip}</div>
@@ -48,7 +47,6 @@ export const MetadataPreview: React.FC<IMetadataPreviewProps> = memo(
         </div>
         <div className={classes.dataBlock} data-testid='dns-block'>
           <div className={classes.header}>Request dns data</div>
-          <div className={classes.hash}>hashSum: {dnsHash}</div>
           {Object.keys(dnsData).map((dnsDataKey: string, index: number) => {
             return (
               <div key={dnsDataKey + String(index)} className={classes.dataSubBlock}>
