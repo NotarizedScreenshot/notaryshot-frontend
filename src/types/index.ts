@@ -17,7 +17,8 @@ export interface ITweetBody {
   card: {
     description: string;
     domain: string;
-    thumbnail_image_original: string;
+    thumbnail_image_original?: string;
+    player_image_original?: string;
     vanity_url: string;
     title: string;
     card_url: string;
@@ -25,7 +26,7 @@ export interface ITweetBody {
   urls: string[] | null;
   hashtags: string[] | null;
   symbols: string[] | null;
-  media: { type: 'photo' | 'video'; src: string; thumb: string }[] | null;
+  media: { type: 'photo' | 'video'; src: string; thumb?: string }[] | null;
   user_mentions: string[] | null;
 }
 

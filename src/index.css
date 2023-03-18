@@ -10,6 +10,12 @@ html {
   font-size: 62.5%;
 }
 
+@media screen and (max-width: 768px) {
+  html {
+    font-size: 50%;
+  }
+}
+
 body {
   background-color: #0d0c27;
   margin: 0;

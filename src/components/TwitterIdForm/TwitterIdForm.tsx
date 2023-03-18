@@ -2,15 +2,8 @@ import { useRef, useState } from 'react';
 import cn from 'classnames';
 import { ITwitterIdFormProps } from './TwitterIdFormProps';
 import classes from './TwitterIdForm.module.scss';
-export const TwitterIdForm: React.FC<ITwitterIdFormProps> = ({
-  onSubmit,
-  inline,
-  initialInputData,
-  validate,
-}) => {
-  const [urlInputValue, setUrlInputValue] = useState<string>(
-    initialInputData ? initialInputData : '',
-  );
+export const TwitterIdForm: React.FC<ITwitterIdFormProps> = ({ onSubmit, inline, initialInputData, validate }) => {
+  const [urlInputValue, setUrlInputValue] = useState<string>(initialInputData ? initialInputData : '');
   const [validating, setValidating] = useState<boolean>(false);
   const [isInvalid, setInvalid] = useState<boolean>(false);
   const [error, setError] = useState<string | null>('');
@@ -95,7 +88,7 @@ export const TwitterIdForm: React.FC<ITwitterIdFormProps> = ({
             className={classes.submitButton}
             disabled={validating || isInvalid || submitting}
           >
-            Check
+            Make screenshot
           </button>
         </div>
         <div className={cn(classes.error, isInvalid ? null : classes.hidden)}>{error}</div>

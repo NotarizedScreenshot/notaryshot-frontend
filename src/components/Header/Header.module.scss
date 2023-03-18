@@ -6,7 +6,7 @@
   position: fixed;
   z-index: 9000;
   .content {
-    width: 140rem;
+    max-width: 140rem;
     height: 6rem;
     margin: auto;
     padding: 1rem;
@@ -25,6 +25,8 @@
 
     .navigation {
       margin-right: auto;
+      @media screen and (max-width: 425px) {
+      }
     }
 
     .connect {

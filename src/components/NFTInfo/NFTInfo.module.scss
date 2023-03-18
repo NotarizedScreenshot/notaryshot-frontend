@@ -1,0 +1,42 @@
+.container {
+  border-radius: 15px;
+  background-color: #040416;
+  padding: 2rem;
+
+  .h3 {
+    font-size: 1.4rem;
+    font-weight: 700;
+  }
+
+  .content {
+    display: flex;
+    align-items: center;
+  }
+
+  .link {
+    font-size: 1.4rem;
+    padding: 3rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .logo {
+    text-align: center;
+    padding: 0.5rem;
+    width: 9rem;
+    .header {
+      font-size: 1.4rem;
+      padding: 1rem 0;
+    }
+
+    .image {
+      width: 5rem;
+      overflow: hidden;
+      margin: auto;
+      img {
+        width: 100%;
+      }
+    }
+  }
+}

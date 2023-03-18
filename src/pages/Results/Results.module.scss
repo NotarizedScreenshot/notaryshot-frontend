@@ -1,0 +1,62 @@
+.container {
+  position: relative;
+  background-color: #0d0c27;
+
+  font-family: monospace;
+  color: white;
+
+  .content {
+    position: relative;
+    background-color: #0d0c27;
+    margin: auto;
+    max-width: 100rem;
+
+    padding: 8rem 2rem 2rem;
+    display: grid;
+
+    grid-template-columns: 1fr 26rem;
+
+    column-gap: 2rem;
+    row-gap: 2rem;
+
+    .h1 {
+      font-size: 3rem;
+      text-transform: lowercase;
+      grid-column: 1 / -1;
+    }
+
+    .requestForm {
+      grid-column: 1 / -1;
+    }
+
+    .notarize {
+      align-self: stretch;
+    }
+
+    .imagePreview {
+      .loading {
+        min-height: 20rem;
+        font-size: 3rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+    }
+
+    @media screen and (max-width: 768px) {
+      .imagePreview {
+        grid-column: 1 / -1;
+      }
+      .notarize {
+        grid-column: 1 / -1;
+      }
+    }
+
+    .tweetInfo,
+    .nftInfo,
+    .metadataInfo,
+    .dnsInfo {
+      grid-column: 1 / -1;
+    }
+  }
+}

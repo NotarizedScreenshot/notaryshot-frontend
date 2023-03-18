@@ -1,0 +1,24 @@
+.container {
+  background-color: #02241a;
+  border-radius: 15px;
+  padding: 2rem;
+  height: 100%;
+  font-size: 2.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+
+  .check {
+    width: 4rem;
+    margin-bottom: 2rem;
+  }
+
+  @media screen and (max-width: 768px) {
+    flex-direction: row;
+    .check {
+      margin-bottom: 0rem;
+      margin-right: 2rem;
+    }
+  }
+}

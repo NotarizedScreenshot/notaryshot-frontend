@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-
+import cn from 'classnames';
 import { INavigationProps } from './NavigationProps';
 import classes from './Navigation.module.scss';
 export const Navigation: React.FC<INavigationProps> = () => {
@@ -8,14 +8,19 @@ export const Navigation: React.FC<INavigationProps> = () => {
       <div className={classes.navElement}>
         <Link to='/'>Home</Link>
       </div>
-      <div className={classes.navElement}>
+      {/* <div className={classes.navElement}>
         <Link to='#'>Team</Link>
-      </div>
+      </div> */}
       <div className={classes.navElement}>
-        <Link to='#'>Git</Link>
+        <Link to='https://github.com/NotarizedScreenshot' target='_blank'>
+          Git
+        </Link>
       </div>
       <div className={classes.navElement}>
         <Link to='/preview'>App</Link>
+      </div>
+      <div className={cn(classes.navElement, classes.small)}>
+        <Link to='/'>Home</Link>
       </div>
     </div>
   );

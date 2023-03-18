@@ -21,11 +21,19 @@
       flex-direction: row;
       justify-content: center;
       align-items: center;
-      width: 65rem;
+      // width: 65rem;
 
       & > :first-child {
         margin-bottom: 0rem;
-        margin-right: 3rem;
+        margin-right: 2rem;
+      }
+      @media screen and (max-width: 768px) {
+        display: block;
+
+        > :first-child {
+          margin-bottom: 2rem;
+          margin-right: 0rem;
+        }
       }
     }
   }
@@ -67,8 +75,8 @@
     // width: 40rem;
     .clearButton {
       position: absolute;
-      right: 2.8rem;
-      top: 1.8rem;
+      right: 1.8rem;
+      top: 1.6rem;
       height: 1.8rem;
       width: 1.8rem;
       border: 0;
@@ -91,9 +99,12 @@
         left: 0px;
         top: 9px;
         border: 1px solid gray;
-        width: 2.8rem;
+        width: 1.8rem;
         height: 0;
         cursor: pointer;
+        @media screen and (max-width: 768px) {
+          top: 6px;
+        }
       }
 
       &::after {
@@ -122,13 +133,13 @@
       position: relative;
       background-color: transparent;
       z-index: 1000;
-      height: 6rem;
+      height: 5rem;
       width: 100%;
       border: 2px solid #4666ff;
       color: white;
-      font-size: 2.5rem;
-      line-height: 2.5rem;
-      border-radius: 5px;
+      font-size: 2rem;
+      line-height: 2rem;
+      border-radius: 15px;
       padding: 1rem 2rem;
       padding-right: 5rem;
       outline: 0;
@@ -152,18 +163,25 @@
     .submitButton {
       background-color: #4666ff;
       border: 2px solid #4666ff;
+      width: 26rem;
 
-      border-radius: 5px;
+      border-radius: 15px;
       padding: 1rem 3.5rem;
       transition: all 0.2s;
-      height: 6rem;
+      height: 5rem;
       cursor: pointer;
       font-family: monospace;
       text-transform: uppercase;
       color: white;
-      font-size: 2.5rem;
-      line-height: 2.5rem;
+      font-size: 2rem;
+      line-height: 2rem;
       font-weight: 700;
+
+      @media screen and (max-width: 768px) {
+        // font-size: 1.5rem;
+        // padding: 1rem 2rem;
+        width: 100%;
+      }
 
       &:disabled,
       &:disabled:hover {

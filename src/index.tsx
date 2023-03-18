@@ -8,7 +8,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
 import '@rainbow-me/rainbowkit/styles.css';
 import './index.css';
-import { Preview, Home } from 'pages';
+import { Preview, Home, Results } from 'pages';
 
 const { chains, provider } = configureChains([polygon], [publicProvider()]);
 
@@ -31,6 +31,10 @@ const router = createBrowserRouter([
   {
     path: 'preview/',
     element: <Preview />,
+  },
+  {
+    path: 'results/',
+    element: <Results />,
   },
 ]);
 

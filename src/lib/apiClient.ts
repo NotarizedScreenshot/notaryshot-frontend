@@ -67,3 +67,14 @@ export const submitNotarization = async (tweetId: string) => {
     setTimeout(() => res(true), 1000);
   });
 };
+
+export const fetchResults = async (metaDataCid: string) => {
+  try {
+    const response = await fetch(`https://ipfs.io/ipfs/${metaDataCid}`);
+    const data = await response.json();
+    return data;
+  } catch (error: any) {
+    console.error('fetchResults', error);
+    return null;
+  }
+};

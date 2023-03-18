@@ -96,6 +96,7 @@ export const PreviewComponent: React.FC<IPreviewProps> = memo(({ isConnected }) 
             setMetadataHash(metadataHashSum);
             setPreviewImageUrl(objectURL!);
             setMetadata(metaData);
+            // console.log('metadata', metaData);
             const proccessedTweetData = !tweetData ? tweetData : processTweetData(tweetData, tweetId);
             const tweetRawData = JSON.stringify(tweetData);
             const proccessedTweetDataHashSum = getTrustedHashSum(JSON.stringify(proccessedTweetData!));
