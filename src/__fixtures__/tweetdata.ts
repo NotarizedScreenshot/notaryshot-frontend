@@ -1,4 +1,4 @@
-import { ITweetData } from 'types';
+import { ITweetBody, ITweetData } from 'types';
 
 export const tweetdataStub1: ITweetData = {
   body: {
@@ -18,4 +18,37 @@ export const tweetdataStub1: ITweetData = {
     quote_count: 0,
     retweet_count: 0,
   },
+};
+
+export const tweetBodyStubEmpty1: ITweetBody = {
+  card: {
+    description: '',
+    domain: '',
+    thumbnail_image_original: '',
+    vanity_url: '',
+    title: '',
+    card_url: '',
+  },
+  full_text: '',
+  urls: null,
+  hashtags: null,
+  media: [],
+  symbols: null,
+  user_mentions: null,
+};
+export const tweetBodyStubFull1: ITweetBody = {
+  card: {
+    description: '',
+    domain: '',
+    thumbnail_image_original: '',
+    vanity_url: '',
+    title: '',
+    card_url: '',
+  },
+  full_text: 'some tests',
+  urls: ['url'],
+  hashtags: ['#1', '#2'],
+  media: ['url1', 'url2'],
+  symbols: ['symb1', 'symb2'],
+  user_mentions: ['ment1', 'ment2'],
 };

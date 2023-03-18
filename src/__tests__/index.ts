@@ -1,20 +1,55 @@
 import { expect, test, describe } from '@jest/globals';
-import { convertImageSize, getOffset, validateBigInt } from 'utils';
+
+import { convertImageSize, getOffset, isValidBigInt, validateBigInt, isTweetBodyElementEmpty } from 'utils';
 import stamps from '__fixtures__/stamps';
+import { tweetBodyStubEmpty1, tweetBodyStubFull1 } from '__fixtures__/tweetdata';
+
+describe('isTweetBodyElemetEmpty', () => {
+  test('if card then not epmty', () => {
+    expect(isTweetBodyElementEmpty('card', tweetBodyStubEmpty1)).toBe(false);
+    expect(isTweetBodyElementEmpty('card', tweetBodyStubFull1)).toBe(false);
+  });
+  test('if elements empty', () => {
+    expect(isTweetBodyElementEmpty('full_text', tweetBodyStubEmpty1)).toBe(true);
+    expect(isTweetBodyElementEmpty('urls', tweetBodyStubEmpty1)).toBe(true);
+    expect(isTweetBodyElementEmpty('hashtags', tweetBodyStubEmpty1)).toBe(true);
+    expect(isTweetBodyElementEmpty('media', tweetBodyStubEmpty1)).toBe(true);
+    expect(isTweetBodyElementEmpty('symbols', tweetBodyStubEmpty1)).toBe(true);
+    expect(isTweetBodyElementEmpty('user_mentions', tweetBodyStubEmpty1)).toBe(true);
+  });
+  test('if elements not empty', () => {
+    expect(isTweetBodyElementEmpty('full_text', tweetBodyStubFull1)).toBe(false);
+    expect(isTweetBodyElementEmpty('urls', tweetBodyStubFull1)).toBe(false);
+    expect(isTweetBodyElementEmpty('hashtags', tweetBodyStubFull1)).toBe(false);
+    expect(isTweetBodyElementEmpty('media', tweetBodyStubFull1)).toBe(false);
+    expect(isTweetBodyElementEmpty('symbols', tweetBodyStubFull1)).toBe(false);
+    expect(isTweetBodyElementEmpty('user_mentions', tweetBodyStubFull1)).toBe(false);
+  });
+});
 
 describe('validateBigin', () => {
   test('get error if invalid', async () => {
     await expect(validateBigInt('')).rejects.toEqual(new Error('should not be empty'));
-    await expect(validateBigInt('1234asdfsaf')).rejects.toEqual(
-      new Error('should contain only digits'),
-    );
-    await expect(validateBigInt('9631031262847836161199')).rejects.toEqual(
-      new Error('should be a valid 64-bit UInt'),
-    );
+    await expect(validateBigInt('1234asdfsaf')).rejects.toEqual(new Error('should contain only digits'));
+    await expect(validateBigInt('9631031262847836161199')).rejects.toEqual(new Error('should be a valid 64-bit UInt'));
   });
   test('if valid', async () => {
     expect(await validateBigInt('16310312628478361611')).toBe(true);
     expect(await validateBigInt('1631653001248268289')).toBe(true);
+  });
+});
+
+describe('test isValidBigInt', () => {
+  test('if invalid', () => {
+    expect(isValidBigInt('')).toBe(false);
+    expect(isValidBigInt('aasd')).toBe(false);
+    expect(isValidBigInt('999999999999999999999999999')).toBe(false);
+    expect(isValidBigInt('-1')).toBe(false);
+  });
+  test('if valid', () => {
+    expect(isValidBigInt('0')).toBe(true);
+    expect(isValidBigInt('123421125125123512')).toBe(true);
+    expect(isValidBigInt('12342112512512351212')).toBe(true);
   });
 });
 
@@ -97,53 +132,42 @@ describe('convertImageSize', () => {
     expect(horResult4.width).toBe(w1);
     expect(horResult4.height / horResult4.width).toBe(horizStamp4.height / horizStamp4.width);
 
-    const { verticalStamp1, verticalStamp2, verticalStamp3, verticalStamp4, verticalStamp5 } =
-      stamps;
+    const { verticalStamp1, verticalStamp2, verticalStamp3, verticalStamp4, verticalStamp5 } = stamps;
 
     const vertResult1 = convertImageSize(verticalStamp1.width, verticalStamp1.height, w1, h1);
     expect(vertResult1.height).toBeGreaterThan(0);
     expect(vertResult1.width).toBeGreaterThan(0);
     expect(vertResult1.height).toBe(h1);
     expect(vertResult1.width).toBeLessThanOrEqual(w1);
-    expect(vertResult1.height / vertResult1.width).toBe(
-      verticalStamp1.height / verticalStamp1.width,
-    );
+    expect(vertResult1.height / vertResult1.width).toBe(verticalStamp1.height / verticalStamp1.width);
 
     const vertResult2 = convertImageSize(verticalStamp2.width, verticalStamp2.height, w1, h1);
     expect(vertResult2.height).toBeGreaterThan(0);
     expect(vertResult2.width).toBeGreaterThan(0);
     expect(vertResult2.height).toBe(h1);
     expect(vertResult2.width).toBeLessThanOrEqual(w1);
-    expect(vertResult2.height / vertResult2.width).toBe(
-      verticalStamp2.height / verticalStamp2.width,
-    );
+    expect(vertResult2.height / vertResult2.width).toBe(verticalStamp2.height / verticalStamp2.width);
 
     const vertResult3 = convertImageSize(verticalStamp3.width, verticalStamp3.height, w1, h1);
     expect(vertResult3.height).toBeGreaterThan(0);
     expect(vertResult3.width).toBeGreaterThan(0);
     expect(vertResult3.height).toBe(h1);
     expect(vertResult3.width).toBeLessThanOrEqual(w1);
-    expect(vertResult3.height / vertResult3.width).toBe(
-      verticalStamp3.height / verticalStamp3.width,
-    );
+    expect(vertResult3.height / vertResult3.width).toBe(verticalStamp3.height / verticalStamp3.width);
 
     const vertResult4 = convertImageSize(verticalStamp4.width, verticalStamp4.height, w1, h1);
     expect(vertResult4.height).toBeGreaterThan(0);
     expect(vertResult4.width).toBeGreaterThan(0);
     expect(vertResult4.height).toBeLessThanOrEqual(h1);
     expect(vertResult4.width).toBeLessThanOrEqual(w1);
-    expect(vertResult4.height / vertResult4.width).toBe(
-      verticalStamp4.height / verticalStamp4.width,
-    );
+    expect(vertResult4.height / vertResult4.width).toBe(verticalStamp4.height / verticalStamp4.width);
 
     const vertResult5 = convertImageSize(verticalStamp5.width, verticalStamp5.height, w1, h1);
     expect(vertResult5.height).toBeGreaterThan(0);
     expect(vertResult5.width).toBeGreaterThan(0);
     expect(vertResult5.height).toBe(h1);
     expect(vertResult5.width).toBeLessThanOrEqual(w1);
-    expect(vertResult5.height / vertResult5.width).toBe(
-      verticalStamp5.height / verticalStamp5.width,
-    );
+    expect(vertResult5.height / vertResult5.width).toBe(verticalStamp5.height / verticalStamp5.width);
   });
 
   test('if canvas horizontal', () => {
@@ -195,51 +219,40 @@ describe('convertImageSize', () => {
     expect(horResult4.width).toBeLessThanOrEqual(w2);
     expect(horResult4.height / horResult4.width).toBe(horizStamp4.height / horizStamp4.width);
 
-    const { verticalStamp1, verticalStamp2, verticalStamp3, verticalStamp4, verticalStamp5 } =
-      stamps;
+    const { verticalStamp1, verticalStamp2, verticalStamp3, verticalStamp4, verticalStamp5 } = stamps;
     const vertResult1 = convertImageSize(verticalStamp1.width, verticalStamp1.height, w2, h2);
     expect(vertResult1.height).toBeGreaterThan(0);
     expect(vertResult1.width).toBeGreaterThan(0);
     expect(vertResult1.height).toBe(h2);
     expect(vertResult1.width).toBeLessThanOrEqual(w2);
-    expect(vertResult1.height / vertResult1.width).toBe(
-      verticalStamp1.height / verticalStamp1.width,
-    );
+    expect(vertResult1.height / vertResult1.width).toBe(verticalStamp1.height / verticalStamp1.width);
 
     const vertResult2 = convertImageSize(verticalStamp2.width, verticalStamp2.height, w2, h2);
     expect(vertResult2.height).toBeGreaterThan(0);
     expect(vertResult2.width).toBeGreaterThan(0);
     expect(vertResult2.height).toBe(h2);
     expect(vertResult2.width).toBeLessThanOrEqual(w2);
-    expect(vertResult2.height / vertResult2.width).toBe(
-      verticalStamp2.height / verticalStamp2.width,
-    );
+    expect(vertResult2.height / vertResult2.width).toBe(verticalStamp2.height / verticalStamp2.width);
 
     const vertResult3 = convertImageSize(verticalStamp3.width, verticalStamp3.height, w2, h2);
     expect(vertResult3.height).toBeGreaterThan(0);
     expect(vertResult3.width).toBeGreaterThan(0);
     expect(vertResult3.height).toBe(h2);
     expect(vertResult3.width).toBeLessThanOrEqual(w2);
-    expect(vertResult3.height / vertResult3.width).toBe(
-      verticalStamp3.height / verticalStamp3.width,
-    );
+    expect(vertResult3.height / vertResult3.width).toBe(verticalStamp3.height / verticalStamp3.width);
 
     const vertResult4 = convertImageSize(verticalStamp4.width, verticalStamp4.height, w2, h2);
     expect(vertResult4.height).toBeGreaterThan(0);
     expect(vertResult4.width).toBeGreaterThan(0);
     expect(vertResult4.height).toBe(h2);
     expect(vertResult4.width).toBeLessThanOrEqual(w2);
-    expect(vertResult4.height / vertResult4.width).toBe(
-      verticalStamp4.height / verticalStamp4.width,
-    );
+    expect(vertResult4.height / vertResult4.width).toBe(verticalStamp4.height / verticalStamp4.width);
 
     const vertResult5 = convertImageSize(verticalStamp5.width, verticalStamp5.height, w2, h2);
     expect(vertResult5.height).toBeGreaterThan(0);
     expect(vertResult5.width).toBeGreaterThan(0);
     expect(vertResult5.height).toBe(h2);
     expect(vertResult5.width).toBeLessThanOrEqual(w2);
-    expect(vertResult5.height / vertResult5.width).toBe(
-      verticalStamp5.height / verticalStamp5.width,
-    );
+    expect(vertResult5.height / vertResult5.width).toBe(verticalStamp5.height / verticalStamp5.width);
   });
 });

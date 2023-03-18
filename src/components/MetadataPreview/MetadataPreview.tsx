@@ -7,6 +7,7 @@ export const MetadataPreview: React.FC<IMetadataPreviewProps> = memo(
   ({ data, preview, hashsum }) => {
     const { ip, url, headers, dns } = data;
     const headersKeys = Object.keys(headers);
+    // sample data source: src/__fixtures__/metadata.ts
     const dnsData = dns.data
       .filter((el: string) => el.length > 0 && !el.includes(';'))
       .map((el: string) => {
