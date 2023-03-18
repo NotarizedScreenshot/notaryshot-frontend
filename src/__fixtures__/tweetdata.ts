@@ -48,7 +48,10 @@ export const tweetBodyStubFull1: ITweetBody = {
   full_text: 'some tests',
   urls: ['url'],
   hashtags: ['#1', '#2'],
-  media: ['url1', 'url2'],
+  media: [
+    { type: 'video', src: 'string', thumb: 'string' },
+    { type: 'video', src: 'string1', thumb: 'string1' },
+  ],
   symbols: ['symb1', 'symb2'],
   user_mentions: ['ment1', 'ment2'],
 };
