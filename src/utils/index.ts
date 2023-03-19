@@ -172,6 +172,7 @@ export const processTweetData = (tweetRawData: any, tweetId: string) => {
 };
 
 export const getTweetResultsFromTweetRawData = (tweetRawData: any, tweetId: string) => {
+  console.log('tweetRawData', tweetRawData);
   const tweetResponseInstructions = tweetRawData['threaded_conversation_with_injections_v2'].instructions;
 
   const tweetTimeLineEntries = tweetResponseInstructions.reduce((acc: any, val: any) => {

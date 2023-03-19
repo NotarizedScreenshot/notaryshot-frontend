@@ -15,6 +15,7 @@ import { createBrowserHistory } from 'history';
 import { useNavigate } from 'react-router-dom';
 
 export const PreviewComponent: React.FC<IPreviewProps> = memo(({ isConnected }) => {
+  console.log('v1.01');
   const [qrUrl, setQrUrl] = useState<string | null>(null);
   const [metadata, setMetadata] = useState<IMetadata | null>(null);
   const [fetchingMetaData, setFetchingMetadata] = useState<boolean>(false);
