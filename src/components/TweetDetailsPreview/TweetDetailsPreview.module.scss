@@ -1,15 +1,16 @@
 .container {
-  font-size: 1.8rem;
-  line-height: 1.8rem;
+  font-size: 1.4rem;
+  line-height: 1.4rem;
   color: white;
 
   .hash {
     padding: 0 1rem;
-    font-size: 1.8rem;
-    line-height: 1.8rem;
+    font-size: 1.4rem;
+    line-height: 1.4rem;
     display: inline-block;
     color: yellow;
     font-weight: 700;
+    word-break: break-all;
   }
 
   .dataBlock {
@@ -29,13 +30,16 @@
 
   .dataSubBlock {
     display: flex;
+    @media screen and (max-width: 950px) {
+      display: block;
+    }
 
     .header {
       color: #65ff8e;
       padding: 1rem 0;
       font-weight: 780;
       margin-right: 1rem;
-      flex: 0 0 35rem;
+      flex: 0 0 22rem;
       padding: 0.5rem 0;
     }
     &.headers {
@@ -69,10 +73,16 @@
         display: flex;
         max-width: 250px;
         min-height: 50px;
+        @media screen and (max-width: 768px) {
+          width: 150px;
+        }
 
         img {
           width: 320px;
           margin-right: 1rem;
+          @media screen and (max-width: 768px) {
+            width: 250px;
+          }
         }
 
         video {

@@ -5,16 +5,14 @@ import { Header, MetadataPreview, TweetDetailsPreview, TwitterIdForm } from 'com
 import cn from 'classnames';
 import { IPreviewProps } from './PreviewProps';
 import classes from './Preview.module.scss';
-import { fetchPreviewDataByTweetId } from 'lib/apiClient';
+import { fetchPreviewDataByTweetId, submitNotarization } from 'lib/apiClient';
 import { IMetadata, ITweetData } from 'types';
 import { getSampleMetadata } from 'lib';
 import { processTweetData, validateBigInt, getTrustedHashSum } from 'utils';
 import { useAccount } from 'wagmi';
 import { useConnectModal } from '@rainbow-me/rainbowkit';
 import { createBrowserHistory } from 'history';
-import { fetchSigner } from '@wagmi/core';
-import { Contract } from 'ethers';
-import notaryShotContract from 'contracts/screenshot-manager.json';
+import { useNavigate } from 'react-router-dom';
 
 export const PreviewComponent: React.FC<IPreviewProps> = memo(({ isConnected }) => {
   const [qrUrl, setQrUrl] = useState<string | null>(null);
@@ -36,28 +34,32 @@ export const PreviewComponent: React.FC<IPreviewProps> = memo(({ isConnected }) 
   const [trustedHashSum, setTrustedHashSum] = useState<string | null>(null);
   const [notorizeTxResult, setNotorizeTxResult] = useState<{
     status: 'confirmed' | 'error';
-    gasUsed: BigInt | null;
     error: string | null;
   } | null>(null);
 
   const { openConnectModal } = useConnectModal();
+  const navigate = useNavigate();
 
   const notarizeHandler = async () => {
     try {
       setNotorizeTxResult(null);
       setNotarizing(true);
-      const signer = await fetchSigner();
-      if (!signer) return;
+      if (!tweetId || !trustedHashSum) {
+        throw new Error(`error: no tweeId (${tweetId}) or on trustedHashSum (${trustedHashSum})`);
+      }
+      const result = await submitNotarization(tweetId, BigInt('0x' + trustedHashSum).toString());
 
-      const contract = new Contract(notaryShotContract.address, notaryShotContract.abi, signer);
+      if (result.status === 'failed') throw new Error(String(result.error!));
 
-      const transaction = await contract.submitMint(tweetId, BigInt('0x' + trustedHashSum).toString());
-      const receipt = await transaction.wait();
-      const gasUsed = receipt.gasUsed as BigInt;
-      setNotorizeTxResult({ status: 'confirmed', gasUsed, error: null });
+      if (result.status === 1) {
+        navigate(`/results?tweeId=${tweetId}`);
+        return;
+      }
+
+      setNotorizeTxResult({ status: 'error', error: 'trasaction not performed' });
     } catch (error) {
       if (error instanceof Error) {
-        setNotorizeTxResult({ status: 'error', gasUsed: null, error: error.message });
+        setNotorizeTxResult({ status: 'error', error: error.message });
       }
       console.error(error);
     } finally {
@@ -90,13 +92,12 @@ export const PreviewComponent: React.FC<IPreviewProps> = memo(({ isConnected }) 
 
           if (!!metaData && !!imageBlob && !!tweetData && !!imageBuffer) {
             const objectURL = URL.createObjectURL(imageBlob);
-            const hash = getTrustedHashSum(imageBuffer);
-            setPreviewImageHash(hash);
+            const screenShotHash = getTrustedHashSum(imageBuffer);
+            setPreviewImageHash(screenShotHash);
             const metadataHashSum = getTrustedHashSum(JSON.stringify(metaData!));
             setMetadataHash(metadataHashSum);
             setPreviewImageUrl(objectURL!);
             setMetadata(metaData);
-            // console.log('metadata', metaData);
             const proccessedTweetData = !tweetData ? tweetData : processTweetData(tweetData, tweetId);
             const tweetRawData = JSON.stringify(tweetData);
             const proccessedTweetDataHashSum = getTrustedHashSum(JSON.stringify(proccessedTweetData!));
@@ -104,13 +105,26 @@ export const PreviewComponent: React.FC<IPreviewProps> = memo(({ isConnected }) 
             setTweetDataHash(proccessedTweetDataHashSum);
 
             const dataForTrustedHashSum = {
-              screenShotHash: hash,
+              screenShotHash,
               tweetRawData,
               parsedTweetData: proccessedTweetData,
               metaData,
             };
 
-            setTrustedHashSum(getTrustedHashSum(JSON.stringify(dataForTrustedHashSum)));
+            const composedTrustedHashsum = getTrustedHashSum(JSON.stringify(dataForTrustedHashSum));
+
+            //TODO: remove for release START
+            console.log('screenShotHash', screenShotHash);
+            const tweetRawDataHast = getTrustedHashSum(tweetRawData);
+            console.log('tweetRawDataHast', tweetRawDataHast);
+            console.log('proccessedTweetDataHashSum', proccessedTweetDataHashSum);
+            console.log('metadataHashSum', metadataHashSum);
+            console.log('trustedHashsum', composedTrustedHashsum);
+            console.log('trustedHashsum Bignum', BigInt('0x' + composedTrustedHashsum).toString());
+
+            //TODO: remove for release END
+
+            setTrustedHashSum(composedTrustedHashsum);
 
             setTweetData(proccessedTweetData);
           }
@@ -193,10 +207,14 @@ export const PreviewComponent: React.FC<IPreviewProps> = memo(({ isConnected }) 
               >
                 Notarize!
               </button>
+              {!!notarizing && (
+                <div className={classes.txStatus}>
+                  <div className={classes.status}>Performing transaction...</div>
+                </div>
+              )}
               {!!notorizeTxResult && (
                 <div className={classes.txStatus}>
-                  <div>Status: {notorizeTxResult?.status}</div>
-                  {!!notorizeTxResult?.gasUsed && <div>Gas used: {notorizeTxResult?.gasUsed?.toString()}</div>}
+                  <div className={classes.status}>Status: {notorizeTxResult?.status}</div>
                   {!!notorizeTxResult?.error && <div className={classes.txError}>Erorr: {notorizeTxResult?.error}</div>}
                 </div>
               )}

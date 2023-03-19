@@ -1,4 +1,8 @@
+import { fetchSigner } from '@wagmi/core';
+import { Contract, ContractReceipt } from 'ethers';
 import { IMetadata } from 'types';
+
+import notaryShotContract from 'contracts/screenshot-manager.json';
 
 export const fetchMetadataById = async (tweetId: string): Promise<IMetadata | null> => {
   try {
@@ -61,11 +65,22 @@ export const fetchPreviewDataByTweetId = async (tweetId: string) => {
   }
 };
 
-export const submitNotarization = async (tweetId: string) => {
-  //TODO: add notarization handler
-  return new Promise((res) => {
-    setTimeout(() => res(true), 1000);
-  });
+export const submitNotarization = async (
+  tweetId: string,
+  trustedHashSumBigIng: string,
+): Promise<ContractReceipt | { status: 'failed' | 'success'; error?: Error | string | null }> => {
+  try {
+    const signer = await fetchSigner();
+    if (!signer) throw new Error('cant get signer');
+    const contract = new Contract(notaryShotContract.address, notaryShotContract.abi, signer);
+    const transaction = await contract.submitMint(tweetId, trustedHashSumBigIng);
+    const receipt: ContractReceipt = await transaction.wait();
+
+    return receipt;
+  } catch (error) {
+    console.error(error);
+    return { status: 'failed', error: error instanceof Error ? error.message : String(error) };
+  }
 };
 
 export const fetchResults = async (metaDataCid: string) => {

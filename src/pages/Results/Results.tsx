@@ -7,6 +7,7 @@ import { IMetadata, ITweetData } from 'types';
 import { fetchResults } from 'lib/apiClient';
 
 import { getTrustedHashSum } from 'utils';
+import { Glitch } from 'components/Glitch';
 
 export const Results: React.FC<IResultsProps> = memo(() => {
   const [tweetId, setTweetId] = useState<string | null>(new URLSearchParams(document.location.search).get('tweetid'));
@@ -26,6 +27,8 @@ export const Results: React.FC<IResultsProps> = memo(() => {
 
   const [parsedTweetData, setParsedTweetData] = useState<ITweetData | null>(null);
   const [metadata, setMetadata] = useState<IMetadata | null>(null);
+
+  const [isFettingResults, setIsFetchingResults] = useState<boolean>(true);
   // console.log(tweetId);
 
   // const parsedTweetData = data1.finalData.parsedTweetData as ITweetData;
@@ -97,8 +100,18 @@ export const Results: React.FC<IResultsProps> = memo(() => {
 
   useEffect(() => {}, [notarizedData]);
 
+  // const [glitchComplete, setGlitchCompelte] = useState<boolean>(false);
+  // const [finishFun, setFinishfun] = useState<any>(null);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setIsFetchingResults(false);
+    }, 15000);
+  }, []);
+
   return (
     <div className={classes.container}>
+      {isFettingResults && <Glitch />}
       <Header />
       <div className={classes.content}>
         <h1 className={classes.h1}>Quantum oracle</h1>
