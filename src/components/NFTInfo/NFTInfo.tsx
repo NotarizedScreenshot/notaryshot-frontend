@@ -1,11 +1,12 @@
 import { INFTInfoProps } from './NFTInfoProps';
 import classes from './NFTInfo.module.scss';
 export const NFTInfo: React.FC<INFTInfoProps> = ({ id }) => {
+  console.log('nftid', id);
   return (
     <div className={classes.container}>
       <h3 className={classes.h3}>NFTInfo</h3>
       <div className={classes.content}>
-        {id ? (
+        {!!id ? (
           <>
             <div className={classes.logo}>
               <div className={classes.header}>OpenSea</div>
