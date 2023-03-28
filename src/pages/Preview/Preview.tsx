@@ -14,6 +14,12 @@ import { useConnectModal } from '@rainbow-me/rainbowkit';
 import { createBrowserHistory } from 'history';
 import { useNavigate } from 'react-router-dom';
 
+import { Contract } from 'ethers';
+// import { IMetadata } from 'types';
+
+import { fetchSigner } from '@wagmi/core';
+import notaryShotContract from 'contracts/screenshot-manager.json';
+
 export const PreviewComponent: React.FC<IPreviewProps> = memo(({ isConnected }) => {
   console.log('v1.01');
   const [qrUrl, setQrUrl] = useState<string | null>(null);
@@ -40,6 +46,33 @@ export const PreviewComponent: React.FC<IPreviewProps> = memo(({ isConnected }) 
 
   const { openConnectModal } = useConnectModal();
   const navigate = useNavigate();
+
+  fetchSigner().then((signer) => {
+    if (!signer) {
+      console.log('no signer');
+      return;
+    }
+    console.log('has signer');
+    const contract = new Contract(notaryShotContract.address, notaryShotContract.abi, signer);
+
+    // contract.on()
+    // const transaction = await contract.submitMint(tweetId, trustedHashSumBigIng);
+    // const receipt: ContractReceipt = await transaction.wait();
+    // console.log(receipt);
+
+    contract.on('RequestContentHashSent', (...args) => {
+      console.log('on RequestContentHashSent');
+      console.log('args', args);
+    });
+    contract.on('Transfer', (...args) => {
+      console.log('on Transfer');
+      console.log('args', args);
+    });
+    contract.on('ChainlinkRequested', (...args) => {
+      console.log('on ChainlinkRequested');
+      console.log('args', args);
+    });
+  });
 
   const notarizeHandler = async () => {
     try {

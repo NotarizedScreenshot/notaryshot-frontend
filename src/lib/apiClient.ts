@@ -73,8 +73,27 @@ export const submitNotarization = async (
     const signer = await fetchSigner();
     if (!signer) throw new Error('cant get signer');
     const contract = new Contract(notaryShotContract.address, notaryShotContract.abi, signer);
+
+    // contract.on()
     const transaction = await contract.submitMint(tweetId, trustedHashSumBigIng);
     const receipt: ContractReceipt = await transaction.wait();
+    console.log(receipt);
+
+    // contract.on('RequestContentHashSent', (...args) => {
+    //   console.log('on RequestContentHashSent');
+    //   console.log('args', args);
+    // });
+    // contract.on('Transfer', (...args) => {
+      // console.log('on Transfer');
+      // console.log('args', args);
+      // console.log(args[2]);
+      // const x = args[2] as BigInt;
+      // console.log(x.toString());
+    // });
+    // contract.on('ChainlinkRequested', (...args) => {
+    //   console.log('on ChainlinkRequested');
+    //   console.log('args', args);
+    // });
 
     return receipt;
   } catch (error) {

@@ -9,6 +9,13 @@ import { fetchResults } from 'lib/apiClient';
 import { getTrustedHashSum } from 'utils';
 import { Glitch } from 'components/Glitch';
 
+import { Contract } from 'ethers';
+// import { IMetadata } from 'types';
+
+import { fetchSigner } from '@wagmi/core';
+
+import notaryShotContract from 'contracts/screenshot-manager.json';
+
 export const Results: React.FC<IResultsProps> = memo(() => {
   const [tweetId, setTweetId] = useState<string | null>(new URLSearchParams(document.location.search).get('tweetid'));
   const [notarizedData, setNotarizedData] = useState<{ [id: string]: string } | null>(null);
@@ -29,6 +36,7 @@ export const Results: React.FC<IResultsProps> = memo(() => {
   const [metadata, setMetadata] = useState<IMetadata | null>(null);
 
   const [isFettingResults, setIsFetchingResults] = useState<boolean>(true);
+  const [nftHashSum, setNftHashSum] = useState<string | null>(null);
   // console.log(tweetId);
 
   // const parsedTweetData = data1.finalData.parsedTweetData as ITweetData;
@@ -36,10 +44,43 @@ export const Results: React.FC<IResultsProps> = memo(() => {
   // const metadata = data1.finalData.metadata;
 
   //TODO: change to actual
-  const hashSUm = '24253786503100722540983614787276281249539409365738449173898742294822468658622';
+  // const hashSUm = '24253786503100722540983614787276281249539409365738449173898742294822468658622';
 
   // 1634098418095095810;
   // bafkreidddpqqmd22ectsv6qpsusdbkdfm4lyzop7hpowywzlwwl6ozomeu
+
+  fetchSigner().then((signer) => {
+    if (!signer) {
+      console.log('no signer');
+      return;
+    }
+    console.log('has signer');
+    const contract = new Contract(notaryShotContract.address, notaryShotContract.abi, signer);
+
+    // contract.on()
+    // const transaction = await contract.submitMint(tweetId, trustedHashSumBigIng);
+    // const receipt: ContractReceipt = await transaction.wait();
+    // console.log(receipt);
+
+    contract.on('RequestContentHashSent', (...args) => {
+      // console.log('on RequestContentHashSent');
+      // console.log('args', args);
+    });
+    contract.on('Transfer', (...args) => {
+      console.log('on Transfer results');
+      console.log('args', args);
+      console.log('args', args);
+      console.log(args[2]);
+      const x = args[2] as BigInt;
+      console.log(x.toString());
+      setNftHashSum(x.toString());
+    });
+    contract.on('ChainlinkRequested', (...args) => {
+      // console.log('on ChainlinkRequested');
+      // console.log('args', args);
+    });
+  });
+
   useEffect(() => {
     fetchResults('bafkreigvaz5lobdenten66j64jdu7el6f5o2zj2ddfqesxvghjbvngmyia').then((data) => {
       // console.log('data', data);
@@ -132,7 +173,7 @@ export const Results: React.FC<IResultsProps> = memo(() => {
           {parsedTweetData && media && tweetId && <TweetInfo data={parsedTweetData} media={media} tweetId={tweetId} />}
         </div>
         <div className={classes.nftInfo}>
-          <NFTInfo id={hashSUm} />
+          <NFTInfo id={nftHashSum} />
         </div>
         {metadata && (
           <div className={classes.metadataInfo}>
