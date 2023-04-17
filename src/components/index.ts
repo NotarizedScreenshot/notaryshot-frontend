@@ -1,5 +1,5 @@
 export * from './UrlForm';
-export * from './Header';
+export * from './HeaderOld';
 export * from './ScreenshotPreview';
 export * from './Navigation';
 export * from './MetadataPreview';
@@ -11,3 +11,5 @@ export * from './TweetInfo';
 export * from './NFTInfo';
 export * from './MetadataInfo';
 export * from './DNSMetadataInfo';
+export * from './Header';
+export * from './CustomConnectButton';

@@ -1,18 +1,18 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { getDefaultWallets, RainbowKitProvider } from '@rainbow-me/rainbowkit';
+import { darkTheme, getDefaultWallets, RainbowKitProvider } from '@rainbow-me/rainbowkit';
 import { configureChains, createClient, WagmiConfig } from 'wagmi';
-import { polygon } from 'wagmi/chains';
+import { polygon, mainnet } from 'wagmi/chains';
 import { publicProvider } from 'wagmi/providers/public';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
 import '@rainbow-me/rainbowkit/styles.css';
 import './index.css';
-import { Preview as OldPreview, Home, Results } from 'pages';
+import { PreviewOld, Preview, Home, Results, Page404 } from 'pages';
 import { io } from 'socket.io-client';
 import { PreviewContextProvider, ConnectionContextProvider } from 'contexts';
 
-const { chains, provider } = configureChains([polygon], [publicProvider()]);
+const { chains, provider } = configureChains([polygon, mainnet], [publicProvider()]);
 
 const { connectors } = getDefaultWallets({
   appName: 'My RainbowKit App',
@@ -63,12 +63,17 @@ const router = createBrowserRouter([
   },
   {
     path: 'previewOld/',
-    element: <OldPreview />,
+    element: <PreviewOld />,
+  },
+  {
+    path: 'preview/',
+    element: <Preview />,
   },
   {
     path: 'results/',
     element: <Results />,
   },
+  { path: '*', element: <Page404 /> },
 ]);
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
@@ -77,7 +82,13 @@ root.render(
   <ConnectionContextProvider>
     <PreviewContextProvider>
       <WagmiConfig client={wagmiClient}>
-        <RainbowKitProvider chains={chains}>
+        <RainbowKitProvider
+          chains={chains}
+          theme={darkTheme({
+            // overlayBlur: 'small',
+            // borderRadius: 'small',
+          })}
+        >
           <RouterProvider router={router} />
         </RainbowKitProvider>
       </WagmiConfig>

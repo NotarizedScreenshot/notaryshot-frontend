@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { IHomeProps } from './HomeProps';
 import classes from './Home.module.scss';
-import { Header, TwitterIdForm } from 'components';
+import { HeaderOld, TwitterIdForm } from 'components';
 import { validateBigInt } from 'utils';
 import { useConnectionContext } from 'contexts';
 
@@ -15,7 +15,7 @@ export const Home: React.FC<IHomeProps> = () => {
   };
   return (
     <div className={classes.container}>
-      <Header />
+      <HeaderOld />
       <div className={classes.background}></div>
       <div className={classes.content}>
         <h2 className={classes.h2}>Everything is verifiable.</h2>

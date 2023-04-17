@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import { Header } from './Header';
+import { HeaderOld } from './Header';
 
 jest.mock('@rainbow-me/rainbowkit', () => ({
   ConnectButton: () => <button>Connect Wallet</button>,
@@ -12,7 +12,7 @@ jest.mock('@rainbow-me/rainbowkit', () => ({
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <Header />,
+    element: <HeaderOld />,
   },
 ]);
 describe('test Header component', () => {

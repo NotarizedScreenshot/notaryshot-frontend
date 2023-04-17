@@ -1,3 +1,9 @@
+@import url('https://fonts.cdnfonts.com/css/general-sans');
+
+:root {
+  --backgroundColor: #131314;
+  --textColor: #fbfbfb;
+}
 * {
   padding: 0;
   margin: 0;
@@ -5,27 +11,32 @@
 }
 
 html {
-  background-color: #0d0c27;
+  background: var(--backgroundColor);
+
   box-sizing: border-box;
   font-size: 62.5%;
-}
-
-@media screen and (max-width: 768px) {
-  html {
-    font-size: 50%;
-  }
+  color: white;
 }
 
 body {
-  background-color: #0d0c27;
+  background: var(--backgroundColor);
   margin: 0;
-  font-family: sans-serif;
+  font-family: General Sans, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+}
+
+h3 {
+  font-size: 2rem;
+  font-weight: 600;
+  line-height: 4rem;
+  letter-spacing: 0;
+  text-align: left;
+  color: #ffffff;
 }
 
 a:link,

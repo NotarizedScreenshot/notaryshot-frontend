@@ -1,6 +1,6 @@
 import { IResultsProps } from './ResultsProps';
 import classes from './Results.module.scss';
-import { Header, ImagePreview, Notarize, TweetInfo, NFTInfo, MetadataInfo, DNSMetadataInfo } from 'components';
+import { HeaderOld, ImagePreview, Notarize, TweetInfo, NFTInfo, MetadataInfo, DNSMetadataInfo } from 'components';
 import { memo, useEffect, useState } from 'react';
 
 import { IMetadata, ITweetData } from 'types';
@@ -153,7 +153,7 @@ export const Results: React.FC<IResultsProps> = memo(() => {
   return (
     <div className={classes.container}>
       {isFettingResults && <Glitch />}
-      <Header />
+      <HeaderOld />
       <div className={classes.content}>
         <h1 className={classes.h1}>Quantum oracle</h1>
         {/* TODO: make form working */}

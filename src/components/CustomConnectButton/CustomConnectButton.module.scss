@@ -1,0 +1,41 @@
+.container {
+  background: var(--backgroundColor);
+  padding: 0 1.8rem;
+
+  button {
+    border-radius: 100px !important;
+    box-shadow: 0 20px 50px rgba(6, 10, 20, 0.07), inset -6px -10px 20px rgba(8, 11, 24, 0.3),
+      inset 6px 10px 20px #ffffff0d !important;
+    background: #151c1e !important;
+    color: var(--textColor);
+    border: none;
+
+    font-family: 'General Sans' !important;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 1.6rem !important;
+    line-height: 160%;
+    height: 4.2rem !important;
+    padding: 0.8rem 1.6rem !important;
+
+    svg {
+      display: none;
+    }
+
+    &:first-child {
+      div {
+        div:first-child {
+          width: 2rem;
+          height: 2rem;
+        }
+      }
+    }
+
+    &:last-child {
+      div:last-child {
+        background: transparent !important;
+        border: none !important;
+      }
+    }
+  }
+}

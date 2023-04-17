@@ -1,7 +1,7 @@
 /* eslint-disable no-restricted-globals */
 import { memo, useEffect, useState } from 'react';
 import QRCode from 'qrcode';
-import { Header, MetadataPreview, TweetDetailsPreview, TwitterIdForm } from 'components';
+import { HeaderOld, MetadataPreview, TweetDetailsPreview, TwitterIdForm } from 'components';
 import cn from 'classnames';
 import { IPreviewProps } from './PreviewProps';
 import classes from './Preview.module.scss';
@@ -228,7 +228,7 @@ export const PreviewComponent: React.FC<IPreviewProps> = memo(({ isConnected }) 
 
   return (
     <div className={classes.container}>
-      <Header />
+      <HeaderOld />
       <div className={classes.content}>
         <h1 className={classes.h1}>Quantum oracle</h1>
         <div className={classes.requestForm}>
@@ -312,7 +312,7 @@ export const PreviewComponent: React.FC<IPreviewProps> = memo(({ isConnected }) 
   );
 });
 
-export const Preview = () => {
+export const PreviewOld = () => {
   const { isConnected, address } = useAccount();
   return <PreviewComponent isConnected={isConnected} address={address} />;
 };
