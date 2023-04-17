@@ -14,3 +14,4 @@ export * from './DNSMetadataInfo';
 export * from './Header';
 export * from './CustomConnectButton';
 export * from './CustomForm';
+export * from './TweetResults';
