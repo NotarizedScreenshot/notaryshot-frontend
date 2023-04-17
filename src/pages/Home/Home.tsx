@@ -3,12 +3,14 @@ import { IHomeProps } from './HomeProps';
 import classes from './Home.module.scss';
 import { Header, TwitterIdForm } from 'components';
 import { validateBigInt } from 'utils';
+import { useConnectionContext } from 'contexts';
 
 export const Home: React.FC<IHomeProps> = () => {
+  const { isConnected: isSocketConnected, userId } = useConnectionContext();
   const navigate = useNavigate();
   const submitHandler = async (data: string) => {
     console.log('handler');
-    navigate(`/preview?tweetid=${data}`);
+    navigate(`/preview?tweetid=${data}&userId=${userId}`);
     return true;
   };
   return (
@@ -22,8 +24,8 @@ export const Home: React.FC<IHomeProps> = () => {
           <TwitterIdForm onSubmit={submitHandler} validate={validateBigInt} inline />
         </div>
         <p className={classes.p}>
-          Quantum Oracle helps create verified screenshots - NFTs proving that whatever their
-          minter found on the net actually existed at that moment.
+          Quantum Oracle helps create verified screenshots - NFTs proving that whatever their minter found on the net
+          actually existed at that moment.
         </p>
       </div>
     </div>

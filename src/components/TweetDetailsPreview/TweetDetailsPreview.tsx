@@ -1,3 +1,4 @@
+import cn from 'classnames';
 import { ITweetDetailsPreviewProps } from './TweetDetailsPreviewProps';
 import classes from './TweetDetailsPreview.module.scss';
 import { Fragment } from 'react';
@@ -111,7 +112,7 @@ export const TweetDetailsPreview: React.FC<ITweetDetailsPreviewProps> = ({ tweet
     <div className={classes.container}>
       <div className={classes.dataBlock}>
         <div className={classes.header}>Tweet stat details</div>
-        {!!detailsKeys && <div className={classes.hash}>hashSum: 0x{tweetDataHash}</div>}
+        {/* {!!detailsKeys && <div className={classes.hash}>hashSum: 0x{tweetDataHash}</div>} */}
         {!!detailsKeys ? (
           detailsKeys.map((key, index) => (
             <div className={classes.dataSubBlock} key={key + String(index)}>
@@ -132,7 +133,7 @@ export const TweetDetailsPreview: React.FC<ITweetDetailsPreviewProps> = ({ tweet
               {key.includes('image') ? (
                 <div className={classes.value}>
                   <div className={classes.link}>{user[key]}</div>
-                  <div className={classes.image}>
+                  <div className={cn(classes.image, classes.userpic)}>
                     <img src={user[key]} alt={key} />
                   </div>
                 </div>

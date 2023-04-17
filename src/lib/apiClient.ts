@@ -48,17 +48,21 @@ export const fetchPreviewImageByID = async (tweetId: string): Promise<Blob | nul
   }
 };
 
-export const fetchPreviewDataByTweetId = async (tweetId: string) => {
+export const fetchPreviewDataByTweetId = async (tweetId: string, userId?: string | null) => {
   try {
-    const imageBlob = await fetchPreviewImageByID(tweetId);
-    const imageBuffer = await imageBlob!.arrayBuffer();
-    if (!imageBlob) {
-      return null;
-    }
-    const metaData = await fetchMetadataById(tweetId);
-    const tweetData = await fetchTweetDatabyId(tweetId);
+    // const imageBlob = await fetchPreviewImageByID(tweetId);
+    // const imageBuffer = await imageBlob!.arrayBuffer();
+    // if (!imageBlob) {
+    // return null;
+    // }
+    // const metaData = await fetchMetadataById(tweetId);
+    // const tweetData = await fetchTweetDatabyId(tweetId);
 
-    return { imageBlob, metaData, tweetData, imageBuffer };
+    const response = await fetch(`/previewData?tweetId=${tweetId}&userId=${userId}`);
+    // const { imageUrl, tweetdata, metadata } = await response.json();
+
+    // return { imageBlob, metaData, tweetData, imageBuffer };
+    return await response.json();
   } catch (error) {
     console.error('fetchPreviewData error', error);
     return null;
@@ -84,11 +88,11 @@ export const submitNotarization = async (
     //   console.log('args', args);
     // });
     // contract.on('Transfer', (...args) => {
-      // console.log('on Transfer');
-      // console.log('args', args);
-      // console.log(args[2]);
-      // const x = args[2] as BigInt;
-      // console.log(x.toString());
+    // console.log('on Transfer');
+    // console.log('args', args);
+    // console.log(args[2]);
+    // const x = args[2] as BigInt;
+    // console.log(x.toString());
     // });
     // contract.on('ChainlinkRequested', (...args) => {
     //   console.log('on ChainlinkRequested');

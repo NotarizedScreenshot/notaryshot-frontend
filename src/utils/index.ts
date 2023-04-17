@@ -171,19 +171,37 @@ export const processTweetData = (tweetRawData: any, tweetId: string) => {
   return createTweetData(tweetResults);
 };
 
-export const getTweetResultsFromTweetRawData = (tweetRawData: any, tweetId: string) => {
-  console.log('tweetRawData', tweetRawData);
-  const tweetResponseInstructions = tweetRawData['threaded_conversation_with_injections_v2'].instructions;
+// export const getTweetResultsFromTweetRawData = (tweetRawData: any, tweetId: string) => {
+//   console.log('tweetRawData', tweetRawData);
+//   const tweetResponseInstructions = tweetRawData['threaded_conversation_with_injections_v2'].instructions;
 
-  const tweetTimeLineEntries = tweetResponseInstructions.reduce((acc: any, val: any) => {
-    return val.type === 'TimelineAddEntries' ? val : acc;
-  }, null).entries;
+//   const tweetTimeLineEntries = tweetResponseInstructions.reduce((acc: any, val: any) => {
+//     return val.type === 'TimelineAddEntries' ? val : acc;
+//   }, null).entries;
 
-  const itemContents = tweetTimeLineEntries.reduce((acc: any, val: any) => {
-    return val.entryId === `tweet-${tweetId}` ? val : acc;
-  }, null).content.itemContent;
+//   const itemContents = tweetTimeLineEntries.reduce((acc: any, val: any) => {
+//     return val.entryId === `tweet-${tweetId}` ? val : acc;
+//   }, null).content.itemContent;
 
-  return itemContents.tweet_results.result;
+//   return itemContents.tweet_results.result;
+// };
+
+export const getTweetResultsFromTweetRawData = (tweetRawDataString: string, tweetId: string) => {
+  try {
+    const tweetRawDataParsed = JSON.parse(tweetRawDataString);
+    const tweetResponseInstructions = tweetRawDataParsed.data['threaded_conversation_with_injections_v2'].instructions;
+
+    const tweetTimeLineEntries = tweetResponseInstructions.find((el: any) => el.type === 'TimelineAddEntries').entries;
+
+    const itemContents = tweetTimeLineEntries.reduce((acc: any, val: any) => {
+      return val.entryId === `tweet-${tweetId}` ? val : acc;
+    }, null).content.itemContent;
+
+    return itemContents.tweet_results.result;
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
 };
 
 export const createTweetData = (tweetResults: ITweetResults): ITweetData => {

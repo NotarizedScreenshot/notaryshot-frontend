@@ -73,6 +73,10 @@
         display: flex;
         max-width: 250px;
         min-height: 50px;
+
+        &.userpic {
+          width: 25px;
+        }
         @media screen and (max-width: 768px) {
           width: 150px;
         }

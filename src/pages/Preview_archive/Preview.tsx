@@ -8,7 +8,7 @@ import classes from './Preview.module.scss';
 import { fetchPreviewDataByTweetId, submitNotarization } from 'lib/apiClient';
 import { IMetadata, ITweetData } from 'types';
 import { getSampleMetadata } from 'lib';
-import { processTweetData, validateBigInt, getTrustedHashSum } from 'utils';
+import { processTweetData, validateBigInt, getTrustedHashSum, getTweetResultsFromTweetRawData } from 'utils';
 import { useAccount } from 'wagmi';
 import { useConnectModal } from '@rainbow-me/rainbowkit';
 import { createBrowserHistory } from 'history';
@@ -19,6 +19,8 @@ import { Contract } from 'ethers';
 
 import { fetchSigner } from '@wagmi/core';
 import notaryShotContract from 'contracts/screenshot-manager.json';
+// import { socket } from 'index';
+import { usePreviewContext, useConnectionContext } from 'contexts';
 
 export const PreviewComponent: React.FC<IPreviewProps> = memo(({ isConnected }) => {
   console.log('v1.01');
@@ -29,6 +31,7 @@ export const PreviewComponent: React.FC<IPreviewProps> = memo(({ isConnected }) 
   const [fetchingMetadataError, setFetchingMetadataError] = useState<Error | null>(null);
   const [qrCodeError, setQrCodeError] = useState<Error | null>(null);
   const [prviewImageUrl, setPreviewImageUrl] = useState<string | null>(null);
+
   const [fetchingPreviewImage, setFetchingPreviewImage] = useState<boolean>(false);
   const [notarizing, setNotarizing] = useState<boolean>(false);
   const [tweetId, setTweetId] = useState<string | null>(new URLSearchParams(document.location.search).get('tweetid'));
@@ -46,6 +49,15 @@ export const PreviewComponent: React.FC<IPreviewProps> = memo(({ isConnected }) 
 
   const { openConnectModal } = useConnectModal();
   const navigate = useNavigate();
+
+  const previewContext = usePreviewContext();
+  const { isConnected: isSocketConnected, userId } = useConnectionContext();
+
+  useEffect(() => {
+    console.log('preview hashes', previewContext);
+    setPreviewImageHash(previewContext.hashes.previewStampedImageHase);
+    setMetadataHash(previewContext.hashes.metadataToSaveCid);
+  }, [previewContext.hashes]);
 
   fetchSigner().then((signer) => {
     if (!signer) {
@@ -104,9 +116,23 @@ export const PreviewComponent: React.FC<IPreviewProps> = memo(({ isConnected }) 
   const submitCheckHandler = async (value: string): Promise<boolean> => {
     isConnected ? setTweetId(value) : openConnectModal!();
     const history = createBrowserHistory();
-    history.replace(`/preview?tweetid=${value}`);
+    history.replace(`/preview?tweetid=${value}&userId=${userId}`);
     return true;
   };
+
+  // socket.on('uploadComplete', (message) => {
+  //   const { mediaCidMap, screenshotCid, stampedScreenShotCid } = message as {
+  //     mediaCidMap: {
+  //       url: string;
+  //       cid: string | null;
+  //       error?: string | undefined;
+  //     }[];
+  //     screenshotCid: string;
+  //     stampedScreenShotCid: string;
+  //   };
+  //   setPreviewImageHash(stampedScreenShotCid);
+  //   console.log('upload complete message', JSON.parse(message));
+  // });
 
   useEffect(() => {
     if (!!tweetId) {
@@ -115,52 +141,70 @@ export const PreviewComponent: React.FC<IPreviewProps> = memo(({ isConnected }) 
       setPreviewImageUrl(null);
       setMetadata(null);
       setPreviewImageHash(null);
-      fetchPreviewDataByTweetId(tweetId)
+      if (!userId) return;
+      fetchPreviewDataByTweetId(tweetId, userId)
         .then((data) => {
           if (!data) {
             setFetchingImageError(new Error('failed to fetch image'));
             setFetchingMetadataError(new Error('failed to fetch metadata'));
             return;
           }
-          const { imageBlob, metaData, tweetData, imageBuffer } = data;
+          console.log(data);
+          // const { imageBlob, metaData, tweetData, imageBuffer } = data;
+          const { imageUrl, tweetdata, metadata, jobId } = data as {
+            imageUrl: string;
+            tweetdata: string;
+            metadata: string;
+            jobId: string;
+          };
 
-          if (!!metaData && !!imageBlob && !!tweetData && !!imageBuffer) {
-            const objectURL = URL.createObjectURL(imageBlob);
-            const screenShotHash = getTrustedHashSum(imageBuffer);
-            setPreviewImageHash(screenShotHash);
-            const metadataHashSum = getTrustedHashSum(JSON.stringify(metaData!));
-            setMetadataHash(metadataHashSum);
-            setPreviewImageUrl(objectURL!);
-            setMetadata(metaData);
-            const proccessedTweetData = !tweetData ? tweetData : processTweetData(tweetData, tweetId);
-            const tweetRawData = JSON.stringify(tweetData);
-            const proccessedTweetDataHashSum = getTrustedHashSum(JSON.stringify(proccessedTweetData!));
+          // console.log(data);
 
-            setTweetDataHash(proccessedTweetDataHashSum);
+          if (!!metadata && !!imageUrl && !!tweetdata) {
+            //   // const objectURL = URL.createObjectURL(imageBlob);
+            //   // const screenShotHash = getTrustedHashSum(imageBuffer);
+            //   // setPreviewImageHash(screenShotHash);
+            //   // const metadataHashSum = getTrustedHashSum(JSON.stringify(metaData!));
+            //   // setMetadataHash(metadataHashSum);
+            // console.log(JSON.parse(tweetdata));
 
-            const dataForTrustedHashSum = {
-              screenShotHash,
-              tweetRawData,
-              parsedTweetData: proccessedTweetData,
-              metaData,
-            };
+            setPreviewImageUrl(imageUrl);
+            const parsedMetadata = JSON.parse(metadata);
 
-            const composedTrustedHashsum = getTrustedHashSum(JSON.stringify(dataForTrustedHashSum));
+            const parsedTweetdata = processTweetData(tweetdata, tweetId);
 
-            //TODO: remove for release START
-            console.log('screenShotHash', screenShotHash);
-            const tweetRawDataHast = getTrustedHashSum(tweetRawData);
-            console.log('tweetRawDataHast', tweetRawDataHast);
-            console.log('proccessedTweetDataHashSum', proccessedTweetDataHashSum);
-            console.log('metadataHashSum', metadataHashSum);
-            console.log('trustedHashsum', composedTrustedHashsum);
-            console.log('trustedHashsum Bignum', BigInt('0x' + composedTrustedHashsum).toString());
+            setMetadata(parsedMetadata);
+            setTweetData(parsedTweetdata);
 
-            //TODO: remove for release END
+            //   // const proccessedTweetData = !tweetData ? tweetData : processTweetData(tweetData, tweetId);
+            //   // const tweetRawData = JSON.stringify(tweetData);
+            //   // const proccessedTweetDataHashSum = getTrustedHashSum(JSON.stringify(proccessedTweetData!));
 
-            setTrustedHashSum(composedTrustedHashsum);
+            //   // setTweetDataHash(proccessedTweetDataHashSum);
 
-            setTweetData(proccessedTweetData);
+            //   const dataForTrustedHashSum = {
+            //     // screenShotHash,
+            //     // tweetRawData,
+            //     // parsedTweetData: proccessedTweetData,
+            //     metaData,
+            //   };
+
+            //   // const composedTrustedHashsum = getTrustedHashSum(JSON.stringify(dataForTrustedHashSum));
+
+            //   //TODO: remove for release START
+            //   // console.log('screenShotHash', screenShotHash);
+            //   // const tweetRawDataHast = getTrustedHashSum(tweetRawData);
+            //   // console.log('tweetRawDataHast', tweetRawDataHast);
+            //   // console.log('proccessedTweetDataHashSum', proccessedTweetDataHashSum);
+            //   // console.log('metadataHashSum', metadataHashSum);
+            //   // console.log('trustedHashsum', composedTrustedHashsum);
+            //   // console.log('trustedHashsum Bignum', BigInt('0x' + composedTrustedHashsum).toString());
+
+            //   //TODO: remove for release END
+
+            //   // setTrustedHashSum(composedTrustedHashsum);
+
+            //   // setTweetData(proccessedTweetData);
           }
         })
         .finally(() => {
@@ -168,11 +212,11 @@ export const PreviewComponent: React.FC<IPreviewProps> = memo(({ isConnected }) 
           setFetchingMetadata(false);
         });
     }
-  }, [tweetId]);
+  }, [tweetId, userId]);
 
   useEffect(() => {
     if (!!metadata && !!tweetId && !!tweetData && !!metadataHash) {
-      const data = { trustedHashSum, tweetId, metadataHash, previewImageHash, tweetDataHash };
+      const data = { metadataHash };
       QRCode.toDataURL(JSON.stringify(data))
         .then(setQrUrl)
         .catch((error) => {
@@ -208,7 +252,7 @@ export const PreviewComponent: React.FC<IPreviewProps> = memo(({ isConnected }) 
                 {fetchingPreviewImage ? 'Getting preview...' : fetchingImageError?.message}
               </div>
             )}
-            {previewImageHash && <div className={classes.hash}>hashSum: 0x{previewImageHash}</div>}
+            {/* {true && <div className={classes.hash}>hash: {previewImageHash}</div>} */}
           </div>
 
           <div className={classes.qr}>
@@ -255,12 +299,10 @@ export const PreviewComponent: React.FC<IPreviewProps> = memo(({ isConnected }) 
             </div>
           </div>
           <div className={classes.meta}>
-            {!fetchingMetaData && tweetData && (
-              <TweetDetailsPreview tweetData={tweetData} tweetDataHash={tweetDataHash} />
-            )}
+            {!fetchingMetaData && tweetData && <TweetDetailsPreview tweetData={tweetData} />}
             {!fetchingMetaData && !tweetData && <div className={classes.getting}>Failed to fetch tweet data</div>}
             {!tweetId && <MetadataPreview data={getSampleMetadata()} preview={!tweetId} />}
-            {tweetId && metadata && <MetadataPreview data={metadata} preview={!tweetId} hashsum={metadataHash} />}
+            {tweetId && metadata && <MetadataPreview data={metadata} preview={!tweetId} />}
             {fetchingMetaData && <div className={classes.getting}>Fetching metadata...</div>}
             {fetchingMetadataError && <div className={classes.getting}>Failed to fetch meta</div>}
           </div>
