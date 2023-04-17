@@ -1,6 +1,6 @@
 import { IPreviewProps } from './PreviewProps';
 import styles from './Preview.module.scss';
-import { CustomForm, TweetResults, Header } from 'components';
+import { CustomForm, TweetResults, Header, MetadataPreview, HTTPMetadata, DNSMetadata } from 'components';
 
 export const Preview: React.FC<IPreviewProps> = () => {
   return (
@@ -10,6 +10,12 @@ export const Preview: React.FC<IPreviewProps> = () => {
         <CustomForm />
         <h2 className={styles.h2}>Confirm Verification</h2>
         <TweetResults />
+        <MetadataPreview title='Http headers meta'>
+          <HTTPMetadata />
+          </MetadataPreview>
+        <MetadataPreview title='DNS headers meta'>
+          <DNSMetadata />
+          </MetadataPreview>
       </main>
     </div>
   );

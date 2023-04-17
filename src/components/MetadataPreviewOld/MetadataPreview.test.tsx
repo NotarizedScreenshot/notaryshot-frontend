@@ -1,10 +1,10 @@
 import { render, screen } from '@testing-library/react';
 import { metadataStub2 } from '__fixtures__/metadata';
-import { MetadataPreview } from './MetadataPreview';
+import { MetadataPreviewOld } from './MetadataPreview';
 
 describe('metadata prview component', () => {
   test('if metadata preview rendered', async () => {
-    render(<MetadataPreview data={metadataStub2} />);
+    render(<MetadataPreviewOld data={metadataStub2} />);
 
     expect(screen.getByText('HTTP Request data')).toBeInTheDocument();
 

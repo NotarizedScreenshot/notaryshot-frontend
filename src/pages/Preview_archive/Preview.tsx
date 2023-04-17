@@ -1,7 +1,7 @@
 /* eslint-disable no-restricted-globals */
 import { memo, useEffect, useState } from 'react';
 import QRCode from 'qrcode';
-import { HeaderOld, MetadataPreview, TweetDetailsPreview, TwitterIdForm } from 'components';
+import { HeaderOld, MetadataPreviewOld, TweetDetailsPreview, TwitterIdForm } from 'components';
 import cn from 'classnames';
 import { IPreviewProps } from './PreviewProps';
 import classes from './Preview.module.scss';
@@ -301,8 +301,8 @@ export const PreviewComponent: React.FC<IPreviewProps> = memo(({ isConnected }) 
           <div className={classes.meta}>
             {!fetchingMetaData && tweetData && <TweetDetailsPreview tweetData={tweetData} />}
             {!fetchingMetaData && !tweetData && <div className={classes.getting}>Failed to fetch tweet data</div>}
-            {!tweetId && <MetadataPreview data={getSampleMetadata()} preview={!tweetId} />}
-            {tweetId && metadata && <MetadataPreview data={metadata} preview={!tweetId} />}
+            {!tweetId && <MetadataPreviewOld data={getSampleMetadata()} preview={!tweetId} />}
+            {tweetId && metadata && <MetadataPreviewOld data={metadata} preview={!tweetId} />}
             {fetchingMetaData && <div className={classes.getting}>Fetching metadata...</div>}
             {fetchingMetadataError && <div className={classes.getting}>Failed to fetch meta</div>}
           </div>
