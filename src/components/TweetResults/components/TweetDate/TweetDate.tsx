@@ -9,7 +9,7 @@ export const TweetDate: React.FC<ITweetDateProps> = () => {
           fill='#6C7F83'
         />
       </svg>
-      <p>10 Aug 2023</p>
+      <p className={styles.p2}>10 Aug 2023</p>
     </div>
   );
 };

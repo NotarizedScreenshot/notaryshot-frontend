@@ -26,6 +26,15 @@
 
     .heading {
       display: flex;
+      height: 44px;
+
+      & > *:first-child {
+        margin-right: auto;
+      }
+
+      & > *:not(:first-child) {
+        margin-left: 4rem;
+      }
     }
     .text {
       grid-column: 2 / -1;

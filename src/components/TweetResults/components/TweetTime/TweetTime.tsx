@@ -9,7 +9,7 @@ export const TweetTime: React.FC<ITweetTimeProps> = () => {
           fill='#6C7F83'
         />
       </svg>
-      <p>11:44PM</p>
+      <p className={styles.p2}>11:44PM</p>
     </div>
   );
 };

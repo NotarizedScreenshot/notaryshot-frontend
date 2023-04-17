@@ -12,7 +12,17 @@ export const TweetAuthor: React.FC<ITweetAuthorProps> = () => {
       </div>
       <div className={styles.profileName}>
         <a className={styles.profileLink} href='https://twitter.com/elonmusk'>
-          ChainHackers
+          <span>ChainHackers</span>
+          <svg width='13' height='13' viewBox='0 0 14 14' fill='none' xmlns='http://www.w3.org/2000/svg'>
+            <path d='M4 12L12 4' stroke='#187EC5' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round' />
+            <path
+              d='M5.5 4H12V10.5'
+              stroke='#187EC5'
+              stroke-width='1.5'
+              stroke-linecap='round'
+              stroke-linejoin='round'
+            />
+          </svg>
         </a>
       </div>
     </div>
