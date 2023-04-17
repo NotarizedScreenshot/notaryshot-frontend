@@ -1,0 +1,45 @@
+.container {
+  height: 4rem;
+
+  .form {
+    display: flex;
+
+    .inputGroup {
+      height: 4rem;
+      flex: 1 1;
+      margin-right: 3rem;
+      .input {
+        background: #151518;
+        border: 1px solid #6c7f83;
+        border-radius: 100px;
+        height: 100%;
+        width: 100%;
+        padding: 8px 24px;
+        color: var(--textColor);
+      }
+    }
+
+    .controls {
+      margin-left: auto;
+      height: 4rem;
+
+      .button {
+        height: 100%;
+        padding: 0.8rem 1.6rem;
+        border: none;
+        border-radius: 100px;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        box-shadow: 0px 20px 50px rgba(6, 10, 20, 0.07), inset -6px -10px 20px rgba(8, 11, 24, 0.3),
+          inset 6px 10px 20px rgba(255, 255, 255, 0.05);
+
+        svg {
+          position: relative;
+          top: -1px;
+          margin-right: 1rem;
+        }
+      }
+    }
+  }
+}

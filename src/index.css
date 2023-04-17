@@ -3,6 +3,7 @@
 :root {
   --backgroundColor: #131314;
   --textColor: #fbfbfb;
+  --buttonBgColor: #15cef7;
 }
 * {
   padding: 0;
@@ -30,6 +31,16 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }
 
+h2 {
+  font-size: 4.8rem;
+  font-weight: 600;
+  line-height: 7.2rem;
+  letter-spacing: 0;
+  text-align: left;
+  color: #ffffff;
+  padding: 3.2rem 0;
+}
+
 h3 {
   font-size: 2rem;
   font-weight: 600;
@@ -37,6 +48,19 @@ h3 {
   letter-spacing: 0;
   text-align: left;
   color: #ffffff;
+}
+
+p {
+}
+
+button {
+  font-family: General Sans, sans-serif;
+  font-size: 1.6rem;
+  font-weight: 600;
+  line-height: 2.6rem;
+  letter-spacing: 0;
+  text-align: left;
+  background-color: var(--buttonBgColor);
 }
 
 a:link,
