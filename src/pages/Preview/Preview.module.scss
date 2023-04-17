@@ -1,4 +1,5 @@
 .container {
+  position: relative;
   background: var(--backgroundColor);
   max-width: 137rem;
   padding: 0 4rem 10rem;
@@ -6,10 +7,60 @@
   min-height: 100vh;
 
   .main {
+    position: relative;
     padding-top: 3rem;
+
+    .bgCircles {
+      position: absolute;
+      background-image: url(../../../public/images/background-circles.png);
+      background-size: contain;
+      background-repeat: no-repeat;
+      height: 140rem;
+      width: 150rem;
+      top: -5rem;
+      right: -20rem;
+      opacity: 0.5;
+    }
 
     .h2 {
       margin-top: 3.7rem;
+    }
+    .spy {
+      position: absolute;
+      right: 40rem;
+      top: 6rem;
+    }
+
+    .message {
+      position: absolute;
+      z-index: 1000;
+      top: 125px;
+      right: -30px;
+      width: 520px;
+      height: 120px;
+      background-image: url('../../../public/images/message-bg.png');
+
+      background-repeat: no-repeat;
+      background-position-x: -15px;
+      background-position-y: -3px;
+
+      text-align: center;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      .text {
+        font-family: 'Russo One';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 15px;
+        line-height: 150%;
+        color: #15cef7;
+        width: 410px;
+
+        border-radius: 100px;
+      }
     }
   }
 }
