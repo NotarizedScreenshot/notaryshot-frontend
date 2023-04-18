@@ -1,16 +1,43 @@
 .container {
   position: relative;
+  overflow: hidden;
+  z-index: 10;
 
   &:last-child {
     top: -2px;
   }
 
   .heading {
+    background: var(--backgroundColor);
+    position: relative;
     display: flex;
     align-items: center;
     justify-content: space-between;
     height: 8rem;
     border-top: 2px solid #fbfbfb;
     border-bottom: 2px solid #fbfbfb;
+    cursor: pointer;
+    z-index: 100;
+  }
+
+  .icon {
+    transition: all 0.8s;
+    &.rotate90 {
+      transform: rotate(-270deg);
+    }
+  }
+
+  .data {
+    position: relative;
+    top: -10000px;
+    max-height: 0;
+    z-index: 50;
+
+    transition: max-height 0.1s;
+    transition: top 0.8s;
+    &.show {
+      max-height: 30000px;
+      top: 0;
+    }
   }
 }
