@@ -18,6 +18,16 @@
     border-bottom: 2px solid #fbfbfb;
     cursor: pointer;
     z-index: 100;
+
+    &.blocked {
+      cursor: not-allowed;
+    }
+
+    .h3 {
+      &.blocked {
+        color: rgb(255, 51, 51);
+      }
+    }
   }
 
   .icon {

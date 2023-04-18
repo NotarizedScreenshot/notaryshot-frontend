@@ -1,9 +1,7 @@
 import { IDNSMetadataProps } from './DNSMetadataProps';
 import styles from './DNSMetadata.module.scss';
-import { IMetadata } from 'types';
 export const DNSMetadata: React.FC<IDNSMetadataProps> = ({ metadata }) => {
-  const data = JSON.parse(metadata) as IMetadata;
-  const { dns } = data;
+  const { dns } = metadata;
   const dnsData = dns.data
     .filter((el: string) => el.length > 0 && !el.includes(';'))
     .map((el: string) => {

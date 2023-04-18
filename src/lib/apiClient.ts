@@ -1,6 +1,6 @@
 import { fetchSigner } from '@wagmi/core';
 import { Contract, ContractReceipt } from 'ethers';
-import { IMetadata } from 'types';
+import { IFetchedData, IMetadata } from 'types';
 
 import notaryShotContract from 'contracts/screenshot-manager.json';
 
@@ -48,20 +48,13 @@ export const fetchPreviewImageByID = async (tweetId: string): Promise<Blob | nul
   }
 };
 
-export const fetchPreviewDataByTweetId = async (tweetId: string, userId?: string | null) => {
-  try {
-    // const imageBlob = await fetchPreviewImageByID(tweetId);
-    // const imageBuffer = await imageBlob!.arrayBuffer();
-    // if (!imageBlob) {
-    // return null;
-    // }
-    // const metaData = await fetchMetadataById(tweetId);
-    // const tweetData = await fetchTweetDatabyId(tweetId);
+export const fetchPreviewDataByTweetId = async (
+  tweetId: string,
+  userId?: string | null,
+): Promise<IFetchedData | null> => {
+  try {    
 
     const response = await fetch(`/previewData?tweetId=${tweetId}&userId=${userId}`);
-    // const { imageUrl, tweetdata, metadata } = await response.json();
-
-    // return { imageBlob, metaData, tweetData, imageBuffer };
     return await response.json();
   } catch (error) {
     console.error('fetchPreviewData error', error);

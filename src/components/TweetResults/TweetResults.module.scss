@@ -27,12 +27,14 @@
       grid-column: 1 / -1 !important;
     }
 
-    div:first-child {
+    & > div:first-child {
       grid-row: 1 / 6;
     }
 
-    div:not(:first-child) {
+    & > div:not(:first-child) {
       grid-column: 2 / -1;
+      justify-self: start;
+      align-self: center;
     }
 
     .heading {

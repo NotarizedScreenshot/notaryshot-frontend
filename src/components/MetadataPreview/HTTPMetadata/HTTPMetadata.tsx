@@ -1,10 +1,8 @@
 import cn from 'classnames';
 import { IHTTPMetadataProps } from './HTTPMetadataProps';
 import styles from './HTTPMetadata.module.scss';
-import { IMetadata } from 'types';
 export const HTTPMetadata: React.FC<IHTTPMetadataProps> = ({ metadata }) => {
-  const data = JSON.parse(metadata) as IMetadata;
-  const { ip, url, headers } = data;
+  const { ip, url, headers } = metadata;
   const headersKeys = Object.keys(headers);
 
   return (

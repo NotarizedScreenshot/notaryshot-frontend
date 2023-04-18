@@ -48,3 +48,15 @@ export interface ITweetData {
   user: ITweetUser;
   details: ITweetDetails;
 }
+
+export interface IFetchedData {
+  imageUrl: string | null;
+  tweetdata: string | null;
+  metadata: string | null;
+}
+
+export interface ITweetAttributes {
+  hashtags: ITweetBody['hashtags'];
+  user_mentions: ITweetBody['user_mentions'];
+  urls: ITweetBody['urls'];
+}

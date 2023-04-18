@@ -5,7 +5,7 @@ export const TweetMedia: React.FC<ITweetMediaProps> = ({ media }) => {
     <div className={styles.container}>
       {media.map((mediaElement, index) => {
         return (
-          <div className={styles.mediaElement}>
+          <div key={`${mediaElement.src}${index}`} className={styles.mediaElement}>
             <a href={mediaElement.src} target='_blank' rel='noreferrer'>
               <img src={mediaElement.type === 'video' ? mediaElement.thumb : mediaElement.src} alt='media element' />
             </a>
