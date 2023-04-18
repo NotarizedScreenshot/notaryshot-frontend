@@ -1,6 +1,6 @@
 import { ITweetTimeProps } from './TweetTimeProps';
 import styles from './TweetTime.module.scss';
-export const TweetTime: React.FC<ITweetTimeProps> = () => {
+export const TweetTime: React.FC<ITweetTimeProps> = ({ date }) => {
   return (
     <div className={styles.container}>
       <svg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'>
@@ -9,7 +9,7 @@ export const TweetTime: React.FC<ITweetTimeProps> = () => {
           fill='#6C7F83'
         />
       </svg>
-      <p className={styles.p2}>11:44PM</p>
+      <p className={styles.p2}>{date.toLocaleTimeString('en-US')}</p>
     </div>
   );
 };

@@ -11,14 +11,16 @@ import {
   TweetTime,
 } from './components';
 export const TweetResults: React.FC<ITweetResultsProps> = () => {
+  const date = new Date(Date.now());
+
   return (
     <div className={styles.container}>
       <div className={styles.content}>
         <ScreenshotPreview />
         <div className={styles.heading}>
           <TweetAuthor />
-          <TweetTime />
-          <TweetDate />
+          <TweetTime date={date} />
+          <TweetDate date={date} />
         </div>
         <div className={styles.text}>
           Today, I attended an important conference at @TEDTalks where legends like @BillGates and @elonmusk spoke. They

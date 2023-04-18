@@ -1,6 +1,6 @@
 import { ITweetDateProps } from './TweetDateProps';
 import styles from './TweetDate.module.scss';
-export const TweetDate: React.FC<ITweetDateProps> = () => {
+export const TweetDate: React.FC<ITweetDateProps> = ({ date }) => {
   return (
     <div className={styles.container}>
       <svg width='23' height='24' viewBox='0 0 23 24' fill='none' xmlns='http://www.w3.org/2000/svg'>
@@ -9,7 +9,9 @@ export const TweetDate: React.FC<ITweetDateProps> = () => {
           fill='#6C7F83'
         />
       </svg>
-      <p className={styles.p2}>10 Aug 2023</p>
+      <p className={styles.p2}>
+        {date.toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' })}
+      </p>
     </div>
   );
 };
