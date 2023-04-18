@@ -9,7 +9,7 @@ export const HTTPMetadata: React.FC<IHTTPMetadataProps> = ({ metadata }) => {
 
   return (
     <div className={styles.container}>
-      <div className={styles.heading}>HTTP Request data</div>
+      <div className={cn(styles.heading, styles.center)}>HTTP Request data</div>
       <div className={styles.dataBlock} data-testid='ip-block'>
         <div className={styles.heading}>ip</div>
         <div className={styles.value}>{ip}</div>
