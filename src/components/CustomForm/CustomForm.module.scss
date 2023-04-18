@@ -1,10 +1,24 @@
 .container {
+  position: relative;
   height: 4rem;
+  z-index: 50;
 
   .form {
     display: flex;
+    position: relative;
+
+    .error {
+      position: absolute;
+      top: -3rem;
+      left: 2.4rem;
+      font-size: 1.6rem;
+      color: red;
+      font-weight: 600;
+      letter-spacing: 1px;
+    }
 
     .inputGroup {
+      position: relative;
       height: 4rem;
       flex: 1 1;
       margin-right: 3rem;
@@ -16,6 +30,57 @@
         width: 100%;
         padding: 8px 24px;
         color: var(--textColor);
+        font-size: 1.4rem;
+      }
+      .clearButton {
+        position: absolute;
+        right: 1.8rem;
+        top: 1rem;
+        height: 1.8rem;
+        width: 1.8rem;
+        border: 0;
+        background-color: transparent;
+        z-index: 1000;
+        color: var(--buttonBgColor);
+
+        &:disabled,
+        &:disabled:hover,
+        &:disabled::after,
+        &:disabled::before {
+          cursor: not-allowed;
+        }
+
+        &::after,
+        &::before {
+          content: '';
+          display: block;
+          position: absolute;
+          left: 0px;
+          top: 9px;
+          border: 1px solid #6c7f83;
+          width: 1.8rem;
+          height: 0;
+          cursor: pointer;
+          @media screen and (max-width: 768px) {
+            top: 6px;
+          }
+        }
+
+        &::after {
+          transform: rotate(45deg);
+        }
+
+        &::before {
+          transform: rotate(-45deg);
+        }
+
+        &:hover,
+        &:active {
+          &::after,
+          &::before {
+            border-color: white;
+          }
+        }
       }
     }
 

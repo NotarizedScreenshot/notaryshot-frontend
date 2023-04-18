@@ -9,6 +9,7 @@
   .main {
     position: relative;
     padding-top: 3rem;
+    z-index: 1;
 
     .bgCircles {
       position: absolute;
@@ -17,13 +18,16 @@
       background-repeat: no-repeat;
       height: 140rem;
       width: 150rem;
-      top: -5rem;
+      top: 0rem;
       right: -20rem;
       opacity: 0.5;
+      z-index: 1;
     }
 
     .h2 {
+      position: relative;
       margin-top: 3.7rem;
+      z-index: 1;
     }
     .spy {
       position: absolute;
@@ -33,7 +37,7 @@
 
     .message {
       position: absolute;
-      z-index: 1000;
+      // z-index: 1;
       top: 125px;
       right: -30px;
       width: 520px;
