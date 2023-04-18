@@ -1,6 +1,7 @@
 .container {
-  height: 670px;
   position: relative;
+  padding-bottom: 5rem;
+  margin-bottom: 5rem;
 
   .content {
     overflow: hidden;
@@ -8,8 +9,8 @@
     display: grid;
     grid-template-columns: 49rem 1fr;
     column-gap: 3rem;
+    row-gap: 2rem;
 
-    height: 620px;
     padding: 3rem;
     padding-bottom: 6rem;
     background: rgba(58, 59, 75, 0.12);

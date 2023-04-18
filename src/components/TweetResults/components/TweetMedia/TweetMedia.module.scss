@@ -1,7 +1,5 @@
 .container {
   overflow: hidden;
-  width: 630px;
-  height: 100px;
 
   background: #1b222c;
 
@@ -10,4 +8,22 @@
 
   border-radius: 14px;
   padding: 10px 20px;
+
+  display: flex;
+  flex-wrap: wrap;
+
+  .mediaElement {
+    &:not(:last-child) {
+      margin-right: 1rem;
+      margin-bottom: 1rem;
+    }
+    width: 14rem;
+    max-height: 8rem;
+    border-radius: 8px;
+    overflow: hidden;
+
+    img {
+      width: 100%;
+    }
+  }
 }
