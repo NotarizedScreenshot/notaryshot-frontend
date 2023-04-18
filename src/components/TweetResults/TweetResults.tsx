@@ -26,6 +26,9 @@ export const TweetResults: React.FC<ITweetResultsProps> = () => {
           bought a new book by @StephenKing that I can't wait to start reading. Finally, I attended a yoga class at
           @yogaworks studio. This day was full of new experiences and motivation!
         </div>
+        <div className={styles.glow}>
+          <img src='/images/glow-1.png' alt='glow' />
+        </div>
         <TweetAttributes />
         <TweetStats />
         <TweetMedia />
