@@ -27,26 +27,26 @@ const wagmiClient = createClient({
 
 export const socket = io({ autoConnect: true });
 
-// socket.on('users', (users) => {
-//   console.log('users', users);
-//   console.log('socket id', socket.id);
-//   // users.forEach((user: any) => {
-//   //   user.self = user.userID === socket.id;
-//   //   // initReactiveProperties(user);
-//   // });
+socket.on('users', (users) => {
+  console.log('users', users);
+  console.log('socket id', socket.id);
+  // users.forEach((user: any) => {
+  //   user.self = user.userID === socket.id;
+  //   // initReactiveProperties(user);
+  // });
 
-//   // put the current user first, and then sort by username
-//   // this.users = users.sort((a, b) => {
-//   //   if (a.self) return -1;
-//   //   if (b.self) return 1;
-//   //   if (a.username < b.username) return -1;
-//   //   return a.username > b.username ? 1 : 0;
-//   // });
-// });
+  // put the current user first, and then sort by username
+  // this.users = users.sort((a, b) => {
+  //   if (a.self) return -1;
+  //   if (b.self) return 1;
+  //   if (a.username < b.username) return -1;
+  //   return a.username > b.username ? 1 : 0;
+  // });
+});
 
-// socket.on('connectMsg', (message) => {
-//   // console.log('socket connect', message);
-// });
+socket.on('connectMsg', (message) => {
+  // console.log('socket connect', message);
+});
 
 socket.on('uploadComplete', (message) => {
   console.log('upload complete message', JSON.parse(message));
