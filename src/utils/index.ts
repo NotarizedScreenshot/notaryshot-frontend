@@ -206,9 +206,23 @@ export const getTweetResultsFromTweetRawData = (tweetRawDataString: string, twee
 
 export const createTweetData = (tweetResults: ITweetResults): ITweetData => {
   const { legacy, views, core, card } = tweetResults;
-  const { full_text, created_at, favorite_count, quote_count, retweet_count, entities, extended_entities } = legacy;
+  const {
+    full_text,
+    created_at,
+    favorite_count,
+    quote_count,
+    retweet_count,
+    entities,
+    extended_entities,
+    bookmark_count,
+  } = legacy;
 
-  const { user_mentions, urls, hashtags, symbols } = entities;
+  const { user_mentions, urls, hashtags, symbols } = entities as {
+    user_mentions: any[];
+    urls: any[];
+    hashtags: any[];
+    symbols: any[];
+  };
 
   const media = extended_entities?.media ?? [];
 
@@ -227,6 +241,7 @@ export const createTweetData = (tweetResults: ITweetResults): ITweetData => {
     quote_count,
     retweet_count,
     views_count,
+    bookmark_count,
   };
 
   const props = [
@@ -287,9 +302,12 @@ export const createTweetData = (tweetResults: ITweetResults): ITweetData => {
         },
       );
 
-  const tweetMentions: ITweetBody['user_mentions'] = !user_mentions
-    ? null
-    : user_mentions.map((mention: { screen_name: string }) => mention.screen_name);
+  const tweetMentions: ITweetBody['user_mentions'] =
+    !user_mentions || user_mentions.length === 0
+      ? null
+      : user_mentions.map((mention: { screen_name: string }) => mention.screen_name);
+
+  const tweetBookmarksCount: string | null = bookmark_count > 0 ? String(bookmark_count) : null;
 
   const body: ITweetBody = {
     full_text,
@@ -299,6 +317,7 @@ export const createTweetData = (tweetResults: ITweetResults): ITweetData => {
     symbols: tweetSymbols,
     media: tweetMedia,
     user_mentions: tweetMentions,
+    bookmark_count: tweetBookmarksCount,
   };
 
   const tweetData = {

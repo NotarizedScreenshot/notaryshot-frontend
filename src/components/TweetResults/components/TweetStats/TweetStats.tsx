@@ -1,6 +1,12 @@
 import { ITweetStatsProps } from './TweetStatsProps';
 import styles from './TweetStats.module.scss';
-export const TweetStats: React.FC<ITweetStatsProps> = ({ favorite_count, quote_count, retweet_count, views_count }) => {
+export const TweetStats: React.FC<ITweetStatsProps> = ({
+  favorite_count,
+  quote_count,
+  retweet_count,
+  views_count,
+  bookmark_count,
+}) => {
   return (
     <div className={styles.container}>
       <div className={styles.stat}>
@@ -26,6 +32,12 @@ export const TweetStats: React.FC<ITweetStatsProps> = ({ favorite_count, quote_c
           <img src='images/Icon-views.png' alt='like icon' />
         </div>
         {views_count}
+      </div>
+      <div className={styles.stat}>
+        <div className={styles.icon}>
+          <img src='images/Icon-bookmarks.png' alt='like icon' />
+        </div>
+        {bookmark_count}
       </div>
     </div>
   );

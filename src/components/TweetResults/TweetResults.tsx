@@ -26,7 +26,7 @@ export const TweetResults: React.FC<ITweetResultsProps> = ({ imageUrl, tweetdata
       setDetails(tweetdata.details);
       setBody(tweetdata.body);
       const { hashtags, urls, user_mentions, media } = tweetdata.body;
-      setAttributes({ hashtags, urls, user_mentions });
+      setAttributes((prev) => (!hashtags && !urls && !user_mentions ? prev : { hashtags, urls, user_mentions }));
       setMedia(media);
     }
   }, [tweetdata]);

@@ -4,4 +4,5 @@ export interface ITweetStatsProps {
   quote_count: number;
   retweet_count: number;
   views_count: string;
+  bookmark_count: string;
 }

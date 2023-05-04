@@ -28,6 +28,7 @@ export interface ITweetBody {
   symbols: string[] | null;
   media: { type: 'photo' | 'video'; src: string; thumb?: string }[] | null;
   user_mentions: string[] | null;
+  bookmark_count: string | null;
 }
 
 export interface ITweetUser {
@@ -42,6 +43,7 @@ export interface ITweetDetails {
   quote_count: number;
   retweet_count: number;
   views_count: string;
+  bookmark_count: string;
 }
 export interface ITweetData {
   body: ITweetBody;

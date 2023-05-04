@@ -9,6 +9,7 @@
     position: relative;
     display: grid;
     grid-template-columns: 49rem 1fr;
+    grid-template-rows: min-content min-content min-content min-content 1fr;
     column-gap: 3rem;
     row-gap: 2rem;
 
@@ -35,7 +36,7 @@
     & > div:not(:first-child) {
       grid-column: 2 / -1;
       justify-self: start;
-      align-self: center;
+      align-self: start;
     }
 
     .heading {
