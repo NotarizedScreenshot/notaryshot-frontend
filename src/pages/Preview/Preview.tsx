@@ -25,7 +25,7 @@ const PreviewComponent: React.FC<IPreviewProps> = memo(() => {
 
   useEffect(() => {
     console.log('useEffect', tweetId);
-    if (!!tweetId && !!userId) {
+    if (!!tweetId /*&& !!userId*/) {
       setFetcing(true);
       fetchPreviewDataByTweetId(tweetId, userId)
         .then((data) => {

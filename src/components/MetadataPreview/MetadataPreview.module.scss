@@ -2,6 +2,7 @@
   position: relative;
   overflow: hidden;
   z-index: 10;
+  background-color: transparent;
 
   &:last-child {
     top: -2px;

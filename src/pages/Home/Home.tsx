@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { IHomeProps } from './HomeProps';
 import classes from './Home.module.scss';
-import { HeaderOld, TwitterIdForm } from 'components';
+import { HeaderOld, TwitterIdForm, Header, CustomForm } from 'components';
 import { validateBigInt } from 'utils';
 import { useConnectionContext } from 'contexts';
 
@@ -15,13 +15,15 @@ export const Home: React.FC<IHomeProps> = () => {
   };
   return (
     <div className={classes.container}>
-      <HeaderOld />
+      {/* <HeaderOld /> */}
+      <Header />
       <div className={classes.background}></div>
       <div className={classes.content}>
         <h2 className={classes.h2}>Everything is verifiable.</h2>
         <h1 className={classes.h1}>Welcome to Quantum Oracle</h1>
         <div className={classes.formContainer}>
-          <TwitterIdForm onSubmit={submitHandler} validate={validateBigInt} inline />
+          {/* <TwitterIdForm onSubmit={submitHandler} validate={validateBigInt} inline /> */}
+          <CustomForm onSubmit={submitHandler} validate={validateBigInt} />
         </div>
         <p className={classes.p}>
           Quantum Oracle helps create verified screenshots - NFTs proving that whatever their minter found on the net
