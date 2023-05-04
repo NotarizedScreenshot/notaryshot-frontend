@@ -93,7 +93,7 @@ export const PreviewComponent: React.FC<IPreviewProps> = memo(({ isConnected }) 
       if (!tweetId || !trustedHashSum) {
         throw new Error(`error: no tweeId (${tweetId}) or on trustedHashSum (${trustedHashSum})`);
       }
-      const result = await submitNotarization(tweetId, BigInt('0x' + trustedHashSum).toString());
+      const result = await submitNotarization(tweetId);
 
       if (result.status === 'failed') throw new Error(String(result.error!));
 
