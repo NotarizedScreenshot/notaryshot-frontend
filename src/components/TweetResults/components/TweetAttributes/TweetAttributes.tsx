@@ -29,7 +29,7 @@ export const TweetAttributes: React.FC<ITweetAttributesProps> = ({ attributes })
       {attributes && attributes.urls && attributes.urls.length > 0 && (
         <div className={cn(styles.attributes, styles.hashtag)}>
           <div className={styles.icon}>
-            <img src='images/Icon-likes.png' alt='hashtages icon' />
+            <img src='images/urls-Icon.png' alt='hashtages icon' />
           </div>
 
           {attributes.urls.map((url, index) => (
