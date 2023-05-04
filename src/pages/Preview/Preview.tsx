@@ -6,7 +6,7 @@ import { IMetadata, ITweetData } from 'types';
 import { fetchPreviewDataByTweetId } from 'lib/apiClient';
 import { processTweetData, validateBigInt } from 'utils';
 import { createBrowserHistory } from 'history';
-import { useConnectionContext } from 'contexts';
+import { usePreviewContext, useConnectionContext } from 'contexts';
 
 const PreviewComponent: React.FC<IPreviewProps> = memo(() => {
   const [fetching, setFetcing] = useState<boolean>(true);
@@ -15,6 +15,7 @@ const PreviewComponent: React.FC<IPreviewProps> = memo(() => {
   const [prviewImageUrl, setPreviewImageUrl] = useState<string | null>(null);
   const [tweetId, setTweetId] = useState<string | null>(new URLSearchParams(document.location.search).get('tweetid'));
   const { userId } = useConnectionContext();
+  const previewContext = usePreviewContext();
 
   const submitCheckHandler = async (value: string): Promise<boolean> => {
     setTweetId(value);
@@ -26,6 +27,7 @@ const PreviewComponent: React.FC<IPreviewProps> = memo(() => {
   useEffect(() => {
     console.log('useEffect', tweetId);
     if (!!tweetId /*&& !!userId*/) {
+      previewContext.setTweetId(tweetId);
       setFetcing(true);
       fetchPreviewDataByTweetId(tweetId, userId)
         .then((data) => {
@@ -53,7 +55,7 @@ const PreviewComponent: React.FC<IPreviewProps> = memo(() => {
           setFetcing(false);
         });
     }
-  }, [tweetId, userId]);
+  }, [tweetId, userId, previewContext]);
 
   return (
     <div className={styles.container}>
@@ -92,5 +94,6 @@ const PreviewComponent: React.FC<IPreviewProps> = memo(() => {
 });
 
 export const Preview = () => {
+  // const { isConnected, address } = useAccount();
   return <PreviewComponent />;
 };

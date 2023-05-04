@@ -11,6 +11,7 @@ export interface IPreviewHash {
     cid: string | null;
     error?: string | undefined;
   }[];
+  tweetId: string | null;
 }
 
 const initialHashesValue: IPreviewHash = {
@@ -18,17 +19,21 @@ const initialHashesValue: IPreviewHash = {
   previewStampedImageHase: null,
   metadataToSaveCid: null,
   mediaHash: [],
+  tweetId: null,
 };
 
 export const PreviewContext = createContext<{
   hashes: IPreviewHash;
   setHashes: Dispatch<SetStateAction<IPreviewHash>>;
-}>({ hashes: initialHashesValue, setHashes: () => undefined });
+  tweetId: string | null;
+  setTweetId: Dispatch<SetStateAction<string | null>>;
+}>({ hashes: initialHashesValue, setHashes: () => undefined, tweetId: null, setTweetId: () => undefined });
 
 export const usePreviewContext = () => useContext(PreviewContext);
 
 export const PreviewContextProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [hashes, setHashes] = useState<IPreviewHash>(initialHashesValue);
+  const [tweetId, setTweetId] = useState<string | null>(null);
   console.log('context hashes', hashes);
 
   useEffect(() => {
@@ -64,6 +69,8 @@ export const PreviewContextProvider: React.FC<{ children: React.ReactNode }> = (
   const value = {
     hashes,
     setHashes,
+    tweetId,
+    setTweetId,
   };
 
   return <PreviewContext.Provider value={value}>{children}</PreviewContext.Provider>;

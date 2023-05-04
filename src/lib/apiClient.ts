@@ -52,8 +52,7 @@ export const fetchPreviewDataByTweetId = async (
   tweetId: string,
   userId?: string | null,
 ): Promise<IFetchedData | null> => {
-  try {    
-
+  try {
     const response = await fetch(`/previewData?tweetId=${tweetId}&userId=${userId}`);
     return await response.json();
   } catch (error) {
@@ -64,15 +63,13 @@ export const fetchPreviewDataByTweetId = async (
 
 export const submitNotarization = async (
   tweetId: string,
-  trustedHashSumBigIng: string,
 ): Promise<ContractReceipt | { status: 'failed' | 'success'; error?: Error | string | null }> => {
   try {
     const signer = await fetchSigner();
     if (!signer) throw new Error('cant get signer');
     const contract = new Contract(notaryShotContract.address, notaryShotContract.abi, signer);
 
-    // contract.on()
-    const transaction = await contract.submitMint(tweetId, trustedHashSumBigIng);
+    const transaction = await contract.submitTweetMint(tweetId);
     const receipt: ContractReceipt = await transaction.wait();
     console.log(receipt);
 
