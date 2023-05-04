@@ -7,7 +7,7 @@ export const TweetAttributes: React.FC<ITweetAttributesProps> = ({ attributes })
       {attributes && attributes.hashtags && attributes.hashtags.length > 0 && (
         <div className={cn(styles.attributes, styles.hashtags)}>
           <div className={styles.icon}>
-            <img src='/images/hashtag-icon.png' alt='hashtages icon' />
+            <img src='images/hashtag-icon.png' alt='hashtages icon' />
           </div>
           {attributes.hashtags.map((hashtag, index) => (
             <div key={`${hashtag}-${index}`} className={cn(styles.attribute, styles.hashtag)}>{`#${hashtag}`}</div>
@@ -17,7 +17,7 @@ export const TweetAttributes: React.FC<ITweetAttributesProps> = ({ attributes })
       {attributes && attributes.user_mentions && attributes.user_mentions.length > 0 && (
         <div className={cn(styles.attributes, styles.hashtag)}>
           <div className={styles.icon}>
-            <img src='/images/mention-icon.png' alt='hashtages icon' />
+            <img src='images/mention-icon.png' alt='hashtages icon' />
           </div>
           {attributes.user_mentions.map((user_mention, index) => (
             <div key={`${user_mention}-${index}`} className={cn(styles.attribute, styles.user_mention)}>
@@ -29,7 +29,7 @@ export const TweetAttributes: React.FC<ITweetAttributesProps> = ({ attributes })
       {attributes && attributes.urls && attributes.urls.length > 0 && (
         <div className={cn(styles.attributes, styles.hashtag)}>
           <div className={styles.icon}>
-            <img src='/images/urls-icon.png' alt='hashtages icon' />
+            <img src='images/urls-icon.png' alt='hashtages icon' />
           </div>
 
           {attributes.urls.map((url, index) => (
