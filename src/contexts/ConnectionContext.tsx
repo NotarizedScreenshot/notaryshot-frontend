@@ -24,20 +24,18 @@ export const ConnectionContextProvider: React.FC<{ children: React.ReactNode }> 
 
   useEffect(() => {
     socket.on('connected', (socketId) => {
-      console.log('data', socketId);
+      console.log('received socket id:', socketId);
 
-      const savedUserId = window.localStorage.getItem('qaUserId');
+      const savedUserId = window.localStorage.getItem('qoUserId');
 
       if (!savedUserId) {
-        window.localStorage.setItem('qaUserId', socketId);
+        window.localStorage.setItem('qoUserId', socketId);
+        console.log('new user id saved');
       }
 
       socket.emit('userIdSaved', savedUserId ? savedUserId : socketId);
-
-      // if (!!socketId) {
-        setUserId(savedUserId ? savedUserId : socketId);
-        setIsConnected(true);
-      // }
+      setUserId(savedUserId ? savedUserId : socketId);
+      setIsConnected(true);
     });
   }, []);
 
