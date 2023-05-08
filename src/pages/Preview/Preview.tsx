@@ -1,7 +1,7 @@
 import { IPreviewProps } from './PreviewProps';
 import styles from './Preview.module.scss';
 import {
-  CustomForm,
+  TweetIdForm,
   TweetResults,
   Header,
   MetadataPreview,
@@ -24,7 +24,7 @@ export const Preview: React.FC<IPreviewProps> = () => {
       <main className={styles.main}>
         {(isFetching || inProgress) && <Preloader percent={!isFetching ? 10 : 5} />}
         {isShowModal && <Modal />}
-        <CustomForm validate={validateBigInt} />
+        <TweetIdForm validate={validateBigInt} />
         {data && !isFetching && (
           <>
             <div className={styles.bgCircles}></div>

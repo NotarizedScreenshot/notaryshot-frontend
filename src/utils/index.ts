@@ -171,21 +171,6 @@ export const processTweetData = (tweetRawData: any, tweetId: string) => {
   return createTweetData(tweetResults);
 };
 
-// export const getTweetResultsFromTweetRawData = (tweetRawData: any, tweetId: string) => {
-//   console.log('tweetRawData', tweetRawData);
-//   const tweetResponseInstructions = tweetRawData['threaded_conversation_with_injections_v2'].instructions;
-
-//   const tweetTimeLineEntries = tweetResponseInstructions.reduce((acc: any, val: any) => {
-//     return val.type === 'TimelineAddEntries' ? val : acc;
-//   }, null).entries;
-
-//   const itemContents = tweetTimeLineEntries.reduce((acc: any, val: any) => {
-//     return val.entryId === `tweet-${tweetId}` ? val : acc;
-//   }, null).content.itemContent;
-
-//   return itemContents.tweet_results.result;
-// };
-
 export const getTweetResultsFromTweetRawData = (tweetRawDataString: string, tweetId: string) => {
   try {
     const tweetRawDataParsed = JSON.parse(tweetRawDataString);

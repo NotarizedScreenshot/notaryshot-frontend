@@ -1,6 +1,6 @@
 import { IResultsProps } from './ResultsProps';
 import classes from './Results.module.scss';
-import { Header, ImagePreview, Notarize, TweetInfo, NFTInfo, MetadataInfo, DNSMetadataInfo } from 'components';
+import { Header, ImagePreview, Notarize, TweetInfo, NFTInfo, MetadataInfo } from 'components';
 import { memo, useEffect, useState } from 'react';
 
 import { IMetadata, ITweetData } from 'types';
@@ -168,11 +168,7 @@ export const Results: React.FC<IResultsProps> = memo(() => {
             <MetadataInfo data={metadata} />
           </div>
         )}
-        {metadata && (
-          <div className={classes.dnsInfo}>
-            <DNSMetadataInfo data={metadata} />
-          </div>
-        )}
+        {metadata && <div className={classes.dnsInfo}></div>}
       </div>
     </div>
   );

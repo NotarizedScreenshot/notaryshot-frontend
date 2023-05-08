@@ -1,8 +1,8 @@
 import { useRef, useState } from 'react';
 import cn from 'classnames';
 
-import { ICutsomFormProps } from './CustomFormProps';
-import styles from './CustomForm.module.scss';
+import { ICutsomFormProps } from './TweetIdFormProps';
+import styles from './TweetIdForm.module.scss';
 
 import {
   useFetchingDispatchContext,
@@ -12,14 +12,14 @@ import {
   useProgressingContext,
 } from 'contexts';
 
-export const CustomForm: React.FC<ICutsomFormProps> = ({ initialInputData, validate, onSubmitCallback }) => {
+export const TweetIdForm: React.FC<ICutsomFormProps> = ({ initialInputData, validate, onSubmitCallback }) => {
   const dispatch = useFetchingDispatchContext();
   const { isFetching } = useFetchingContext();
   const { userId } = useConnectionContext();
   const { setInProgress, setProgress } = useProgressingContext();
 
   const [urlInputValue, setUrlInputValue] = useState<string>(initialInputData ? initialInputData : '');
-  const [dirtry, setDirty] = useState<boolean>(false);
+  const [dirty, setDirty] = useState<boolean>(false);
   const [isInvalid, setInvalid] = useState<boolean>(false);
   const [error, setError] = useState<string | null>('');
   const [validating, setValidating] = useState<boolean>(false);
@@ -37,7 +37,7 @@ export const CustomForm: React.FC<ICutsomFormProps> = ({ initialInputData, valid
 
   const changeInputHandler: React.ChangeEventHandler<HTMLInputElement> = (event) => {
     setUrlInputValue(event.currentTarget.value);
-    if (dirtry) {
+    if (dirty) {
       validate(event.currentTarget.value)
         .then((data) => {
           setInvalid(false);
@@ -110,7 +110,7 @@ export const CustomForm: React.FC<ICutsomFormProps> = ({ initialInputData, valid
                 fill={validating || isInvalid || isFetching ? '#3797b3' : '#112631'}
               />
             </svg>
-            <p className='p2'>Make screenshot</p>
+            <p className='p2'>Immortalize</p>
           </button>
         </div>
         <div className={cn(styles.error, isInvalid ? null : styles.hidden)}>{error}</div>

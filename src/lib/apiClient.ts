@@ -72,20 +72,22 @@ export const submitNotarization = async (
 
     const transaction = await contract.submitTweetMint(tweetId);
 
-    cb && cb(`Trasaction confirmed, waiting for receipt...`);
-    
+    cb && cb(`Trasaction ${transaction.hash} confirmed, waiting for receipt...`);
+
     const receipt: ContractReceipt = await transaction.wait();
 
     return receipt;
   } catch (error: any) {
-    console.error('submit notarization errro', error);
+    console.error('submit notarization error', error);
     return { status: 'failed', error: error.reason };
   }
 };
 
 export const fetchResults = async (metaDataCid: string) => {
   try {
-    const response = await fetch(`https://ipfs.io/ipfs/${metaDataCid}`);
+    const storageGateway = process.env.REACT_APP_STORAGE_GATEWAY;
+    if (!storageGateway) throw new Error(`No storage gateway address, REACT_APP_STORAGE_GATEWAY = ${storageGateway}`);
+    const response = await fetch(`${process.env.REACT_APP_STORAGE_GATEWAY}${metaDataCid}`);
     const data = await response.json();
     return data;
   } catch (error: any) {
