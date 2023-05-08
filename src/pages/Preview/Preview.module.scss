@@ -1,149 +1,95 @@
 .container {
   position: relative;
-  background-color: #0d0c27;
+  background: var(--backgroundColor);
+  max-width: 137rem;
+  padding: 0 4rem 10rem;
+  margin: auto;
+  min-height: 100vh;
 
-  font-family: monospace;
-  color: white;
-
-  .content {
+  .main {
     position: relative;
-    background-color: #0d0c27;
+    padding-top: 3rem;
+    z-index: 1;
 
-    margin: auto;
-    max-width: 140rem;
-    min-height: 100vh;
-    padding: 8rem 2rem 2rem;
-    .hash {
-      padding: 1rem 0;
-      font-size: 1.8rem;
-      line-height: 1.8rem;
-      display: inline-block;
-      color: yellow;
-      font-weight: 700;
+    .loader {
+      height: 50rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      .spinner {
+        border: 16px solid #15cef78b;
+        border-top: 16px solid var(--backgroundColor);
+        border-radius: 50%;
+        width: 120px;
+        height: 120px;
+        animation: spin 2s linear infinite;
+      }
     }
 
-    .h1 {
-      font-size: 3rem;
-      text-transform: lowercase;
+    .bgCircles {
+      position: absolute;
+      background-image: url(../../../public/images/background-circles.png);
+      background-size: contain;
+      background-repeat: no-repeat;
+      height: 140rem;
+      width: 150rem;
+      top: 0rem;
+      right: -20rem;
+      opacity: 0.5;
+      z-index: 1;
     }
 
-    .advise {
-      font-size: 4rem;
-      text-align: center;
-      padding: 2rem;
-    }
-
-    .requestForm {
-      padding: 2rem 0;
-    }
-
-    .preview {
+    .h2 {
       position: relative;
-      display: grid;
-      padding: 3rem;
-      grid-template-columns: 65% 30%;
-      justify-content: space-between;
-      row-gap: 6rem;
+      margin-top: 3.7rem;
+      z-index: 1;
+    }
+    .spy {
+      position: absolute;
+      right: 40rem;
+      top: 6rem;
+    }
 
-      .getting {
-        font-size: 5rem;
-        color: #adbbff76;
-        padding: 2rem 0;
-      }
+    .message {
+      position: absolute;
+      // z-index: 1;
+      top: 125px;
+      right: -30px;
+      width: 520px;
+      height: 120px;
+      background-image: url('../../../public/images/message-bg.png');
 
-      .image {
-        position: relative;
-        text-align: center;
-        min-height: 50rem;
+      background-repeat: no-repeat;
+      background-position-x: -15px;
+      background-position-y: -3px;
 
-        .hash {
-          position: absolute;
-          bottom: -3rem;
-          left: 0;
-        }
+      text-align: center;
 
-        img {
-          width: 100%;
-        }
-      }
+      display: flex;
+      align-items: center;
+      justify-content: center;
 
-      .empty {
-        border: 10px dashed #adbbff76;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      }
+      .text {
+        font-family: 'Russo One';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 15px;
+        line-height: 150%;
+        color: #15cef7;
+        width: 410px;
 
-      .qr {
-        justify-self: center;
-        width: 30rem;
-        min-height: 30rem;
-        overflow: hidden;
-        padding: 3rem 0;
-
-        .empty {
-          height: 30rem;
-          font-size: 3rem;
-          color: #adbbff76;
-          text-align: center;
-          padding: 1rem;
-        }
-
-        & *:not(:last-child) {
-          margin-bottom: 2rem;
-        }
-        .qrImage {
-          width: 100%;
-          border-radius: 10px;
-        }
-        .qrDescription,
-        .notice {
-          padding: 1rem;
-          font-size: 1.8rem;
-          font-weight: 700;
-        }
-        .notice {
-          color: #adbbff76;
-          text-align: center;
-        }
-        .notarize {
-          .button {
-            background-color: #7c5ae4;
-            border: 2px solid #7c5ae4;
-            border-radius: 5px;
-            color: white;
-            font-size: 2.5rem;
-            line-height: 2.5rem;
-            font-weight: 700;
-            width: 100%;
-            padding: 2rem 3.5rem;
-            cursor: pointer;
-            transition: all 0.2s;
-
-            &:disabled,
-            &:disabled:hover,
-            &:disabled:active {
-              cursor: not-allowed;
-              background-color: #adbbff76;
-              border: none;
-              color: gray;
-              opacity: 0.6;
-            }
-
-            &:hover,
-            :active {
-              color: white;
-              background-color: #0d0c27;
-              border: 2px solid #7c5ae4;
-            }
-          }
-        }
-      }
-
-      .meta {
-        min-height: 40rem;
-        grid-column: 1 / -1;
+        border-radius: 100px;
       }
     }
+  }
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
   }
 }

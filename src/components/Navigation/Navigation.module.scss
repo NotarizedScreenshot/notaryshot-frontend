@@ -8,5 +8,15 @@
   .navElement {
     padding: 0 2rem;
     font-weight: 700;
+    @media screen and (max-width: 425px) {
+      display: none;
+    }
+
+    &.small {
+      display: none;
+      @media screen and (max-width: 425px) {
+        display: block;
+      }
+    }
   }
 }

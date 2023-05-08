@@ -1,7 +1,14 @@
 # notaryshot-frontend
 
-The amazing Notarized Screenshot UI is here. Generate a certified copy of what you can see on
-your screen
+The amazing Notarized Screenshot UI is here. Generate a certified copy of what you can see on your screen
+
+## Before run
+
+Add .env file and define storage gateway (ipfs for default):
+
+```
+REACT_APP_STORAGE_GATEWAY=https://ipfs.io/ipfs/
+```
 
 ## Dev Run
 

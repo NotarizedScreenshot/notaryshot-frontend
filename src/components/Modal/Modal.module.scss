@@ -1,0 +1,14 @@
+.container {
+  background: rgba(19, 19, 20, 0.8);
+  backdrop-filter: blur(7.5px);
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 9000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}

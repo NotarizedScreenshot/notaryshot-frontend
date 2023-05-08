@@ -1,10 +1,13 @@
 {
-  "address": "0xA567349bDd3D4F2C3E25f65745a020162C202ef2",
+  "address": "0x9fe7A2d575205cbcA433E22e9983f68EF1E52ecE",
   "abi": [
     {
       "inputs": [
+        { "internalType": "address", "name": "_linkToken", "type": "address" },
         { "internalType": "address", "name": "_oracle", "type": "address" },
-        { "internalType": "string", "name": "_jobid", "type": "string" }
+        { "internalType": "string", "name": "_jobid", "type": "string" },
+        { "internalType": "string", "name": "_name", "type": "string" },
+        { "internalType": "string", "name": "_symbol", "type": "string" }
       ],
       "stateMutability": "nonpayable",
       "type": "constructor"
@@ -31,67 +34,29 @@
     },
     {
       "anonymous": false,
-      "inputs": [
-        { "indexed": true, "internalType": "bytes32", "name": "id", "type": "bytes32" }
-      ],
+      "inputs": [{ "indexed": true, "internalType": "bytes32", "name": "id", "type": "bytes32" }],
       "name": "ChainlinkCancelled",
       "type": "event"
     },
     {
       "anonymous": false,
-      "inputs": [
-        { "indexed": true, "internalType": "bytes32", "name": "id", "type": "bytes32" }
-      ],
+      "inputs": [{ "indexed": true, "internalType": "bytes32", "name": "id", "type": "bytes32" }],
       "name": "ChainlinkFulfilled",
       "type": "event"
     },
     {
       "anonymous": false,
-      "inputs": [
-        { "indexed": true, "internalType": "bytes32", "name": "id", "type": "bytes32" }
-      ],
+      "inputs": [{ "indexed": true, "internalType": "bytes32", "name": "id", "type": "bytes32" }],
       "name": "ChainlinkRequested",
       "type": "event"
     },
     {
       "anonymous": false,
       "inputs": [
-        { "indexed": true, "internalType": "address", "name": "requester", "type": "address" },
-        { "indexed": false, "internalType": "string", "name": "url", "type": "string" },
-        {
-          "indexed": false,
-          "internalType": "uint256",
-          "name": "expectedSha256sum",
-          "type": "uint256"
-        },
-        {
-          "indexed": false,
-          "internalType": "uint256",
-          "name": "actualSha256sum",
-          "type": "uint256"
-        }
+        { "indexed": true, "internalType": "address", "name": "minter", "type": "address" },
+        { "indexed": false, "internalType": "uint64", "name": "tweetId", "type": "uint64" }
       ],
-      "name": "MintRequestRefused",
-      "type": "event"
-    },
-    {
-      "anonymous": false,
-      "inputs": [
-        { "indexed": true, "internalType": "address", "name": "requester", "type": "address" },
-        { "indexed": false, "internalType": "string", "name": "url", "type": "string" },
-        { "indexed": false, "internalType": "uint256", "name": "sha256sum", "type": "uint256" }
-      ],
-      "name": "RequestContentHashFulfilled",
-      "type": "event"
-    },
-    {
-      "anonymous": false,
-      "inputs": [
-        { "indexed": true, "internalType": "address", "name": "requester", "type": "address" },
-        { "indexed": false, "internalType": "string", "name": "url", "type": "string" },
-        { "indexed": false, "internalType": "uint256", "name": "sha256sum", "type": "uint256" }
-      ],
-      "name": "RequestContentHashSent",
+      "name": "SubmitTweetMint",
       "type": "event"
     },
     {
@@ -102,6 +67,17 @@
         { "indexed": true, "internalType": "uint256", "name": "tokenId", "type": "uint256" }
       ],
       "name": "Transfer",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        { "indexed": false, "internalType": "uint256", "name": "id", "type": "uint256" },
+        { "indexed": true, "internalType": "address", "name": "minter", "type": "address" },
+        { "indexed": false, "internalType": "uint64", "name": "tweetId", "type": "uint64" },
+        { "indexed": false, "internalType": "string", "name": "_metadataCid", "type": "string" }
+      ],
+      "name": "TweetMint",
       "type": "event"
     },
     {
@@ -124,7 +100,6 @@
     {
       "inputs": [
         { "internalType": "bytes32", "name": "_requestId", "type": "bytes32" },
-        { "internalType": "uint256", "name": "_sha256sum", "type": "uint256" },
         { "internalType": "string", "name": "_metadataCid", "type": "string" }
       ],
       "name": "fulfillContentHash",
@@ -153,6 +128,13 @@
       "inputs": [],
       "name": "jobId",
       "outputs": [{ "internalType": "bytes32", "name": "", "type": "bytes32" }],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "latestTokenId",
+      "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
       "stateMutability": "view",
       "type": "function"
     },
@@ -186,11 +168,10 @@
     },
     {
       "inputs": [{ "internalType": "bytes32", "name": "", "type": "bytes32" }],
-      "name": "requestIdToAddress",
+      "name": "requestData",
       "outputs": [
-        { "internalType": "address", "name": "requester", "type": "address" },
-        { "internalType": "string", "name": "url", "type": "string" },
-        { "internalType": "uint256", "name": "sha256sum", "type": "uint256" }
+        { "internalType": "address", "name": "minter", "type": "address" },
+        { "internalType": "uint64", "name": "tweetId", "type": "uint64" }
       ],
       "stateMutability": "view",
       "type": "function"
@@ -236,11 +217,15 @@
       "type": "function"
     },
     {
-      "inputs": [
-        { "internalType": "string", "name": "_url", "type": "string" },
-        { "internalType": "uint256", "name": "_urlContentHash", "type": "uint256" }
-      ],
-      "name": "submitMint",
+      "inputs": [{ "internalType": "address", "name": "_oracle", "type": "address" }],
+      "name": "setOracle",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [{ "internalType": "uint64", "name": "tweetId", "type": "uint64" }],
+      "name": "submitTweetMint",
       "outputs": [],
       "stateMutability": "nonpayable",
       "type": "function"

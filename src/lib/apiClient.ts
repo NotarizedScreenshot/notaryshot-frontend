@@ -1,4 +1,8 @@
-import { IMetadata, ITweetData } from 'types';
+import { fetchSigner } from '@wagmi/core';
+import { Contract, ContractReceipt } from 'ethers';
+import { IFetchedData, IMetadata } from 'types';
+
+import notaryShotContract from 'contracts/screenshot-manager.json';
 
 export const fetchMetadataById = async (tweetId: string): Promise<IMetadata | null> => {
   try {
@@ -13,7 +17,7 @@ export const fetchMetadataById = async (tweetId: string): Promise<IMetadata | nu
   }
 };
 
-export const fetchTweetDatabyId = async (tweetId: string): Promise<ITweetData | null> => {
+export const fetchTweetDatabyId = async (tweetId: string): Promise<any | null> => {
   try {
     const response = await fetch(`/tweetData?tweetId=${tweetId}`);
     if (!response.ok) {
@@ -44,25 +48,50 @@ export const fetchPreviewImageByID = async (tweetId: string): Promise<Blob | nul
   }
 };
 
-export const fetchPreviewDataByTweetId = async (tweetId: string) => {
+export const fetchPreviewDataByTweetId = async (
+  tweetId: string,
+  userId?: string | null,
+): Promise<IFetchedData | null> => {
   try {
-    const imageBlob = await fetchPreviewImageByID(tweetId);
-    if (!imageBlob) {
-      return null;
-    }
-    const metaData = await fetchMetadataById(tweetId);
-    const tweetData = await fetchTweetDatabyId(tweetId);
-
-    return { imageBlob, metaData, tweetData };
+    const response = await fetch(`/previewData?tweetId=${tweetId}&userId=${userId}`);
+    return await response.json();
   } catch (error) {
     console.error('fetchPreviewData error', error);
     return null;
   }
 };
 
-export const submitNotarization = async (tweetId: string) => {
-  //TODO: add notarization handler
-  return new Promise((res) => {
-    setTimeout(() => res(true), 1000);
-  });
+export const submitNotarization = async (
+  tweetId: string,
+  cb?: (data: any) => void,
+): Promise<ContractReceipt | { status: 'failed' | 'success'; error?: string | null }> => {
+  try {
+    const signer = await fetchSigner();
+    if (!signer) throw new Error('cant get signer');
+    const contract = new Contract(notaryShotContract.address, notaryShotContract.abi, signer);
+
+    const transaction = await contract.submitTweetMint(tweetId);
+
+    cb && cb(`Trasaction ${transaction.hash} confirmed, waiting for receipt...`);
+
+    const receipt: ContractReceipt = await transaction.wait();
+
+    return receipt;
+  } catch (error: any) {
+    console.error('submit notarization error', error);
+    return { status: 'failed', error: error.reason };
+  }
+};
+
+export const fetchResults = async (metaDataCid: string) => {
+  try {
+    const storageGateway = process.env.REACT_APP_STORAGE_GATEWAY;
+    if (!storageGateway) throw new Error(`No storage gateway address, REACT_APP_STORAGE_GATEWAY = ${storageGateway}`);
+    const response = await fetch(`${process.env.REACT_APP_STORAGE_GATEWAY}${metaDataCid}`);
+    const data = await response.json();
+    return data;
+  } catch (error: any) {
+    console.error('fetchResults', error);
+    return null;
+  }
 };

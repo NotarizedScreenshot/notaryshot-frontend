@@ -1,0 +1,19 @@
+.container {
+  display: flex;
+  align-items: center;
+  background: #131314;
+  border-radius: 10px;
+  height: 44px;
+  padding: 10px;
+
+  .p2 {
+    font-family: General Sans;
+    font-size: 1.6rem;
+    font-weight: 400;
+    line-height: 2.4rem;
+    letter-spacing: 0;
+    text-align: left;
+    color: #6c7f83;
+    margin-left: 1rem;
+  }
+}

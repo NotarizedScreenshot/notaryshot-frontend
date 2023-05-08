@@ -1,9 +1,5 @@
-import { IMetadata } from 'types';
-
 export interface IMetadataPreviewProps {
   children?: React.ReactNode;
-  data: IMetadata;
-  preview?: boolean;
-  dnsHash?: string;
-  headersHash?: string;
+  title: string;
+  blocked: boolean;
 }

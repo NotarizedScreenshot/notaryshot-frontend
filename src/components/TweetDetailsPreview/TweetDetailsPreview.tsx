@@ -1,3 +1,4 @@
+import cn from 'classnames';
 import { ITweetDetailsPreviewProps } from './TweetDetailsPreviewProps';
 import classes from './TweetDetailsPreview.module.scss';
 import { Fragment } from 'react';
@@ -13,13 +14,29 @@ const renderBodyElements = (key: keyof ITweetBody, body: ITweetBody) => {
       <div className={classes.value}>
         {key === 'media' &&
           (!isTweetBodyElementEmpty(key, body) ? (
-            body[key]?.map((url: string, index: number) => {
+            body[key]?.map((mediaEl, index: number) => {
               return (
-                <Fragment key={url + String(index)}>
-                  <div className={classes.link}>{url}</div>
-                  <div className={classes.image}>
-                    <img src={url} alt={key} />
-                  </div>
+                <Fragment key={mediaEl.src + String(index)}>
+                  {mediaEl.type === 'photo' && (
+                    <>
+                      <div className={classes.link}>{mediaEl.src}</div>
+                      <div className={classes.image}>
+                        <img src={mediaEl.src} alt={key} />
+                      </div>
+                    </>
+                  )}
+                  {mediaEl.type === 'video' && (
+                    <>
+                      <div className={classes.link}>{mediaEl.src}</div>
+                      <div className={classes.image}>
+                        <img src={mediaEl.thumb} alt={key} />
+                        <video controls>
+                          <source src={mediaEl.src} type='video/mp4' />
+                          Your browser does not support the video tag.
+                        </video>
+                      </div>
+                    </>
+                  )}
                 </Fragment>
               );
             })
@@ -85,12 +102,7 @@ const renderBodyElements = (key: keyof ITweetBody, body: ITweetBody) => {
   );
 };
 
-export const TweetDetailsPreview: React.FC<ITweetDetailsPreviewProps> = ({
-  tweetData,
-  tweetStatsHash,
-  tweetUserInfoHash,
-  tweetBodyDetailsHash,
-}) => {
+export const TweetDetailsPreview: React.FC<ITweetDetailsPreviewProps> = ({ tweetData, tweetDataHash }) => {
   const { details, user, body } = tweetData;
   const detailsKeys = !!details ? (Object.keys(details) as [keyof ITweetDetails]) : null;
   const userKeys = !!user ? (Object.keys(user) as [keyof ITweetUser]) : null;
@@ -100,7 +112,7 @@ export const TweetDetailsPreview: React.FC<ITweetDetailsPreviewProps> = ({
     <div className={classes.container}>
       <div className={classes.dataBlock}>
         <div className={classes.header}>Tweet stat details</div>
-        {!!detailsKeys && <div className={classes.hash}>hashSum: {tweetStatsHash}</div>}
+        {/* {!!detailsKeys && <div className={classes.hash}>hashSum: 0x{tweetDataHash}</div>} */}
         {!!detailsKeys ? (
           detailsKeys.map((key, index) => (
             <div className={classes.dataSubBlock} key={key + String(index)}>
@@ -114,7 +126,6 @@ export const TweetDetailsPreview: React.FC<ITweetDetailsPreviewProps> = ({
       </div>
       <div className={classes.dataBlock}>
         <div className={classes.header}>Tweet user info</div>
-        {!!userKeys && <div className={classes.hash}>hashSum: {tweetUserInfoHash}</div>}
         {!!userKeys ? (
           userKeys.map((key, index) => (
             <div className={classes.dataSubBlock} key={key + String(index)}>
@@ -122,7 +133,7 @@ export const TweetDetailsPreview: React.FC<ITweetDetailsPreviewProps> = ({
               {key.includes('image') ? (
                 <div className={classes.value}>
                   <div className={classes.link}>{user[key]}</div>
-                  <div className={classes.image}>
+                  <div className={cn(classes.image, classes.userpic)}>
                     <img src={user[key]} alt={key} />
                   </div>
                 </div>
@@ -137,7 +148,6 @@ export const TweetDetailsPreview: React.FC<ITweetDetailsPreviewProps> = ({
       </div>
       <div className={classes.dataBlock}>
         <div className={classes.header}>Tweet body details</div>
-        {!!bodyKeys && <div className={classes.hash}>hashSum: {tweetBodyDetailsHash}</div>}
         {!!bodyKeys ? (
           bodyKeys.map((key) => {
             return renderBodyElements(key, body);

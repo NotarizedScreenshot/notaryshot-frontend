@@ -9,6 +9,7 @@ export const tweetdataStub1: ITweetData = {
     symbols: [],
     user_mentions: [],
     card: null,
+    bookmark_count: null,
   },
   user: { profile_image_url_https: '', name: '', screen_name: '' },
   details: {
@@ -17,6 +18,7 @@ export const tweetdataStub1: ITweetData = {
     views_count: '0',
     quote_count: 0,
     retweet_count: 0,
+    bookmark_count: '0',
   },
 };
 
@@ -35,6 +37,7 @@ export const tweetBodyStubEmpty1: ITweetBody = {
   media: [],
   symbols: null,
   user_mentions: null,
+  bookmark_count: '',
 };
 export const tweetBodyStubFull1: ITweetBody = {
   card: {
@@ -48,7 +51,11 @@ export const tweetBodyStubFull1: ITweetBody = {
   full_text: 'some tests',
   urls: ['url'],
   hashtags: ['#1', '#2'],
-  media: ['url1', 'url2'],
+  media: [
+    { type: 'video', src: 'string', thumb: 'string' },
+    { type: 'video', src: 'string1', thumb: 'string1' },
+  ],
   symbols: ['symb1', 'symb2'],
   user_mentions: ['ment1', 'ment2'],
+  bookmark_count: null,
 };
