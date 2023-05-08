@@ -1,6 +1,6 @@
 import { IResultsProps } from './ResultsProps';
 import classes from './Results.module.scss';
-import { HeaderOld, ImagePreview, Notarize, TweetInfo, NFTInfo, MetadataInfo, DNSMetadataInfo } from 'components';
+import { Header, ImagePreview, Notarize, TweetInfo, NFTInfo, MetadataInfo, DNSMetadataInfo } from 'components';
 import { memo, useEffect, useState } from 'react';
 
 import { IMetadata, ITweetData } from 'types';
@@ -15,6 +15,8 @@ import { Contract } from 'ethers';
 import { fetchSigner } from '@wagmi/core';
 
 import notaryShotContract from 'contracts/screenshot-manager.json';
+
+////// IGNORE ON REVIEW, FOR TESTING ONLY.
 
 export const Results: React.FC<IResultsProps> = memo(() => {
   const [tweetId, setTweetId] = useState<string | null>(new URLSearchParams(document.location.search).get('tweetid'));
@@ -49,37 +51,23 @@ export const Results: React.FC<IResultsProps> = memo(() => {
   // 1634098418095095810;
   // bafkreidddpqqmd22ectsv6qpsusdbkdfm4lyzop7hpowywzlwwl6ozomeu
 
-  fetchSigner().then((signer) => {
-    if (!signer) {
-      console.log('no signer');
-      return;
-    }
-    console.log('has signer');
-    const contract = new Contract(notaryShotContract.address, notaryShotContract.abi, signer);
+  fetchSigner()
+    .then((signer) => {
+      if (!signer) {
+        console.log('no signer');
+        return;
+      }
+      const contract = new Contract(notaryShotContract.address, notaryShotContract.abi, signer);
 
-    // contract.on()
-    // const transaction = await contract.submitMint(tweetId, trustedHashSumBigIng);
-    // const receipt: ContractReceipt = await transaction.wait();
-    // console.log(receipt);
-
-    contract.on('RequestContentHashSent', (...args) => {
-      // console.log('on RequestContentHashSent');
-      // console.log('args', args);
+      contract.on('Transfer', (...args) => {
+        const x = args[2] as BigInt;
+        console.log(x.toString());
+        setNftHashSum(x.toString());
+      });
+    })
+    .catch((error) => {
+      console.error(error);
     });
-    contract.on('Transfer', (...args) => {
-      console.log('on Transfer results');
-      console.log('args', args);
-      console.log('args', args);
-      console.log(args[2]);
-      const x = args[2] as BigInt;
-      console.log(x.toString());
-      setNftHashSum(x.toString());
-    });
-    contract.on('ChainlinkRequested', (...args) => {
-      // console.log('on ChainlinkRequested');
-      // console.log('args', args);
-    });
-  });
 
   useEffect(() => {
     fetchResults('bafkreigvaz5lobdenten66j64jdu7el6f5o2zj2ddfqesxvghjbvngmyia').then((data) => {
@@ -153,7 +141,7 @@ export const Results: React.FC<IResultsProps> = memo(() => {
   return (
     <div className={classes.container}>
       {isFettingResults && <Glitch />}
-      <HeaderOld />
+      <Header />
       <div className={classes.content}>
         <h1 className={classes.h1}>Quantum oracle</h1>
         {/* TODO: make form working */}

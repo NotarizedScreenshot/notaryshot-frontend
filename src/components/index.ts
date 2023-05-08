@@ -1,5 +1,4 @@
 export * from './UrlForm';
-export * from './HeaderOld';
 export * from './ScreenshotPreview';
 export * from './Navigation';
 export * from './MetadataPreviewOld';
