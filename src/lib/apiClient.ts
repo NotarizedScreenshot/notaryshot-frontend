@@ -63,36 +63,23 @@ export const fetchPreviewDataByTweetId = async (
 
 export const submitNotarization = async (
   tweetId: string,
-): Promise<ContractReceipt | { status: 'failed' | 'success'; error?: Error | string | null }> => {
+  cb?: (data: any) => void,
+): Promise<ContractReceipt | { status: 'failed' | 'success'; error?: string | null }> => {
   try {
     const signer = await fetchSigner();
     if (!signer) throw new Error('cant get signer');
     const contract = new Contract(notaryShotContract.address, notaryShotContract.abi, signer);
 
     const transaction = await contract.submitTweetMint(tweetId);
-    const receipt: ContractReceipt = await transaction.wait();
-    console.log(receipt);
 
-    // contract.on('RequestContentHashSent', (...args) => {
-    //   console.log('on RequestContentHashSent');
-    //   console.log('args', args);
-    // });
-    // contract.on('Transfer', (...args) => {
-    // console.log('on Transfer');
-    // console.log('args', args);
-    // console.log(args[2]);
-    // const x = args[2] as BigInt;
-    // console.log(x.toString());
-    // });
-    // contract.on('ChainlinkRequested', (...args) => {
-    //   console.log('on ChainlinkRequested');
-    //   console.log('args', args);
-    // });
+    cb && cb(`Trasaction confirmed, waiting for receipt...`);
+    
+    const receipt: ContractReceipt = await transaction.wait();
 
     return receipt;
-  } catch (error) {
-    console.error(error);
-    return { status: 'failed', error: error instanceof Error ? error.message : String(error) };
+  } catch (error: any) {
+    console.error('submit notarization errro', error);
+    return { status: 'failed', error: error.reason };
   }
 };
 

@@ -16,3 +16,6 @@ export * from './Header';
 export * from './CustomConnectButton';
 export * from './CustomForm';
 export * from './TweetResults';
+export * from './Preloader';
+export * from './Modal';
+export * from './TransactionStatus';

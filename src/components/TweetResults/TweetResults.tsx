@@ -13,7 +13,7 @@ import {
 import { useEffect, useState } from 'react';
 import { ITweetAttributes, ITweetBody, ITweetDetails, ITweetUser } from 'types';
 
-export const TweetResults: React.FC<ITweetResultsProps> = ({ imageUrl, tweetdata }) => {
+export const TweetResults: React.FC<ITweetResultsProps> = ({ imageUrl, tweetdata, tweetId }) => {
   const [user, setUser] = useState<ITweetUser | null>(null);
   const [details, setDetails] = useState<ITweetDetails | null>(null);
   const [attributes, setAttributes] = useState<ITweetAttributes | null>(null);
@@ -50,7 +50,7 @@ export const TweetResults: React.FC<ITweetResultsProps> = ({ imageUrl, tweetdata
         {details && <TweetStats {...details} />}
         {media && media.length > 0 && <TweetMedia media={media} />}
       </div>
-      <NotarizeButton />
+      <NotarizeButton tweetId={tweetId} />
     </div>
   );
 };
