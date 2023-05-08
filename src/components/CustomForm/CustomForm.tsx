@@ -18,9 +18,7 @@ export const CustomForm: React.FC<ICutsomFormProps> = ({ initialInputData, valid
   const { userId } = useConnectionContext();
   const { setInProgress, setProgress } = useProgressingContext();
 
-  const [urlInputValue, setUrlInputValue] = useState<string>(
-    initialInputData ? initialInputData : '1654807463068151808',
-  );
+  const [urlInputValue, setUrlInputValue] = useState<string>(initialInputData ? initialInputData : '');
   const [dirtry, setDirty] = useState<boolean>(false);
   const [isInvalid, setInvalid] = useState<boolean>(false);
   const [error, setError] = useState<string | null>('');
