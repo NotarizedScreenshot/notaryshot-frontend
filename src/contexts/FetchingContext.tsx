@@ -3,7 +3,6 @@ import { createContext, useContext, useReducer } from 'react';
 import { IMetadata, ITweetData } from 'types';
 import { processTweetData } from 'utils';
 
-
 export interface IFetchingContextState {
   isFetching: boolean;
   tweetId: string | null;
@@ -46,6 +45,7 @@ export const fetchPreviewData = async (dispatch: React.Dispatch<TFetcingAction>,
   try {
     dispatch({ type: EFetchingActionTypes.setFetchingStart });
     const result = await fetchPreviewDataByTweetId(tweetId, userId);
+    
     if (!!result) {
       const { imageUrl, tweetdata, metadata } = result;
 

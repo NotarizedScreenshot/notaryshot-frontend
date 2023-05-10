@@ -16,6 +16,7 @@ import {
   FetchingContextProvider,
   ProgressingContextProvider,
   ModalContextProvider,
+  TransactionContextProvider,
 } from 'contexts';
 
 const { chains, provider } = configureChains([polygon, mainnet], [publicProvider()]);
@@ -57,11 +58,13 @@ root.render(
         <FetchingContextProvider>
           <PreviewContextProvider>
             <ProgressingContextProvider>
-              <WagmiConfig client={wagmiClient}>
-                <RainbowKitProvider chains={chains} theme={darkTheme()}>
-                  <RouterProvider router={router} />
-                </RainbowKitProvider>
-              </WagmiConfig>
+              <TransactionContextProvider>
+                <WagmiConfig client={wagmiClient}>
+                  <RainbowKitProvider chains={chains} theme={darkTheme()}>
+                    <RouterProvider router={router} />
+                  </RainbowKitProvider>
+                </WagmiConfig>
+              </TransactionContextProvider>
             </ProgressingContextProvider>
           </PreviewContextProvider>
         </FetchingContextProvider>

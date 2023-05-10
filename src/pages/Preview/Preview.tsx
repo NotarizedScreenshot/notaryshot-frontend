@@ -40,11 +40,14 @@ export const Preview: React.FC<IPreviewProps> = () => {
             <TweetResults imageUrl={data.imageUrl} tweetdata={data.tweetdata} tweetId={tweetId} />
             <MetadataPreview
               blocked={!data.metadata}
-              title={`Http headers meta${!data.metadata && ': metadata unavailable'}`}
+              title={`Http headers meta${!data.metadata ? ': data unavailable' : ''}`}
             >
               {data.metadata && <HTTPMetadata metadata={data.metadata} />}
             </MetadataPreview>
-            <MetadataPreview blocked={!data.metadata} title='DNS headers meta'>
+            <MetadataPreview
+              blocked={!data.metadata}
+              title={`DNS headers meta${!data.metadata ? ': data unavailable' : ''}`}
+            >
               {data.metadata && <DNSMetadata metadata={data.metadata} />}
             </MetadataPreview>
           </>
