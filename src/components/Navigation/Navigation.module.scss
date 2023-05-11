@@ -1,9 +1,17 @@
 .container {
-  background-color: #040416;
   color: white;
   display: flex;
   justify-content: flex-start;
   align-items: center;
+
+  a {
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 24px;
+    letter-spacing: 0em;
+    text-align: left;
+    color: white;
+  }
 
   .navElement {
     padding: 0 2rem;

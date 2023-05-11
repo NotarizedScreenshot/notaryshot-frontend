@@ -15,3 +15,5 @@ export * from './Preloader';
 export * from './Modal';
 export * from './TransactionStatus';
 export * from './GatewayLink';
+export * from './Hero';
+export * from './Button';

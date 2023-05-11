@@ -6,21 +6,29 @@ export const Navigation: React.FC<INavigationProps> = () => {
   return (
     <div className={classes.container} data-testid='navigation'>
       <div className={classes.navElement}>
-        <Link to='/'>Home</Link>
-      </div>
-      {/* <div className={classes.navElement}>
-        <Link to='#'>Team</Link>
-      </div> */}
-      <div className={classes.navElement}>
-        <Link to='https://github.com/NotarizedScreenshot' target='_blank'>
-          Git
-        </Link>
+        <a href='https://github.com/NotarizedScreenshot' target='_blank' rel='noreferrer'>
+          Discord
+        </a>
       </div>
       <div className={classes.navElement}>
-        <Link to='/preview'>App</Link>
+        <a href='https://github.com/NotarizedScreenshot' target='_blank' rel='noreferrer'>
+          Docs
+        </a>
       </div>
-      <div className={cn(classes.navElement, classes.small)}>
-        <Link to='/'>Home</Link>
+      <div className={classes.navElement}>
+        <a href='https://github.com/NotarizedScreenshot' target='_blank' rel='noreferrer'>
+          GitHub
+        </a>
+      </div>
+      <div className={classes.navElement}>
+        <a href='https://github.com/NotarizedScreenshot' target='_blank' rel='noreferrer'>
+          Twitter
+        </a>
+      </div>
+      <div className={classes.navElement}>
+        <a href='https://github.com/NotarizedScreenshot' target='_blank' rel='noreferrer'>
+          E-mail
+        </a>
       </div>
     </div>
   );

@@ -1,0 +1,19 @@
+.button {
+  background: #15cef7;
+  box-shadow: 0px 5px 50px rgba(6, 10, 20, 0.2), inset 6px 6px 20px rgba(8, 11, 24, 0.3),
+    inset -6px -10px 20px rgba(255, 255, 255, 0.05);
+  border-radius: 100px;
+  border: none;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 1.8rem;
+  line-height: 160%;
+
+  color: #112631;
+  padding: 1rem 6rem;
+  height: 5.5rem;
+  width: 26rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
