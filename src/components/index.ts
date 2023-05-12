@@ -17,3 +17,6 @@ export * from './TransactionStatus';
 export * from './GatewayLink';
 export * from './Hero';
 export * from './Button';
+export * from './TryIt';
+export * from './CircledNumber';
+export * from './ProcessIcon';

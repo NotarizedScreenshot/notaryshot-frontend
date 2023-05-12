@@ -1,13 +1,20 @@
 import { IHomeProps } from './HomeProps';
-import { Header, Hero, TweetIdForm } from 'components';
+import { Header, Hero, TweetIdForm, TryIt } from 'components';
 import { validateBigInt } from 'utils';
-import classes from './Home.module.scss';
+import styles from './Home.module.scss';
+// import {  } from 'components/TryIt';
 
 export const Home: React.FC<IHomeProps> = () => {
   return (
-    <div className={classes.container}>
-      <Header />
-      <Hero />
+    <div className={styles.container}>
+      <div className={styles.background}>
+        <div className={styles.gradientBlack} />
+      </div>
+      <div className={styles.content}>
+        <Header />
+        <Hero />
+        <TryIt />
+      </div>
       {/* <div className={classes.background}></div>
       <div className={classes.content}>
         <h2 className={classes.h2}>Everything is verifiable.</h2>

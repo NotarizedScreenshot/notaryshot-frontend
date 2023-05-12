@@ -1,0 +1,139 @@
+.container {
+  background: rgba(23, 23, 28, 0.6);
+  box-shadow: inset -2px -2px 4px rgba(255, 255, 255, 0.08), inset 2px 2px 4px rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(13px);
+
+  border-radius: 20px;
+
+  padding: 4rem 4rem 6rem;
+
+  .ol {
+    padding: 4rem 0;
+    list-style-type: none;
+    margin: 0;
+
+    display: flex;
+    justify-content: space-between;
+
+    .li {
+      max-width: 30rem;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      .p2 {
+        font-style: normal;
+        padding: 1rem 0;
+        font-weight: 400;
+        font-size: 1.6rem;
+        line-height: 150%;
+      }
+    }
+  }
+
+  .description {
+    display: flex;
+    justify-content: space-between;
+    .process {
+      max-width: 59rem;
+      .h2 {
+        font-size: 4.8rem;
+        font-weight: 600;
+        line-height: 5.8rem;
+        padding: 0;
+        margin-bottom: 2rem;
+      }
+      .p2 {
+        font-size: 1.6rem;
+        font-weight: 400;
+        line-height: 2.4rem;
+        margin-bottom: 4rem;
+      }
+
+      .processOrder {
+        display: flex;
+        justify-content: space-between;
+
+        .divider {
+          padding-top: 4rem;
+
+          img {
+            transform: translateY(-50%);
+          }
+        }
+      }
+    }
+    .web3note {
+      max-width: 46rem;
+      .rects {
+        display: flex;
+        margin-bottom: 2rem;
+        .spy {
+          width: 27rem;
+          height: 21rem;
+
+          background: rgba(41, 41, 50, 0.7) url('../../../public/images/rect-glow.png');
+          box-shadow: inset -2px -2px 4px rgba(255, 255, 255, 0.08), inset 2px 2px 4px rgba(255, 255, 255, 0.08);
+          backdrop-filter: blur(5px);
+
+          border-radius: 20px;
+
+          position: relative;
+          img {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+          }
+        }
+        .web {
+          position: relative;
+          width: 18.2rem;
+          height: 9.9rem;
+          right: -0.5rem;
+
+          top: 5rem;
+
+          background: rgba(41, 41, 50, 0.7);
+
+          box-shadow: inset -2px -2px 4px rgba(255, 255, 255, 0.08), inset 2px 2px 4px rgba(255, 255, 255, 0.08);
+          backdrop-filter: blur(5px);
+
+          border-radius: 20px;
+          transform: rotate(15deg);
+
+          font-family: Bruno Ace;
+          font-size: 1.8rem;
+          font-weight: 400;
+          line-height: 2.2rem;
+          padding: 2rem 3.5rem;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+
+          p:last-child {
+            position: relative;
+            text-align: right;
+            margin-top: 0.5rem;
+
+            &::before {
+              width: 3rem;
+              height: 3rem;
+              position: absolute;
+              left: 0;
+              content: '';
+              background: url(../../../public/images/icon-logout.png);
+              background-repeat: no-repeat;
+              transform: rotate(-15deg) translate(-0.5rem, -10%);
+            }
+          }
+        }
+      }
+      .p2 {
+        font-size: 1.6rem;
+        font-weight: 400;
+        line-height: 2.4rem;
+      }
+    }
+  }
+}
