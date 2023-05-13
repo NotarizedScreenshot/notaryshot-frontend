@@ -17,9 +17,12 @@
     "@types/react-dom": "^18.0.10",
     "classnames": "^2.3.2",
     "crypto-js": "^4.1.1",
+    "eslint-config-prettier": "^8.8.0",
+    "eslint-plugin-prettier": "^4.2.1",
     "ethers": "^5",
     "history": "^5.3.0",
     "nock": "^13.3.0",
+    "prettier": "^2.8.8",
     "qrcode": "^1.5.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -27,7 +30,7 @@
     "react-scripts": "^5.0.1",
     "sass": "^1.58.0",
     "socket.io-client": "^4.6.1",
-    "typescript": "^4.9.5",
+    "typescript": "*",
     "wagmi": "^0.11.5",
     "web-vitals": "^2.1.4",
     "yup": "^1.0.0"
@@ -62,8 +65,19 @@
   "devDependencies": {
     "@types/crypto-js": "^4.1.1",
     "@types/qrcode": "^1.5.0",
+    "@typescript-eslint/eslint-plugin": "^5.43.0",
+    "@typescript-eslint/parser": "^5.59.5",
     "clean-webpack-plugin": "^4.0.0",
-    "webpack-cli": "^5.0.1",
-    "copy-webpack-plugin": "^11.0.0"
+    "copy-webpack-plugin": "^11.0.0",
+    "eslint": "^8.0.1",
+    "eslint-config-airbnb-typescript": "^17.0.0",
+    "eslint-config-standard-with-typescript": "^34.0.1",
+    "eslint-config-xo": "^0.43.1",
+    "eslint-config-xo-typescript": "^0.57.0",
+    "eslint-plugin-import": "^2.25.2",
+    "eslint-plugin-n": "^15.0.0",
+    "eslint-plugin-promise": "^6.0.0",
+    "eslint-plugin-react": "^7.32.2",
+    "webpack-cli": "^5.0.1"
   }
 }

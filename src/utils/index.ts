@@ -118,14 +118,10 @@ export const isValidBigInt = (data: string) => {
 export const isTweetBodyElementEmpty = (key: keyof ITweetBody, body: ITweetBody): boolean =>
   key === 'card' ? false : !body[key] || body[key]!.length === 0;
 
-export const processTweetData = (tweetRawData: any, tweetId: string) => {
-  const tweetResults = getTweetResultsFromTweetRawData(tweetRawData, tweetId) as ITweetResults;
-  return createTweetData(tweetResults);
-};
 
-export const getTweetResultsFromTweetRawData = (tweetRawDataString: string, tweetId: string) => {
-  try {
-    const tweetRawDataParsed = JSON.parse(tweetRawDataString);
+  export const getTweetResultsFromTweetRawData = (tweetRawDataString: string, tweetId: string) => {
+    try {
+      const tweetRawDataParsed = JSON.parse(tweetRawDataString);
     const tweetResponseInstructions = tweetRawDataParsed.data['threaded_conversation_with_injections_v2'].instructions;
 
     const tweetTimeLineEntries = tweetResponseInstructions.find((el: any) => el.type === 'TimelineAddEntries').entries;
@@ -140,6 +136,7 @@ export const getTweetResultsFromTweetRawData = (tweetRawDataString: string, twee
     return null;
   }
 };
+
 
 export const createTweetData = (tweetResults: ITweetResults): ITweetData => {
   const { legacy, views, core, card } = tweetResults;
@@ -263,6 +260,11 @@ export const createTweetData = (tweetResults: ITweetResults): ITweetData => {
     details,
   };
   return tweetData;
+};
+
+export const processTweetData = (tweetRawData: any, tweetId: string) => {
+  const tweetResults = getTweetResultsFromTweetRawData(tweetRawData, tweetId) as ITweetResults;
+  return createTweetData(tweetResults);
 };
 
 export const getTrustedHashSum = (data: string | Buffer | ArrayBuffer) =>
