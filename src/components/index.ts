@@ -20,3 +20,5 @@ export * from './Button';
 export * from './TryIt';
 export * from './CircledNumber';
 export * from './ProcessIcon';
+export * from './HowItWorks';
+export * from './HowItWorksCard';

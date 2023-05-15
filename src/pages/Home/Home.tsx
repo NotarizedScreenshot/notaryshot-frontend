@@ -1,5 +1,5 @@
 import { IHomeProps } from './HomeProps';
-import { Header, Hero, TweetIdForm, TryIt } from 'components';
+import { Header, Hero, TweetIdForm, TryIt, HowItWorks } from 'components';
 import { validateBigInt } from 'utils';
 import styles from './Home.module.scss';
 // import {  } from 'components/TryIt';
@@ -14,6 +14,7 @@ export const Home: React.FC<IHomeProps> = () => {
         <Header />
         <Hero />
         <TryIt />
+        <HowItWorks />
       </div>
       {/* <div className={classes.background}></div>
       <div className={classes.content}>
