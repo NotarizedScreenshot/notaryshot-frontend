@@ -23,3 +23,4 @@ export * from './ProcessIcon';
 export * from './HowItWorks';
 export * from './HowItWorksCard';
 export * from './Benefits';
+export * from './Footer';
