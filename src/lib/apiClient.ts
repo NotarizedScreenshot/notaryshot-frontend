@@ -11,20 +11,8 @@ export const fetchMetadataById = async (tweetId: string): Promise<IMetadata | nu
       throw new Error('Error when fetching tweet data');
     }
     return await response.json();
-  } catch (error) {
-    console.error('fetchTweetDatabyId error', error);
-    return null;
-  }
-};
-
-export const fetchTweetDatabyId = async (tweetId: string): Promise<any | null> => {
-  try {
-    const response = await fetch(`/tweetData?tweetId=${tweetId}`);
-    if (!response.ok) {
-      throw new Error('Error when fetching tweet data');
-    }
-    return await response.json();
-  } catch (error) {
+    /* eslint-disable  @typescript-eslint/no-explicit-any */
+  } catch (error: any) {
     console.error('fetchTweetDatabyId error', error);
     return null;
   }
@@ -42,7 +30,7 @@ export const fetchPreviewImageByID = async (tweetId: string): Promise<Blob | nul
     }
     const blob = await response.blob();
     return blob;
-  } catch (error) {
+  } catch (error: any) {
     console.log('fetching error image', error);
     return null;
   }
@@ -55,7 +43,8 @@ export const fetchPreviewDataByTweetId = async (
   try {
     const response = await fetch(`/previewData?tweetId=${tweetId}&userId=${userId}`);
     return await response.json();
-  } catch (error) {
+    /* eslint-disable  @typescript-eslint/no-explicit-any */
+  } catch (error: any) {
     console.error('fetchPreviewData error', error);
     return null;
   }
@@ -63,7 +52,7 @@ export const fetchPreviewDataByTweetId = async (
 
 export const submitNotarization = async (
   tweetId: string,
-  cb?: (data: any) => void,
+  cb?: (data: string) => void,
 ): Promise<ContractReceipt | { status: 'failed' | 'success'; error?: string | null }> => {
   try {
     const signer = await fetchSigner();
@@ -72,11 +61,14 @@ export const submitNotarization = async (
 
     const transaction = await contract.submitTweetMint(tweetId);
 
-    cb && cb(`Trasaction ${transaction.hash} confirmed, waiting for receipt...`);
+    if (!!cb) {
+      cb(`Trasaction ${transaction.hash} confirmed, waiting for receipt...`);
+    }
 
     const receipt: ContractReceipt = await transaction.wait();
 
     return receipt;
+    /* eslint-disable  @typescript-eslint/no-explicit-any */
   } catch (error: any) {
     console.error('submit notarization error', error);
     return { status: 'failed', error: error.reason };

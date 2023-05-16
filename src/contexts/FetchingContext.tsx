@@ -3,7 +3,6 @@ import { createContext, useContext, useReducer } from 'react';
 import { IMetadata, ITweetData } from 'types';
 import { processTweetData } from 'utils';
 
-
 export interface IFetchingContextState {
   isFetching: boolean;
   tweetId: string | null;
@@ -70,7 +69,8 @@ const reducer = (state: IFetchingContextState, action: TFetcingAction): IFetchin
     case EFetchingActionTypes.setFetchingStart:
       return { ...state, isFetching: true, error: false, data: null };
     case EFetchingActionTypes.setFetchingCompelete:
-      return { ...state, isFetching: false, error: false, data: payload!, tweetId: payload!.tweetId };
+      if (!payload) return state;
+      return { ...state, isFetching: false, error: false, data: payload, tweetId: payload.tweetId };
     case EFetchingActionTypes.setFetchingFailed:
       return { ...state, isFetching: true, error: true, data: null };
     default:
@@ -82,7 +82,7 @@ export const FetchingDispatchContext = createContext<React.Dispatch<TFetcingActi
 
 export const useFetchingDispatchContext = () => useContext(FetchingDispatchContext);
 
-export const FetchingContextProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+export const FetchingContextProvider = ({ children }: { children: React.ReactNode }): JSX.Element => {
   const [state, dispatch] = useReducer(reducer, fetchingContextInitialState);
 
   return (

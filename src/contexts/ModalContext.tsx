@@ -1,4 +1,4 @@
-import { createContext, useContext, useReducer } from 'react';
+import React, { createContext, useContext, useReducer } from 'react';
 
 interface IModalContextState {
   isShowModal: boolean;
@@ -50,11 +50,17 @@ const reducer = (state: IModalContextState, action: TModalActionTypes) => {
   const { type, payload } = action;
   switch (type) {
     case EModalACtionTypes.showModal:
+      if (!payload) return state;
       return {
         ...state,
         isShowModal: true,
-        modalType: payload!.modalType,
-        data: { ...state.data, transactionStatus: payload?.data?.transactionStatus! },
+        modalType: payload.modalType,
+        data: {
+          ...state.data,
+          transactionStatus: payload?.data?.transactionStatus
+            ? payload?.data?.transactionStatus
+            : 'unknown transaction status',
+        },
       };
     case EModalACtionTypes.hideModal:
       return { ...modalContextInitialValue };
@@ -63,9 +69,7 @@ const reducer = (state: IModalContextState, action: TModalActionTypes) => {
   }
 };
 
-export const ModalDispatchContext = createContext<React.Dispatch<TModalActionTypes>>(
-  (action: TModalActionTypes) => undefined,
-);
+export const ModalDispatchContext = createContext<React.Dispatch<TModalActionTypes>>(() => undefined);
 
 export const useModalDispatchContext = () => useContext(ModalDispatchContext);
 

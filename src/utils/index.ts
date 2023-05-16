@@ -24,8 +24,8 @@ export const getOffset = (
   canvasHeight: number,
   imageWidth: number,
   imageHeight: number,
-  offsetXRatio: number = 0,
-  offsetYRatio: number = 0,
+  offsetXRatio = 0,
+  offsetYRatio = 0,
 ): { x: number; y: number } => {
   if (imageWidth > canvasWidth || imageHeight > canvasHeight) throw new Error('image bigger that canvas');
 
@@ -44,7 +44,7 @@ export const getStampedImagePreviewDataUrl = (
   backgroundImage: HTMLImageElement,
   watermarkImgae: HTMLImageElement,
   metadata: string[] = [],
-  canvasWidth: number = 500,
+  canvasWidth = 500,
   metadataOptions: {
     stringMaxWidth: number;
     leftPadding: number;
@@ -73,7 +73,9 @@ export const getStampedImagePreviewDataUrl = (
   canvas.setAttribute('width', String(canvasWidth));
   canvas.setAttribute('height', String(canvasHeight));
 
-  const ctx = canvas.getContext('2d')!;
+  const ctx = canvas.getContext('2d');
+
+  if (!ctx) throw new Error('canvas is null');
 
   ctx.drawImage(backgroundImage, 0, 0, canvasWidth, canvasHeight);
 
@@ -116,12 +118,11 @@ export const isValidBigInt = (data: string) => {
 };
 
 export const isTweetBodyElementEmpty = (key: keyof ITweetBody, body: ITweetBody): boolean =>
-  key === 'card' ? false : !body[key] || body[key]!.length === 0;
+  key === 'card' ? false : !body[key] || body[key]?.length === 0;
 
-
-  export const getTweetResultsFromTweetRawData = (tweetRawDataString: string, tweetId: string) => {
-    try {
-      const tweetRawDataParsed = JSON.parse(tweetRawDataString);
+export const getTweetResultsFromTweetRawData = (tweetRawDataString: string, tweetId: string) => {
+  try {
+    const tweetRawDataParsed = JSON.parse(tweetRawDataString);
     const tweetResponseInstructions = tweetRawDataParsed.data['threaded_conversation_with_injections_v2'].instructions;
 
     const tweetTimeLineEntries = tweetResponseInstructions.find((el: any) => el.type === 'TimelineAddEntries').entries;
@@ -136,7 +137,6 @@ export const isTweetBodyElementEmpty = (key: keyof ITweetBody, body: ITweetBody)
     return null;
   }
 };
-
 
 export const createTweetData = (tweetResults: ITweetResults): ITweetData => {
   const { legacy, views, core, card } = tweetResults;
@@ -175,7 +175,7 @@ export const createTweetData = (tweetResults: ITweetResults): ITweetData => {
     quote_count,
     retweet_count,
     views_count,
-    bookmark_count,
+    bookmark_count: String(bookmark_count),
   };
 
   const props = [
