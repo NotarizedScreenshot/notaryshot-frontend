@@ -1,0 +1,42 @@
+.container {
+  font-size: 1.6rem;
+  font-weight: 600;
+  line-height: 2.6rem;
+
+  .link {
+    display: flex;
+    align-items: center;
+    padding: 1rem 0;
+
+    .icon {
+      width: 2rem;
+      height: 2rem;
+      margin-right: 0.5rem;
+    }
+  }
+
+  &.large {
+    font-size: 2.8rem;
+    line-height: 4rem;
+    .link {
+      padding: 0.5rem 0;
+
+      .icon {
+        width: 2.5rem;
+        height: 2.5rem;
+        margin-right: 1rem;
+      }
+    }
+  }
+
+  &.small {
+    .link {
+      padding: 0.5rem 0;
+
+      .icon {
+        width: 1.6rem;
+        height: 1.6rem;
+      }
+    }
+  }
+}

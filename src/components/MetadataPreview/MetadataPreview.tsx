@@ -2,17 +2,29 @@ import cn from 'classnames';
 import { IMetadataPreviewProps } from './MetadataPreviewProps';
 import styles from './MetadataPreview.module.scss';
 import { useState } from 'react';
+import { GatewayLink } from 'components/GatewayLink';
+import { useProgressingContext, useTransactionContext } from 'contexts';
 export const MetadataPreview: React.FC<IMetadataPreviewProps> = ({ children, title, blocked }) => {
   const [isCollapsed, setIsCollapsed] = useState<boolean>(true);
+  const { transactionStatus, transactionId } = useTransactionContext();
+  const { contentId } = useProgressingContext();
 
   const clickHandler = () => {
     if (blocked) return;
     setIsCollapsed(!isCollapsed);
   };
+
+  console.log(contentId?.metadataToSaveCid);
   return (
     <div className={styles.container}>
       <div className={cn(styles.heading, blocked ? styles.blocked : null)} onClick={clickHandler}>
-        <h3 className={cn(styles.h3, blocked ? styles.blocked : null)}>{title}</h3>
+        <h3 className={cn(styles.h3, blocked ? styles.blocked : null)}>
+          {transactionStatus && transactionId && contentId ? (
+            <GatewayLink cid={contentId.metadataToSaveCid} title={title} size='large' />
+          ) : (
+            title
+          )}
+        </h3>
         <svg
           className={cn(styles.icon, isCollapsed ? null : styles.rotate90)}
           width='26'

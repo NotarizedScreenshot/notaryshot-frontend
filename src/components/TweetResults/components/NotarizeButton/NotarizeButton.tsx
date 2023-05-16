@@ -2,10 +2,18 @@ import { INotarizeButtonProps } from './NotarizeButtonProps';
 import styles from './NotarizeButton.module.scss';
 import { useConnectModal } from '@rainbow-me/rainbowkit';
 import { useAccount } from 'wagmi';
-import { submitNotarization } from 'lib/apiClient';
-import { useFetchingContext, useModalDispatchContext, showModal, hideModal, EModalDialogTypes } from 'contexts';
+import {
+  useFetchingContext,
+  useModalDispatchContext,
+  showModal,
+  hideModal,
+  EModalDialogTypes,
+  useTransactionContext,
+} from 'contexts';
 import { memo, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { submitNotarization } from 'lib';
+
 
 export const NotarizeButton: React.FC<INotarizeButtonProps> = memo(() => {
   const { tweetId } = useFetchingContext();
@@ -13,6 +21,7 @@ export const NotarizeButton: React.FC<INotarizeButtonProps> = memo(() => {
   const { openConnectModal } = useConnectModal();
   const dispatch = useModalDispatchContext();
   const navigate = useNavigate();
+  const { setTransactionId, setTransactionStatus } = useTransactionContext();
 
   const updateStateOnTransaction = useCallback(
     (transactionStatus: string) => showModal(dispatch, EModalDialogTypes.transaction, { transactionStatus }),
@@ -34,8 +43,10 @@ export const NotarizeButton: React.FC<INotarizeButtonProps> = memo(() => {
       }
       updateStateOnTransaction('Transaction succeed');
       setTimeout(() => {
-        navigate(`/results?tweeId=${tweetId}`);
+        navigate(`/results`);
         dispatch(hideModal);
+        setTransactionId(result.transactionHash!);
+        setTransactionStatus('success');
       }, 1500);
     }
   };

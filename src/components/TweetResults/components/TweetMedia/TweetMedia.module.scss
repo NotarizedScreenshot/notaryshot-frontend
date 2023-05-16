@@ -9,21 +9,27 @@
   border-radius: 14px;
   padding: 10px 20px;
 
-  display: flex;
-  flex-wrap: wrap;
+  max-width: 100%;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min-content, 15rem));
+  justify-self: start;
+  gap: 1rem;
 
   .mediaElement {
-    &:not(:last-child) {
-      margin-right: 1rem;
-      margin-bottom: 1rem;
-    }
     width: 14rem;
-    max-height: 8rem;
     border-radius: 8px;
     overflow: hidden;
+    justify-self: center;
 
-    img {
-      width: 100%;
+    .preview {
+      width: 14rem;
+      max-height: 8rem;
+      overflow: hidden;
+      border-radius: 8px;
+      margin-bottom: 1rem;
+      img {
+        width: 100%;
+      }
     }
   }
 }

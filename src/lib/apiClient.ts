@@ -64,7 +64,10 @@ export const fetchPreviewDataByTweetId = async (
 export const submitNotarization = async (
   tweetId: string,
   cb?: (data: any) => void,
-): Promise<ContractReceipt | { status: 'failed' | 'success'; error?: string | null }> => {
+): Promise<
+  // TODO: https://github.com/orgs/NotarizedScreenshot/projects/1/views/1?filterQuery=typ&pane=issue&itemId=28111890
+  ContractReceipt | { status: 'failed' | 'success'; transactionHash?: string | null; error?: string | null }
+> => {
   try {
     const signer = await fetchSigner();
     if (!signer) throw new Error('cant get signer');

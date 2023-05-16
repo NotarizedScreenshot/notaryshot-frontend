@@ -14,3 +14,4 @@ export * from './TweetResults';
 export * from './Preloader';
 export * from './Modal';
 export * from './TransactionStatus';
+export * from './GatewayLink';

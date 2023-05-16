@@ -228,12 +228,11 @@ export const createTweetData = (tweetResults: ITweetResults): ITweetData => {
           video_info: { variants: any[] };
         }) => {
           if (type === 'video') {
-            const minBitrateVariant = video_info.variants.reduce((acc, val) => {
-              if ((!!acc.bitrate && val.bitrate < acc.bitrate) || (!acc.bitrate && val.bitrate)) return val;
+            const maxBitrateVariant = video_info.variants.reduce((acc, val) => {
+              if ((!!acc.bitrate && val.bitrate > acc.bitrate) || (!acc.bitrate && val.bitrate)) return val;
               return acc;
             }, {});
-
-            return { type, src: minBitrateVariant.url, thumb: media_url_https };
+            return { type, src: maxBitrateVariant.url, thumb: media_url_https };
           }
           return { type, src: media_url_https };
         },
@@ -270,3 +269,5 @@ export const getTrustedHashSum = (data: string | Buffer | ArrayBuffer) =>
     // @ts-ignore
     sha256(CryptoJS.lib.WordArray.create(data)),
   );
+
+export const getGatwayLink = (cid: string) => `${process.env.REACT_APP_STORAGE_GATEWAY}${cid}`;
