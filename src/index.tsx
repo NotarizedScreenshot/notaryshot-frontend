@@ -19,7 +19,7 @@ import {
   TransactionContextProvider,
 } from 'contexts';
 
-const { chains, provider } = configureChains([polygon, mainnet], [publicProvider()]);
+const { chains, provider } = configureChains([polygon], [publicProvider()]);
 
 const { connectors } = getDefaultWallets({
   appName: 'My RainbowKit App',

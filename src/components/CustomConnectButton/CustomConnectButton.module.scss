@@ -22,15 +22,6 @@
       display: none;
     }
 
-    &:first-child {
-      div {
-        div:first-child {
-          width: 2rem;
-          height: 2rem;
-        }
-      }
-    }
-
     &:last-child {
       div:last-child {
         background: transparent !important;
