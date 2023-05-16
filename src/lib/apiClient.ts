@@ -65,7 +65,7 @@ export const submitNotarization = async (
   tweetId: string,
   cb?: (data: any) => void,
 ): Promise<
-  // TODO: make relevant type, extend ContractReceipt with error status
+  // TODO: https://github.com/orgs/NotarizedScreenshot/projects/1/views/1?filterQuery=typ&pane=issue&itemId=28111890
   ContractReceipt | { status: 'failed' | 'success'; transactionHash?: string | null; error?: string | null }
 > => {
   try {
