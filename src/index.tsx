@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { darkTheme, getDefaultWallets, RainbowKitProvider } from '@rainbow-me/rainbowkit';
 import { configureChains, createClient, WagmiConfig } from 'wagmi';
-import { polygon, mainnet } from 'wagmi/chains';
+import { polygon } from 'wagmi/chains';
 import { publicProvider } from 'wagmi/providers/public';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 

@@ -1,7 +1,6 @@
-import { Link } from 'react-router-dom';
-import cn from 'classnames';
 import { INavigationProps } from './NavigationProps';
 import classes from './Navigation.module.scss';
+
 export const Navigation: React.FC<INavigationProps> = () => {
   return (
     <div className={classes.container} data-testid='navigation'>
