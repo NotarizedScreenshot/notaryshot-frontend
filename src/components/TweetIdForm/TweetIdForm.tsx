@@ -39,7 +39,7 @@ export const TweetIdForm: React.FC<ICutsomFormProps> = ({ initialInputData, vali
     setUrlInputValue(event.currentTarget.value);
     if (dirty) {
       validate(event.currentTarget.value)
-        .then((data) => {
+        .then(() => {
           setInvalid(false);
           setError(null);
           setValidating(false);
