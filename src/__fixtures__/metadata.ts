@@ -1,4 +1,4 @@
-import { IMetadata, ITweetData } from 'types'
+import { IMetadata } from 'types'
 
 export const metadataStub1: IMetadata = {
   headers: {

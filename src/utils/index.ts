@@ -152,10 +152,10 @@ export const createTweetData = (tweetResults: ITweetResults): ITweetData => {
   } = legacy;
 
   const { user_mentions, urls, hashtags, symbols } = entities as {
-    user_mentions: any[];
-    urls: any[];
-    hashtags: any[];
-    symbols: any[];
+    user_mentions: { screen_name: string }[];
+    urls: { expanded_url: string }[];
+    hashtags: { text: string }[];
+    symbols: { text: string }[];
   };
 
   const media = extended_entities?.media ?? [];
