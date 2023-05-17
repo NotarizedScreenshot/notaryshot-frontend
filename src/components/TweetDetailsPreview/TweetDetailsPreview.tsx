@@ -75,21 +75,21 @@ const renderBodyElements = (key: keyof ITweetBody, body: ITweetBody) => {
           ))}
         {key === 'card' &&
           (!!body[key] ? (
-            bodyCardKeys.map((key, index) => {
+            bodyCardKeys.map((bodyCardKey, index) => {
               return (
-                <div className={classes.dataSubBlock} key={key + String(index)}>
-                  <div className={classes.header}>{key}</div>
+                <div className={classes.dataSubBlock} key={bodyCardKey + String(index)}>
+                  <div className={classes.header}>{bodyCardKey}</div>
                   {key.includes('image') ? (
                     body.card && (
                       <div className={classes.value}>
-                        <div className={classes.link}>{!!body.card && body.card[key]}</div>
+                        <div className={classes.link}>{!!body.card && body.card[bodyCardKey]}</div>
                         <div className={classes.image}>
-                          <img src={body.card[key]} alt={key} />
+                          <img src={body.card[bodyCardKey]} alt={bodyCardKey} />
                         </div>
                       </div>
                     )
                   ) : (
-                    <div className={classes.value}>{!!body.card && body.card[key]}</div>
+                    <div className={classes.value}>{!!body.card && body.card[bodyCardKey]}</div>
                   )}
                 </div>
               );

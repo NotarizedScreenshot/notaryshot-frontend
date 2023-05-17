@@ -44,9 +44,9 @@ export const TweetIdForm: React.FC<ICutsomFormProps> = ({ initialInputData, vali
           setError(null);
           setValidating(false);
         })
-        .catch((error: Error) => {
+        .catch((inputValidationError: Error) => {
           setInvalid(true);
-          setError(error.message);
+          setError(inputValidationError.message);
         });
     }
   };
@@ -66,9 +66,9 @@ export const TweetIdForm: React.FC<ICutsomFormProps> = ({ initialInputData, vali
           onSubmitCallback(urlInputValue);
         }
       })
-      .catch((error: Error) => {
+      .catch((submitValidationError: Error) => {
         setInvalid(true);
-        setError(error.message);
+        setError(submitValidationError.message);
         inputRef.current?.focus();
       });
   };

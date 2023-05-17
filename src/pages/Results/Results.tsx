@@ -60,7 +60,7 @@ export const Results: React.FC<IResultsProps> = memo(() => {
       const contract = new Contract(notaryShotContract.address, notaryShotContract.abi, signer);
 
       contract.on('Transfer', (...args) => {
-        const x = args[2] as BigInt;
+        const x = args[2] as bigint;
         console.log(x.toString());
         setNftHashSum(x.toString());
       });
@@ -94,7 +94,7 @@ export const Results: React.FC<IResultsProps> = memo(() => {
       const proccessedTweetDataHashSum = getTrustedHashSum(JSON.stringify(data.parsedTweetData));
       // console.log(trustedHashSum);
       // console.log(BigInt('0x' + trustedHashSum).toString());
-      const qrCodeData: {
+      const qrCodeDataFinal: {
         trustedHashSum: string;
         tweetId: string;
         metadataHash: string;
@@ -108,7 +108,7 @@ export const Results: React.FC<IResultsProps> = memo(() => {
         tweetDataHash: proccessedTweetDataHashSum,
       };
       // console.log(qrCodeData);
-      setQrCodeData(qrCodeData);
+      setQrCodeData(qrCodeDataFinal);
     });
   }, []);
 
