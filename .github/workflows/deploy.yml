@@ -19,6 +19,8 @@ jobs:
         run: yarn install
       - name: Tests
         run: yarn test
+      - name: Lint
+        run: yarn lint
       - name: Build
         run: yarn build
       - name: Save Build Cache
