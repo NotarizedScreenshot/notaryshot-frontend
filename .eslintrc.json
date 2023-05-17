@@ -22,6 +22,7 @@
     "@typescript-eslint/naming-convention": "off",
     "@typescript-eslint/ban-ts-comment": "off",
     "@typescript-eslint/dot-notation": "off",
-    "react/react-in-jsx-scope": "off"
+    "react/react-in-jsx-scope": "off",
+    "react/prop-types": "off"
   }
 }
