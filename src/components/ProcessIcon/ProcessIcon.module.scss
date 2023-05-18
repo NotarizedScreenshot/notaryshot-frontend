@@ -1,0 +1,25 @@
+.container {
+  .icon {
+    width: 8rem;
+    height: 8rem;
+    background: linear-gradient(222.06deg, rgba(255, 255, 255, 0.22) -16.8%, rgba(255, 255, 255, 0) 114.68%);
+    border-radius: 100px;
+    margin: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    .glow {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+  }
+
+  .title {
+    font-size: 2rem;
+    font-weight: 600;
+    line-height: 4rem;
+  }
+}
