@@ -20,7 +20,7 @@ export const Navigation: React.FC<INavigationProps> = () => {
         </a>
       </div>
       <div className={classes.navElement}>
-        <a href='https://github.com/NotarizedScreenshot' target='_blank' rel='noreferrer'>
+        <a href='https://twitter.com/ChainHackerClan' target='_blank' rel='noreferrer'>
           Twitter
         </a>
       </div>
