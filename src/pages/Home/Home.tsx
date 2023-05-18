@@ -6,7 +6,7 @@ import classes from './Home.module.scss';
 
 export const Home: React.FC<IHomeProps> = () => {
   const navigate = useNavigate();
-  const submitHandler = async (data: string) => {
+  const submitHandler = async () => {
     navigate(`/preview`);
     return true;
   };

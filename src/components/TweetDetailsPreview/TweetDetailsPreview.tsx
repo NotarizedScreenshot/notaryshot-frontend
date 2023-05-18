@@ -102,7 +102,7 @@ const renderBodyElements = (key: keyof ITweetBody, body: ITweetBody) => {
   );
 };
 
-export const TweetDetailsPreview: React.FC<ITweetDetailsPreviewProps> = ({ tweetData, tweetDataHash }) => {
+export const TweetDetailsPreview: React.FC<ITweetDetailsPreviewProps> = ({ tweetData }) => {
   const { details, user, body } = tweetData;
   const detailsKeys = !!details ? (Object.keys(details) as [keyof ITweetDetails]) : null;
   const userKeys = !!user ? (Object.keys(user) as [keyof ITweetUser]) : null;
