@@ -106,10 +106,30 @@
         box-shadow: 0px 20px 50px rgba(6, 10, 20, 0.07), inset -6px -10px 20px rgba(8, 11, 24, 0.3),
           inset 6px 10px 20px rgba(255, 255, 255, 0.05);
 
+        transition: all 0.2s;
+
         svg {
           position: relative;
           top: -1px;
           margin-right: 1rem;
+        }
+
+        &:hover,
+        &:active {
+          transform: scale(1.02);
+          box-shadow: none;
+        }
+
+        &:disabled {
+          color: #6c7f83;
+          border: 1px solid #6c7f83;
+          background-color: inherit;
+
+          box-shadow: none;
+          &:hover,
+          &:active {
+            transform: scale(1);
+          }
         }
       }
     }

@@ -10,28 +10,38 @@ export const TryIt: React.FC<ITryItProps> = () => {
 
       <ol className={styles.ol}>
         <li className={styles.li}>
-          <CircledNumber number={1} />
+          <div className={styles.number}>
+            <CircledNumber number={1} />
+          </div>
           <p className={styles.p2}>Log into your crypto wallet</p>
         </li>
         <li className={styles.li}>
-          <CircledNumber number={2} />
+          <div className={styles.number}>
+            <CircledNumber number={2} />
+          </div>
           <p className={styles.p2}>
             Paste the link to the any <br />
             tweet you want
           </p>
         </li>
         <li className={styles.li}>
-          <CircledNumber number={3} />
+          <div className={styles.number}>
+            <CircledNumber number={3} />
+          </div>
 
           <p className={styles.p2}>Make a screenshot</p>
         </li>
         <li className={styles.li}>
-          <CircledNumber number={4} />
+          <div className={styles.number}>
+            <CircledNumber number={4} />
+          </div>
 
           <p className={styles.p2}>Notarize</p>
         </li>
         <li className={styles.li}>
-          <CircledNumber number={5} />
+          <div className={styles.number}>
+            <CircledNumber number={5} />
+          </div>
           <p className={styles.p2}>Get a verified nft screenshot whose authenticity is recorded in the blockchain</p>
         </li>
       </ol>
