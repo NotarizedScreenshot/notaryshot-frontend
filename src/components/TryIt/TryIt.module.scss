@@ -13,14 +13,51 @@
     margin: 0;
 
     display: flex;
-    justify-content: space-between;
 
     .li {
       max-width: 30rem;
       text-align: center;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
+      position: relative;
+      flex: 1;
+
+      &:last-child {
+        flex: 2;
+      }
+
+      &:not(:first-child) {
+        .number {
+          &::before {
+            position: absolute;
+            content: '';
+            width: calc(50% - 3.2rem);
+            height: 1px;
+            left: 0;
+            top: 50%;
+            background-color: #221f32;
+          }
+        }
+      }
+
+      &:not(:last-child) {
+        .number {
+          &::after {
+            position: absolute;
+            content: '';
+            width: calc(50% - 3.2rem);
+            height: 1px;
+            right: 0;
+            top: 50%;
+            background-color: #221f32;
+          }
+        }
+      }
+
+      .number {
+        position: relative;
+
+        display: flex;
+        justify-content: center;
+      }
       .p2 {
         font-style: normal;
         padding: 1rem 0;
