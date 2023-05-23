@@ -1,0 +1,50 @@
+.container {
+  max-width: 30rem;
+  background: rgba(23, 23, 28, 0.6);
+  box-shadow: inset -2px -2px 4px rgba(255, 255, 255, 0.08), inset 2px 2px 4px rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(13px);
+
+  border-radius: 20px;
+
+  padding: 2rem;
+
+  .message {
+    position: relative;
+    height: 10rem;
+
+    .bubble {
+      position: absolute;
+    }
+
+    .p {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 22rem;
+      font-family: Russo One;
+      font-size: 1.5rem;
+      font-weight: 400;
+      line-height: 2.3rem;
+      text-align: center;
+    }
+  }
+
+  .pictures {
+    display: flex;
+    width: 100%;
+    margin-top: 1rem;
+
+    .userPic {
+      img {
+        width: 100%;
+      }
+      margin-right: 1rem;
+    }
+    .tweetPic {
+      img {
+        width: 100%;
+      }
+    }
+  }
+}

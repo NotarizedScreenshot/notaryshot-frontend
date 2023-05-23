@@ -1,5 +1,5 @@
 import { IHomeProps } from './HomeProps';
-import { Header, Hero, TryIt, HowItWorks, Benefits, Footer } from 'components';
+import { Header, Hero, TryIt, HowItWorks, Benefits, Footer, Collapsable, Process } from 'components';
 import styles from './Home.module.scss';
 
 export const Home: React.FC<IHomeProps> = () => {
@@ -13,6 +13,9 @@ export const Home: React.FC<IHomeProps> = () => {
         <Hero />
         <TryIt />
         <HowItWorks />
+        <Collapsable title='Detailed history'>
+          <Process />
+        </Collapsable>
         <Benefits />
         <Footer />
       </div>

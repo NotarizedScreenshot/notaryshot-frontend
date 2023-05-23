@@ -1,0 +1,32 @@
+.container {
+  width: 14rem;
+
+  .userpic {
+    width: 5rem;
+    height: 5rem;
+    background: #1b222c;
+
+    box-shadow: inset -2px -2px 4px rgba(255, 255, 255, 0.08), inset 2px 2px 4px rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(5px);
+
+    border-radius: 100px;
+    text-align: center;
+    margin: auto;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .image {
+      display: inline-block;
+    }
+  }
+
+  .p2 {
+    padding: 1rem 0;
+    font-weight: 400;
+    font-size: 1.6rem;
+    line-height: 150%;
+    text-align: center;
+  }
+}
