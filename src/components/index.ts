@@ -24,3 +24,5 @@ export * from './HowItWorks';
 export * from './HowItWorksCard';
 export * from './Benefits';
 export * from './Footer';
+export * from './Collapsable';
+export * from './Process';
