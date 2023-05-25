@@ -3,10 +3,9 @@ import styles from './NotarizeButton.module.scss';
 import { useConnectModal } from '@rainbow-me/rainbowkit';
 import { useAccount } from 'wagmi';
 import { submitNotarization } from 'lib/apiClient';
-import { useFetchingContext, useModalDispatchContext, showModal, hideModal, EModalDialogTypes } from 'contexts';
+import { useFetchingContext, useModalDispatchContext, showModal, hideModal, EModalDialogTypes, useTransactionContext } from 'contexts';
 import { useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { submitNotarization } from 'lib';
 
 export const NotarizeButton: React.FC<INotarizeButtonProps> = () => {
   const { tweetId } = useFetchingContext();

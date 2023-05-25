@@ -40,7 +40,7 @@ export const TryIt: React.FC<ITryItProps> = () => {
           <h2 className={styles.h2}>As web2 and web3 merge</h2>
           <p className={styles.p2}>
             QuantumOracle consolidates the content on web2 servers into a decentralized storage. This captures the
-            content's exact state and retrieval history, including:
+            content&apos;s exact state and retrieval history, including:
           </p>
           <div className={styles.processOrder}>
             <ProcessIcon title='Server DNS' iconURL='images/icon-dns.png' />
