@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { darkTheme, getDefaultWallets, RainbowKitProvider } from '@rainbow-me/rainbowkit';
 import { configureChains, createClient, WagmiConfig } from 'wagmi';
-import { polygon, mainnet } from 'wagmi/chains';
+import { polygon } from 'wagmi/chains';
 import { publicProvider } from 'wagmi/providers/public';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
@@ -16,9 +16,10 @@ import {
   FetchingContextProvider,
   ProgressingContextProvider,
   ModalContextProvider,
+  TransactionContextProvider,
 } from 'contexts';
 
-const { chains, provider } = configureChains([polygon, mainnet], [publicProvider()]);
+const { chains, provider } = configureChains([polygon], [publicProvider()]);
 
 const { connectors } = getDefaultWallets({
   appName: 'My RainbowKit App',
@@ -57,11 +58,13 @@ root.render(
         <FetchingContextProvider>
           <PreviewContextProvider>
             <ProgressingContextProvider>
-              <WagmiConfig client={wagmiClient}>
-                <RainbowKitProvider chains={chains} theme={darkTheme()}>
-                  <RouterProvider router={router} />
-                </RainbowKitProvider>
-              </WagmiConfig>
+              <TransactionContextProvider>
+                <WagmiConfig client={wagmiClient}>
+                  <RainbowKitProvider chains={chains} theme={darkTheme()}>
+                    <RouterProvider router={router} />
+                  </RainbowKitProvider>
+                </WagmiConfig>
+              </TransactionContextProvider>
             </ProgressingContextProvider>
           </PreviewContextProvider>
         </FetchingContextProvider>

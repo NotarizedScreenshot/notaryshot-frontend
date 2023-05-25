@@ -9,9 +9,12 @@ import {
   TweetMedia,
   TweetStats,
   TweetTime,
+  ViewNFTButton,
 } from './components';
 import { useEffect, useState } from 'react';
 import { ITweetAttributes, ITweetBody, ITweetDetails, ITweetUser } from 'types';
+import { GatewayLink } from 'components/GatewayLink';
+import { useProgressingContext, useTransactionContext } from 'contexts';
 
 export const TweetResults: React.FC<ITweetResultsProps> = ({ imageUrl, tweetdata, tweetId }) => {
   const [user, setUser] = useState<ITweetUser | null>(null);
@@ -19,6 +22,8 @@ export const TweetResults: React.FC<ITweetResultsProps> = ({ imageUrl, tweetdata
   const [attributes, setAttributes] = useState<ITweetAttributes | null>(null);
   const [body, setBody] = useState<ITweetBody | null>(null);
   const [media, setMedia] = useState<ITweetBody['media'] | null>(null);
+
+  const { transactionStatus, transactionId } = useTransactionContext();
 
   useEffect(() => {
     if (!!tweetdata) {
@@ -32,6 +37,8 @@ export const TweetResults: React.FC<ITweetResultsProps> = ({ imageUrl, tweetdata
   }, [tweetdata]);
 
   const date = new Date(details ? details.created_at : Date.now());
+
+  const { contentId } = useProgressingContext();
 
   return (
     <div className={styles.container}>
@@ -48,9 +55,12 @@ export const TweetResults: React.FC<ITweetResultsProps> = ({ imageUrl, tweetdata
         </div>
         {attributes && <TweetAttributes attributes={attributes} />}
         {details && <TweetStats {...details} />}
+        {transactionStatus && transactionId && contentId && (
+          <GatewayLink cid={contentId.metadataToSaveCid} title={`tweet ${tweetId} data`} />
+        )}
         {media && media.length > 0 && <TweetMedia media={media} />}
       </div>
-      <NotarizeButton tweetId={tweetId} />
+      {transactionStatus && transactionId ? <ViewNFTButton /> : <NotarizeButton tweetId={tweetId} />}
     </div>
   );
 };

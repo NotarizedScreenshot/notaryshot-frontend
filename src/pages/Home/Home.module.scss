@@ -1,57 +1,29 @@
 .container {
   position: relative;
-  font-family: monospace;
   color: white;
-  max-width: 137rem;
-  padding: 0 4rem 10rem;
   margin: auto;
+  background-color: #131314;
   .background {
-    position: fixed;
-    opacity: 0.025;
+    position: absolute;
     width: 100%;
-    height: 100%;
-
-    background: url('../../../public/images/bg-img-02.png');
-    background-size: contain;
+    height: 70rem;
+    background: url('../../../public/images/hero-image-background.png');
+    background-size: cover;
     background-repeat: no-repeat;
-    background-position: bottom;
+    background-color: #131314;
+    background-blend-mode: color-dodge;
     left: 0;
     top: 0;
+
+    .gradientBlack {
+      height: 100%;
+      background: linear-gradient(0deg, #131314 0%, #13131400 50%);
+    }
   }
 
   .content {
-    position: relative;
-
+    max-width: 137rem;
+    padding: 0 4rem 10rem;
     margin: auto;
-    max-width: 140rem;
-    min-height: 100vh;
-    padding: 8rem 2rem 2rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
-
-    .h1 {
-      font-size: 8rem;
-      text-align: center;
-      margin-bottom: 3rem;
-    }
-    .h2 {
-      font-size: 5rem;
-      text-align: center;
-      margin-bottom: 3rem;
-    }
-
-    .p {
-      font-size: 2.5rem;
-      text-align: center;
-      max-width: 110rem;
-      line-height: 5rem;
-    }
-
-    .formContainer {
-      padding: 10rem 10rem;
-      width: 100%;
-    }
   }
 }

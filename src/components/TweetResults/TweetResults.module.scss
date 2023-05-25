@@ -9,7 +9,7 @@
     position: relative;
     display: grid;
     grid-template-columns: 49rem 1fr;
-    grid-template-rows: min-content min-content min-content min-content 1fr;
+    grid-template-rows: min-content min-content min-content min-content min-content 1fr;
     column-gap: 3rem;
     row-gap: 2rem;
 
@@ -30,7 +30,7 @@
     }
 
     & > div:first-child {
-      grid-row: 1 / 6;
+      grid-row: 1 / 7;
     }
 
     & > div:not(:first-child) {

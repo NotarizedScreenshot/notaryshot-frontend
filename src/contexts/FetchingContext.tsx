@@ -45,6 +45,7 @@ export const fetchPreviewData = async (dispatch: React.Dispatch<TFetcingAction>,
   try {
     dispatch({ type: EFetchingActionTypes.setFetchingStart });
     const result = await fetchPreviewDataByTweetId(tweetId, userId);
+    
     if (!!result) {
       const { imageUrl, tweetdata, metadata } = result;
 

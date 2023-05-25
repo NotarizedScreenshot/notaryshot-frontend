@@ -1,62 +1,83 @@
 .container {
   position: relative;
-  background-color: #0d0c27;
-
-  font-family: monospace;
   color: white;
+  max-width: 137rem;
+  padding: 0 4rem 10rem;
+  margin: auto;
 
-  .content {
+  .main {
     position: relative;
-    background-color: #0d0c27;
-    margin: auto;
-    max-width: 100rem;
+    padding-top: 3rem;
+    z-index: 1;
 
-    padding: 8rem 2rem 2rem;
-    display: grid;
-
-    grid-template-columns: 1fr 26rem;
-
-    column-gap: 2rem;
-    row-gap: 2rem;
-
-    .h1 {
-      font-size: 3rem;
-      text-transform: lowercase;
-      grid-column: 1 / -1;
+    .bgCircles {
+      position: absolute;
+      background-image: url(../../../public/images/background-circles.png);
+      background-size: contain;
+      background-repeat: no-repeat;
+      height: 140rem;
+      width: 150rem;
+      top: 0rem;
+      right: -20rem;
+      opacity: 0.5;
+      z-index: 1;
     }
 
-    .requestForm {
-      grid-column: 1 / -1;
+    .spy {
+      position: absolute;
+      right: 40rem;
+      top: 6rem;
     }
 
-    .notarize {
-      align-self: stretch;
-    }
+    .message {
+      position: absolute;
+      // z-index: 1;
+      top: 125px;
+      right: -30px;
+      width: 520px;
+      height: 120px;
+      background-image: url('../../../public/images/message-bg.png');
 
-    .imagePreview {
-      .loading {
-        min-height: 20rem;
-        font-size: 3rem;
-        display: flex;
-        align-items: center;
-        justify-content: center;
+      background-repeat: no-repeat;
+      background-position-x: -15px;
+      background-position-y: -3px;
+
+      text-align: center;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      .text {
+        font-family: 'Russo One';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 15px;
+        line-height: 150%;
+        color: #15cef7;
+        width: 410px;
+
+        border-radius: 100px;
       }
     }
 
-    @media screen and (max-width: 768px) {
-      .imagePreview {
-        grid-column: 1 / -1;
+    .title {
+      position: relative;
+      .h2 {
+        position: relative;
+        margin-top: 3.7rem;
+        z-index: 1;
+        padding-bottom: 4.8rem;
       }
-      .notarize {
-        grid-column: 1 / -1;
+      .p3 {
+        position: absolute;
+        bottom: 0;
+        font-size: 1.2rem;
+        font-weight: 400;
+        line-height: 1.8rem;
+        padding-bottom: 2rem;
+        letter-spacing: 1px;
       }
-    }
-
-    .tweetInfo,
-    .nftInfo,
-    .metadataInfo,
-    .dnsInfo {
-      grid-column: 1 / -1;
     }
   }
 }

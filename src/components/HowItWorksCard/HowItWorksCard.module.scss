@@ -1,0 +1,67 @@
+.container {
+  position: relative;
+  width: 63rem;
+
+  background: rgba(23, 23, 28, 0.6);
+  box-shadow: inset -2px -2px 4px rgba(255, 255, 255, 0.08), inset 2px 2px 4px rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(13px);
+
+  border-radius: 20px;
+  padding: 3rem 2.2rem 3rem 3rem;
+
+  display: grid;
+  grid-template-columns: repeat(2, min-content);
+  justify-content: space-between;
+
+  min-height: 15rem;
+
+  .number {
+    position: absolute;
+    transform: translate(-30%, -45%);
+    top: 0;
+    left: 0;
+  }
+
+  .bubble {
+    position: absolute;
+    right: 0;
+    top: 0;
+    transform: translate(1.5rem, 1.5rem);
+
+    .message {
+      width: 37rem;
+      height: 9rem;
+      position: absolute;
+      top: 1.8rem;
+      right: 1.5rem;
+
+      font-family: Russo One;
+      font-size: 1.5rem;
+      font-weight: 400;
+      line-height: 2.3rem;
+
+      text-align: center;
+      padding: 0 4rem;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+    }
+  }
+
+  .person {
+    border-radius: 10px;
+    img {
+      display: block;
+    }
+  }
+
+  .action {
+    border-radius: 10px;
+    align-self: end;
+    img {
+      display: block;
+    }
+  }
+}
