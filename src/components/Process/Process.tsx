@@ -30,7 +30,9 @@ export const Process: React.FC<IProcessProps> = () => {
               />
             </div>
             <div className={`${styles.col24} ${styles.aligncenter}`}>
-              <p className={`${styles.p2} ${styles.mw275}`}>post UFO leak "Here's the photo! #UFO #lead #coverup"</p>
+              <p className={`${styles.p2} ${styles.mw275}`}>
+                post UFO leak &quot;Here&apos;s the photo! #UFO #lead #coverup&quot;
+              </p>
               <div className={styles.soildArrowRight}></div>
             </div>
 
