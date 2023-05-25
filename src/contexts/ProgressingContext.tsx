@@ -1,5 +1,5 @@
 import { socket } from 'index';
-import { createContext, useCallback, useContext, useEffect, useState } from 'react';
+import React, { createContext, useCallback, useContext, useEffect, useState } from 'react';
 
 interface IProgressingContextValue {
   progress: number;
@@ -17,8 +17,8 @@ interface IProgressingContextValue {
 export const progressingContextInitialValue: IProgressingContextValue = {
   progress: 0,
   inProgress: false,
-  setInProgress: (isInProgress: boolean) => undefined,
-  setProgress: (progress: number) => undefined,
+  setInProgress: () => undefined,
+  setProgress: () => undefined,
   contentId: null,
 };
 
@@ -26,7 +26,7 @@ export const ProgressingContext = createContext<IProgressingContextValue>(progre
 
 export const useProgressingContext = () => useContext(ProgressingContext);
 
-export const ProgressingContextProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+export const ProgressingContextProvider = ({ children }: { children: React.ReactNode }): JSX.Element => {
   const [progressValue, setProgressValue] = useState<IProgressingContextValue>(progressingContextInitialValue);
 
   const setInProgress = useCallback((inProgress: boolean) => {

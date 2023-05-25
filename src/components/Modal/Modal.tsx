@@ -12,7 +12,7 @@ const renderComponent = (
 ) => {
   switch (modalType) {
     case EModalDialogTypes.transaction:
-      return <TransactionStatus statusValue={data!.transactionStatus} />;
+      return <TransactionStatus statusValue={data ? data.transactionStatus : 'unknown status'} />;
     case EModalDialogTypes.preloader:
       return <Preloader />;
     default:

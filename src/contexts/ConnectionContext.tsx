@@ -14,7 +14,7 @@ export const ConnectionContext = createContext<IConnectionContextValue>(initialV
 
 export const useConnectionContext = () => useContext(ConnectionContext);
 
-export const ConnectionContextProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+export const ConnectionContextProvider = ({ children }: { children: React.ReactNode }): JSX.Element => {
   const [isConnected, setIsConnected] = useState<boolean>(initialValue.isConnected);
   const [userId, setUserId] = useState<string | null>(initialValue.userId);
   const value: IConnectionContextValue = {

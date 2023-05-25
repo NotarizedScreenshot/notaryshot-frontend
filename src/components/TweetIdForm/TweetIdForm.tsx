@@ -46,14 +46,14 @@ export const TweetIdForm: React.FC<ICutsomFormProps> = ({ initialInputData, vali
     setUrlInputValue(event.currentTarget.value);
     if (dirty) {
       validate(event.currentTarget.value)
-        .then((data) => {
+        .then(() => {
           setInvalid(false);
           setError(null);
           setValidating(false);
         })
-        .catch((error: Error) => {
+        .catch((inputValidationError: Error) => {
           setInvalid(true);
-          setError(error.message);
+          setError(inputValidationError.message);
         });
     }
   };
@@ -71,9 +71,9 @@ export const TweetIdForm: React.FC<ICutsomFormProps> = ({ initialInputData, vali
         resetTransactionStatus();
         navigate(`/preview`);
       })
-      .catch((error: Error) => {
+      .catch((submitValidationError: Error) => {
         setInvalid(true);
-        setError(error.message);
+        setError(submitValidationError.message);
         inputRef.current?.focus();
       });
   };

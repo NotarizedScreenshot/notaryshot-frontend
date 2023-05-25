@@ -3,9 +3,9 @@ import styles from './DNSMetadata.module.scss';
 export const DNSMetadata: React.FC<IDNSMetadataProps> = ({ metadata }) => {
   const { dns } = metadata;
   const dnsData = dns.data
-    .filter((el: string) => el.length > 0 && !el.includes(';'))
-    .map((el: string) => {
-      return el
+    .filter((dataElement: string) => dataElement.length > 0 && !dataElement.includes(';'))
+    .map((filteredElement: string) => {
+      return filteredElement
         .split('\t')
         .filter((el) => el.length > 0)
         .flatMap((el, _, array) => (array.length === 1 ? el.split(' ') : el));
@@ -26,8 +26,8 @@ export const DNSMetadata: React.FC<IDNSMetadataProps> = ({ metadata }) => {
           return (
             <div key={dnsDataKey + String(index)} className={styles.dataSubBlock}>
               <div className={styles.heading}>{dnsDataKey}</div>
-              {dnsData[dnsDataKey].map((dnsDataEl: string[], index: number) => (
-                <div key={dnsDataEl + String(index)} className={styles.value}>
+              {dnsData[dnsDataKey].map((dnsDataEl: string[], dnsDataElIndex: number) => (
+                <div key={dnsDataEl + String(dnsDataElIndex)} className={styles.value}>
                   {dnsDataEl.join(' ')}
                 </div>
               ))}

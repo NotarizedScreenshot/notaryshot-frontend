@@ -115,8 +115,8 @@ export const TweetInfo: React.FC<ITweetInfoProps> = memo(({ data, media, tweetId
           <div className={classes.element}>
             <div className={classes.h3}>user_mentions</div>
             <div className={cn(classes.content, classes.userMentions)}>
-              {user_mentions.map((user: string, index: number) => (
-                <div key={user + String(index)}>{`@${user}`}&nbsp;</div>
+              {user_mentions.map((userMentioned: string, index: number) => (
+                <div key={userMentioned + String(index)}>{`@${userMentioned}`}&nbsp;</div>
               ))}
             </div>
           </div>

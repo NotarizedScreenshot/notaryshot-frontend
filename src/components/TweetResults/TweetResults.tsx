@@ -30,9 +30,9 @@ export const TweetResults: React.FC<ITweetResultsProps> = ({ imageUrl, tweetdata
       setUser(tweetdata.user);
       setDetails(tweetdata.details);
       setBody(tweetdata.body);
-      const { hashtags, urls, user_mentions, media } = tweetdata.body;
+      const { hashtags, urls, user_mentions, media: bodyMedia } = tweetdata.body;
       setAttributes((prev) => (!hashtags && !urls && !user_mentions ? prev : { hashtags, urls, user_mentions }));
-      setMedia(media);
+      setMedia(bodyMedia);
     }
   }, [tweetdata]);
 

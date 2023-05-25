@@ -8,8 +8,8 @@ export const TweetMedia: React.FC<ITweetMediaProps> = ({ media }) => {
 
   const getCIDByUrl = (url: string): string | null => {
     try {
-      const media = contentId?.mediaCidMap.find((el) => el.url === url);
-      return media ? media.cid : null;
+      const uploadedMedia = contentId?.mediaCidMap.find((el) => el.url === url);
+      return uploadedMedia ? uploadedMedia.cid : null;
     } catch (error) {
       console.error(`cant get CID for ${url}`);
       return null;

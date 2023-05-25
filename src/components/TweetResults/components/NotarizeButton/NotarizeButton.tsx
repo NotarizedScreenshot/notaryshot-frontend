@@ -2,20 +2,12 @@ import { INotarizeButtonProps } from './NotarizeButtonProps';
 import styles from './NotarizeButton.module.scss';
 import { useConnectModal } from '@rainbow-me/rainbowkit';
 import { useAccount } from 'wagmi';
-import {
-  useFetchingContext,
-  useModalDispatchContext,
-  showModal,
-  hideModal,
-  EModalDialogTypes,
-  useTransactionContext,
-} from 'contexts';
-import { memo, useCallback } from 'react';
+import { submitNotarization } from 'lib/apiClient';
+import { useFetchingContext, useModalDispatchContext, showModal, hideModal, EModalDialogTypes, useTransactionContext } from 'contexts';
+import { useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { submitNotarization } from 'lib';
 
-
-export const NotarizeButton: React.FC<INotarizeButtonProps> = memo(() => {
+export const NotarizeButton: React.FC<INotarizeButtonProps> = () => {
   const { tweetId } = useFetchingContext();
   const { isConnected } = useAccount();
   const { openConnectModal } = useConnectModal();
@@ -29,7 +21,7 @@ export const NotarizeButton: React.FC<INotarizeButtonProps> = memo(() => {
   );
   const clickHandler = async () => {
     if (!isConnected) {
-      openConnectModal!();
+      if (!!openConnectModal) openConnectModal();
       return;
     }
     if (tweetId) {
@@ -72,4 +64,4 @@ export const NotarizeButton: React.FC<INotarizeButtonProps> = memo(() => {
       </button>
     </div>
   );
-});
+};

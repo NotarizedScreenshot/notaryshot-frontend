@@ -7,7 +7,6 @@ import { useFetchingContext } from 'contexts';
 
 export const Results: React.FC<IResultsProps> = memo(() => {
   const { data, tweetId } = useFetchingContext();
-
   return (
     <div className={styles.container}>
       <Header />
