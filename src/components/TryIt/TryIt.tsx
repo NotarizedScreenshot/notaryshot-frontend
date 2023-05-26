@@ -1,12 +1,11 @@
 import { ITryItProps } from './TryItProps';
 import styles from './TryIt.module.scss';
 import { TweetIdForm, CircledNumber, ProcessIcon } from 'components';
-import { validateBigInt } from 'utils';
 
 export const TryIt: React.FC<ITryItProps> = () => {
   return (
     <div className={styles.container}>
-      <TweetIdForm validate={validateBigInt} />
+      <TweetIdForm />
 
       <ol className={styles.ol}>
         <li className={styles.li}>

@@ -2,7 +2,6 @@ import { IResultsProps } from './ResultsProps';
 import styles from './Results.module.scss';
 import { Header, TweetIdForm, TweetResults, MetadataPreview, HTTPMetadata, DNSMetadata } from 'components';
 import { memo } from 'react';
-import { validateBigInt } from 'utils';
 import { useFetchingContext } from 'contexts';
 
 export const Results: React.FC<IResultsProps> = memo(() => {
@@ -11,7 +10,7 @@ export const Results: React.FC<IResultsProps> = memo(() => {
     <div className={styles.container}>
       <Header />
       <main className={styles.main}>
-        <TweetIdForm validate={validateBigInt} />
+        <TweetIdForm />
         {data && (
           <>
             <div className={styles.bgCircles}></div>

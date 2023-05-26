@@ -13,17 +13,19 @@ import {
   useTransactionContext,
 } from 'contexts';
 import { useNavigate } from 'react-router-dom';
+import { validateTweetLinkOrTweetId } from 'utils';
 
-export const TweetIdForm: React.FC<ICutsomFormProps> = ({ initialInputData, validate }) => {
+export const TweetIdForm: React.FC<ICutsomFormProps> = ({
+  initialInputData,
+  validate = validateTweetLinkOrTweetId,
+}) => {
   const dispatch = useFetchingDispatchContext();
   const { isFetching } = useFetchingContext();
   const { userId } = useConnectionContext();
   const { setInProgress, setProgress } = useProgressingContext();
   const { resetTransactionStatus } = useTransactionContext();
 
-  const [urlInputValue, setUrlInputValue] = useState<string>(
-    initialInputData ? initialInputData : '',
-  );
+  const [urlInputValue, setUrlInputValue] = useState<string>(initialInputData ? initialInputData : '');
   const [dirty, setDirty] = useState<boolean>(false);
   const [isInvalid, setInvalid] = useState<boolean>(false);
   const [error, setError] = useState<string | null>('');
@@ -62,12 +64,12 @@ export const TweetIdForm: React.FC<ICutsomFormProps> = ({ initialInputData, vali
     setDirty(true);
     setValidating(true);
     validate(urlInputValue)
-      .then(() => {
+      .then((data: string) => {
         setInProgress(true);
         setProgress(0);
         setValidating(false);
         setInvalid(false);
-        fetchPreviewData(dispatch, urlInputValue, userId!);
+        fetchPreviewData(dispatch, data, userId!);
         resetTransactionStatus();
         navigate(`/preview`);
       })
