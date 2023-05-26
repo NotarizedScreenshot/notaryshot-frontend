@@ -10,7 +10,6 @@ import {
   Preloader,
   Modal,
 } from 'components';
-import { validateBigInt } from 'utils';
 import { useFetchingContext, useProgressingContext, useModalContext } from 'contexts';
 
 export const Preview: React.FC<IPreviewProps> = () => {
@@ -24,7 +23,7 @@ export const Preview: React.FC<IPreviewProps> = () => {
       <main className={styles.main}>
         {(isFetching || inProgress) && <Preloader percent={!isFetching ? 10 : 5} />}
         {isShowModal && <Modal />}
-        <TweetIdForm validate={validateBigInt} />
+        <TweetIdForm />
         {data && !isFetching && (
           <>
             <div className={styles.bgCircles}></div>

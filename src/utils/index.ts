@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-shadow */
 import enchex from 'crypto-js/enc-hex';
 import sha256 from 'crypto-js/sha256';
 import CryptoJS from 'crypto-js';
@@ -102,6 +103,13 @@ export const getStampedImagePreviewDataUrl = (
   return canvas.toDataURL();
 };
 
+export const isValidBigInt = (data: string) => {
+  if (data.length === 0) return false;
+  if (!/^\d+$/.test(data)) return false;
+  if (BigInt(data) > BigInt(2 ** 64 - 1)) return false;
+  return true;
+};
+
 export const validateBigInt = (data: string): Promise<boolean> =>
   new Promise((resovle, reject) => {
     if (data.length === 0) reject(new Error('should not be empty'));
@@ -110,11 +118,40 @@ export const validateBigInt = (data: string): Promise<boolean> =>
     resovle(true);
   });
 
-export const isValidBigInt = (data: string) => {
-  if (data.length === 0) return false;
-  if (!/^\d+$/.test(data)) return false;
-  if (BigInt(data) > BigInt(2 ** 64 - 1)) return false;
-  return true;
+export const isValidTweetLink = (data: string): boolean => {
+  try {
+    const url = new URL(data);
+
+    if (!['http:', 'https:'].includes(url.protocol)) return false;
+    if (!['twitter.com'].includes(url.hostname)) return false;
+
+    const pathElements = url.pathname.split('/').filter((el) => !!el.length);
+
+    if (pathElements[1] !== 'status') return false;
+    if (!isValidBigInt(pathElements[2])) return false;
+
+    return true;
+  } catch (error: any) {
+    console.log('error validating tweet link', error.message);
+    return false;
+  }
+};
+
+export const validateTweetLinkOrTweetId = (data: string): Promise<string> => {
+  return new Promise((resolve, reject) => {
+    const isBigInt = isValidBigInt(data);
+    if (isBigInt) {
+      return resolve(data);
+    }
+
+    const isTweetLink = isValidTweetLink(data);
+    if (isTweetLink) {
+      const pathnames = new URL(data).pathname.split('/');
+
+      resolve(pathnames[pathnames.length - 1]);
+    }
+    reject(new Error('should be a valid tweet link or a tweet id'));
+  });
 };
 
 export const isTweetBodyElementEmpty = (key: keyof ITweetBody, body: ITweetBody): boolean =>

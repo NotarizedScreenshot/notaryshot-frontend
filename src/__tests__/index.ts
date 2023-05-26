@@ -1,6 +1,13 @@
 import { expect, test, describe } from '@jest/globals';
 
-import { convertImageSize, getOffset, isValidBigInt, validateBigInt, isTweetBodyElementEmpty } from 'utils';
+import {
+  convertImageSize,
+  getOffset,
+  isValidBigInt,
+  validateBigInt,
+  isTweetBodyElementEmpty,
+  validateTweetLinkOrTweetId,
+} from 'utils';
 import stamps from '__fixtures__/stamps';
 import { tweetBodyStubEmpty1, tweetBodyStubFull1 } from '__fixtures__/tweetdata';
 
@@ -50,6 +57,56 @@ describe('test isValidBigInt', () => {
     expect(isValidBigInt('0')).toBe(true);
     expect(isValidBigInt('123421125125123512')).toBe(true);
     expect(isValidBigInt('12342112512512351212')).toBe(true);
+  });
+});
+
+describe('test validateTweetLinkOrTweetId', () => {
+  test('valid', async () => {
+    expect(await validateTweetLinkOrTweetId('1661997848689352')).toBe('1661997848689352');
+    expect(await validateTweetLinkOrTweetId('https://twitter.com/LibertyCappy/status/1661997848689352705')).toBe(
+      '1661997848689352705',
+    );
+    expect(await validateTweetLinkOrTweetId('https://twitter.com/twitter/status/1661997848689352705')).toBe(
+      '1661997848689352705',
+    );
+    expect(await validateTweetLinkOrTweetId('http://twitter.com/LibertyCappy/status/1661997848689352705')).toBe(
+      '1661997848689352705',
+    );
+  });
+  test('invalid', async () => {
+    await expect(validateTweetLinkOrTweetId('')).rejects.toEqual(
+      new Error('should be a valid tweet link or a tweet id'),
+    );
+    await expect(validateTweetLinkOrTweetId('some random string')).rejects.toEqual(
+      new Error('should be a valid tweet link or a tweet id'),
+    );
+    await expect(validateTweetLinkOrTweetId('1661997848689352705a')).rejects.toEqual(
+      new Error('should be a valid tweet link or a tweet id'),
+    );
+    await expect(validateTweetLinkOrTweetId('166199784868935270504')).rejects.toEqual(
+      new Error('should be a valid tweet link or a tweet id'),
+    );
+    await expect(validateTweetLinkOrTweetId('LibertyCappy/status/1661997848689352705')).rejects.toEqual(
+      new Error('should be a valid tweet link or a tweet id'),
+    );
+    await expect(
+      validateTweetLinkOrTweetId('ftp://twitter.com/LibertyCappy/status/1661997848689352705'),
+    ).rejects.toEqual(new Error('should be a valid tweet link or a tweet id'));
+    await expect(
+      validateTweetLinkOrTweetId('https://titter.com/LibertyCappy/status/1661997848689352705'),
+    ).rejects.toEqual(new Error('should be a valid tweet link or a tweet id'));
+    await expect(
+      validateTweetLinkOrTweetId('https://twitter.com/LibertyCappy/status/16619978486893a52705'),
+    ).rejects.toEqual(new Error('should be a valid tweet link or a tweet id'));
+    await expect(validateTweetLinkOrTweetId('http://twitter.com/LibertyCappy/1661997848689352705')).rejects.toEqual(
+      new Error('should be a valid tweet link or a tweet id'),
+    );
+    await expect(
+      validateTweetLinkOrTweetId('http://twitter.com/LibertyCappy/not_status/1661997848689352705'),
+    ).rejects.toEqual(new Error('should be a valid tweet link or a tweet id'));
+    await expect(
+      validateTweetLinkOrTweetId('http://twitter.com/LibertyCappy/status/166199784868930052705'),
+    ).rejects.toEqual(new Error('should be a valid tweet link or a tweet id'));
   });
 });
 
