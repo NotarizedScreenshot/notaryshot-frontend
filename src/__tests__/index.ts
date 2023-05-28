@@ -74,39 +74,27 @@ describe('test validateTweetLinkOrTweetId', () => {
     );
   });
   test('invalid', async () => {
-    await expect(validateTweetLinkOrTweetId('')).rejects.toEqual(
-      new Error('should be a valid tweet link or a tweet id'),
-    );
-    await expect(validateTweetLinkOrTweetId('some random string')).rejects.toEqual(
-      new Error('should be a valid tweet link or a tweet id'),
-    );
-    await expect(validateTweetLinkOrTweetId('1661997848689352705a')).rejects.toEqual(
-      new Error('should be a valid tweet link or a tweet id'),
-    );
-    await expect(validateTweetLinkOrTweetId('166199784868935270504')).rejects.toEqual(
-      new Error('should be a valid tweet link or a tweet id'),
-    );
-    await expect(validateTweetLinkOrTweetId('LibertyCappy/status/1661997848689352705')).rejects.toEqual(
-      new Error('should be a valid tweet link or a tweet id'),
-    );
-    await expect(
-      validateTweetLinkOrTweetId('ftp://twitter.com/LibertyCappy/status/1661997848689352705'),
-    ).rejects.toEqual(new Error('should be a valid tweet link or a tweet id'));
-    await expect(
-      validateTweetLinkOrTweetId('https://titter.com/LibertyCappy/status/1661997848689352705'),
-    ).rejects.toEqual(new Error('should be a valid tweet link or a tweet id'));
-    await expect(
-      validateTweetLinkOrTweetId('https://twitter.com/LibertyCappy/status/16619978486893a52705'),
-    ).rejects.toEqual(new Error('should be a valid tweet link or a tweet id'));
-    await expect(validateTweetLinkOrTweetId('http://twitter.com/LibertyCappy/1661997848689352705')).rejects.toEqual(
-      new Error('should be a valid tweet link or a tweet id'),
-    );
-    await expect(
-      validateTweetLinkOrTweetId('http://twitter.com/LibertyCappy/not_status/1661997848689352705'),
-    ).rejects.toEqual(new Error('should be a valid tweet link or a tweet id'));
-    await expect(
-      validateTweetLinkOrTweetId('http://twitter.com/LibertyCappy/status/166199784868930052705'),
-    ).rejects.toEqual(new Error('should be a valid tweet link or a tweet id'));
+    function tweetError(data: string): Error {
+      return new Error('expected a valid tweet link or a tweet id, actual value: ' + data)
+    }
+    const invalidStrings: string[] = [
+      '',
+      'some random string',
+      '1661997848689352705a',
+      '166199784868935270504',
+      'LibertyCappy/status/1661997848689352705',
+      'ftp://twitter.com/LibertyCappy/status/1661997848689352705',
+      'https://titter.com/LibertyCappy/status/1661997848689352705',
+      'https://twitter.com/LibertyCappy/status/16619978486893a52705',
+      'http://twitter.com/LibertyCappy/1661997848689352705',
+      'http://twitter.com/LibertyCappy/not_status/1661997848689352705',
+      'http://twitter.com/LibertyCappy/status/166199784868930052705'
+    ];
+    invalidStrings.forEach((invalidString) => {
+      expect(validateTweetLinkOrTweetId(invalidString)).rejects.toEqual(
+          tweetError(invalidString),
+      );
+    });
   });
 });
 
