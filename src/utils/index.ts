@@ -1,7 +1,4 @@
 /* eslint-disable @typescript-eslint/no-shadow */
-import enchex from 'crypto-js/enc-hex';
-import sha256 from 'crypto-js/sha256';
-import CryptoJS from 'crypto-js';
 import { ITweetBody, ITweetData, ITweetDetails, ITweetResults, ITweetUser } from 'types';
 
 export const convertImageSize = (
@@ -137,22 +134,19 @@ export const isValidTweetLink = (data: string): boolean => {
   }
 };
 
-export const validateTweetLinkOrTweetId = (data: string): Promise<string> => {
-  return new Promise((resolve, reject) => {
-    const isBigInt = isValidBigInt(data);
-    if (isBigInt) {
+export const validateTweetLinkOrTweetId = (data: string): Promise<string> => new Promise((resolve, reject) => {
+    if (isValidBigInt(data)) {
       return resolve(data);
     }
 
-    const isTweetLink = isValidTweetLink(data);
-    if (isTweetLink) {
+    if (isValidTweetLink(data)) {
       const pathnames = new URL(data).pathname.split('/');
-
       resolve(pathnames[pathnames.length - 1]);
     }
-    reject(new Error('should be a valid tweet link or a tweet id'));
+
+    reject(new Error('expected a valid tweet link or a tweet id, actual value: ' + data));
   });
-};
+
 
 export const isTweetBodyElementEmpty = (key: keyof ITweetBody, body: ITweetBody): boolean =>
   key === 'card' ? false : !body[key] || body[key]?.length === 0;
@@ -241,13 +235,13 @@ export const createTweetData = (tweetResults: ITweetResults): ITweetData => {
       }, {});
 
   const tweetUrls: ITweetBody['urls'] =
-    !urls || urls.length === 0 ? null : urls?.map((url: { expanded_url: string }) => url.expanded_url);
+      !urls || urls.length === 0 ? null : urls.map((url: { expanded_url: string }) => url.expanded_url);
 
   const tweetHashTags: ITweetBody['hashtags'] =
-    !hashtags || hashtags.length === 0 ? null : hashtags?.map((hashtag: { text: string }) => hashtag.text);
+    !hashtags || hashtags.length === 0 ? null : hashtags.map((hashtag: { text: string }) => hashtag.text);
 
   const tweetSymbols: ITweetBody['symbols'] =
-    !symbols || symbols.length === 0 ? null : symbols?.map((symbol: { text: string }) => symbol.text);
+    !symbols || symbols.length === 0 ? null : symbols.map((symbol: { text: string }) => symbol.text);
 
   const tweetMedia: ITweetBody['media'] = !media
     ? null
@@ -303,10 +297,4 @@ export const processTweetData = (tweetRawData: any, tweetId: string) => {
   return createTweetData(tweetResults);
 };
 
-export const getTrustedHashSum = (data: string | Buffer | ArrayBuffer) =>
-  enchex.stringify(
-    // @ts-ignore
-    sha256(CryptoJS.lib.WordArray.create(data)),
-  );
-
-export const getGatwayLink = (cid: string) => `${process.env.REACT_APP_STORAGE_GATEWAY}${cid}`;
+export const getGatewayLink = (cid: string) => `${process.env.REACT_APP_STORAGE_GATEWAY}${cid}`;
