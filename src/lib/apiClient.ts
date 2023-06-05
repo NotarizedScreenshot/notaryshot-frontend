@@ -4,6 +4,8 @@ import { IFetchedData, IMetadata } from 'types';
 
 import notaryShotContract from 'contracts/screenshot-manager.json';
 
+const DEFAULT_REQUEST_TIMEOUT_MS = 120000;
+
 export const fetchMetadataById = async (tweetId: string): Promise<IMetadata | null> => {
   try {
     const response = await fetch(`/metaData?tweetId=${tweetId}`);
@@ -40,8 +42,17 @@ export const fetchPreviewDataByTweetId = async (
   tweetId: string,
   userId?: string | null,
 ): Promise<IFetchedData | null> => {
+  const abortcontroller = new AbortController();
+  const tiemoutId = setTimeout(() => abortcontroller.abort(), DEFAULT_REQUEST_TIMEOUT_MS);
   try {
-    const response = await fetch(`/previewData?tweetId=${tweetId}&userId=${userId}`);
+    const response = await fetch(`/previewData?tweetId=${tweetId}&userId=${userId}`, {
+      signal: abortcontroller.signal,
+    });
+
+    clearInterval(tiemoutId);
+
+    if (response.status !== 200) return null;
+
     return await response.json();
     /* eslint-disable  @typescript-eslint/no-explicit-any */
   } catch (error: any) {
