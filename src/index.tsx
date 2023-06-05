@@ -55,9 +55,9 @@ root.render(
   <React.StrictMode>
     <ModalContextProvider>
       <ConnectionContextProvider>
-        <FetchingContextProvider>
-          <PreviewContextProvider>
-            <ProgressingContextProvider>
+        <PreviewContextProvider>
+          <ProgressingContextProvider>
+            <FetchingContextProvider>
               <TransactionContextProvider>
                 <WagmiConfig client={wagmiClient}>
                   <RainbowKitProvider chains={chains} theme={darkTheme()}>
@@ -65,9 +65,9 @@ root.render(
                   </RainbowKitProvider>
                 </WagmiConfig>
               </TransactionContextProvider>
-            </ProgressingContextProvider>
-          </PreviewContextProvider>
-        </FetchingContextProvider>
+            </FetchingContextProvider>
+          </ProgressingContextProvider>
+        </PreviewContextProvider>
       </ConnectionContextProvider>
     </ModalContextProvider>
   </React.StrictMode>,
