@@ -11,12 +11,41 @@ import {
   Modal,
 } from 'components';
 import { useFetchingContext, useProgressingContext, useModalContext, useConnectionContext } from 'contexts';
+import { fetchSigner } from '@wagmi/core';
+import { useCallback, useEffect } from 'react';
+import { Contract } from 'ethers';
+import notaryShotContract from 'contracts/screenshot-manager.json';
 
 export const Preview: React.FC<IPreviewProps> = () => {
   const { data, isFetching, tweetId, error: fetchingError } = useFetchingContext();
   const { isShowModal } = useModalContext();
   const { inProgress } = useProgressingContext();
   const { connectionError } = useConnectionContext();
+
+  const testContract = useCallback(async () => {
+    try {
+    } catch (err) {
+      const signer = await fetchSigner();
+      if (!signer) throw new Error('cant get signer');
+      const contract = new Contract(notaryShotContract.address, notaryShotContract.abi, signer);
+
+      console.log('contract in preview', contract);
+
+      contract.on('Transfer', (...args) => {
+        console.log('on transfer in preview', args);
+      });
+      contract.on('SubmitTweetMint', (...args) => {
+        console.log('on SubmitTweetMint in preview', args);
+      });
+    }
+  }, []);
+
+  useEffect(() => {
+    'run useEffect in preview';
+    testContract();
+  }, []);
+
+  console.log('inProgress', inProgress);
 
   return (
     <div className={styles.container}>
