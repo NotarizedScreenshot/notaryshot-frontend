@@ -1,7 +1,8 @@
 import { fetchPreviewDataByTweetId } from 'lib/apiClient';
-import { createContext, useContext, useReducer } from 'react';
+import { createContext, useContext, useEffect, useReducer } from 'react';
 import { IMetadata, ITweetData } from 'types';
 import { processTweetData } from 'utils';
+import { useProgressingContext } from './ProgressingContext';
 
 export interface IFetchingContextState {
   isFetching: boolean;
@@ -45,7 +46,7 @@ export const fetchPreviewData = async (dispatch: React.Dispatch<TFetcingAction>,
   try {
     dispatch({ type: EFetchingActionTypes.setFetchingStart });
     const result = await fetchPreviewDataByTweetId(tweetId, userId);
-    
+
     if (!!result) {
       const { imageUrl, tweetdata, metadata } = result;
 
@@ -57,6 +58,8 @@ export const fetchPreviewData = async (dispatch: React.Dispatch<TFetcingAction>,
         type: EFetchingActionTypes.setFetchingCompelete,
         payload: { tweetdata: parsedTweetdata, metadata: parsedMetadata, imageUrl, tweetId },
       });
+    } else {
+      dispatch({ type: EFetchingActionTypes.setFetchingFailed });
     }
   } catch {
     dispatch({ type: EFetchingActionTypes.setFetchingFailed });
@@ -73,7 +76,7 @@ const reducer = (state: IFetchingContextState, action: TFetcingAction): IFetchin
       if (!payload) return state;
       return { ...state, isFetching: false, error: false, data: payload, tweetId: payload.tweetId };
     case EFetchingActionTypes.setFetchingFailed:
-      return { ...state, isFetching: true, error: true, data: null };
+      return { ...state, isFetching: false, error: true, data: null };
     default:
       return state;
   }
@@ -85,6 +88,14 @@ export const useFetchingDispatchContext = () => useContext(FetchingDispatchConte
 
 export const FetchingContextProvider = ({ children }: { children: React.ReactNode }): JSX.Element => {
   const [state, dispatch] = useReducer(reducer, fetchingContextInitialState);
+
+  const { setInProgress } = useProgressingContext();
+
+  useEffect(() => {
+    if (!!state.error) {
+      setInProgress(false);
+    }
+  }, [state.error]);
 
   return (
     <FetchingContext.Provider value={state}>

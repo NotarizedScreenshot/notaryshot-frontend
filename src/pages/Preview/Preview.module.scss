@@ -11,6 +11,20 @@
     padding-top: 3rem;
     z-index: 1;
 
+    .errors {
+      .h2 {
+        padding: 1rem;
+      }
+
+      .p2 {
+        font-size: 1.6rem;
+        font-weight: 400;
+        line-height: 2.4rem;
+        letter-spacing: 1px;
+        padding: 1rem;
+      }
+    }
+
     .loader {
       height: 50rem;
       display: flex;
@@ -44,7 +58,9 @@
       position: relative;
       margin-top: 3.7rem;
       z-index: 1;
+      // padding: 1rem;
     }
+
     .spy {
       position: absolute;
       right: 40rem;

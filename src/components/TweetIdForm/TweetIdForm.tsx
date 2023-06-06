@@ -21,7 +21,7 @@ export const TweetIdForm: React.FC<ICutsomFormProps> = ({
 }) => {
   const dispatch = useFetchingDispatchContext();
   const { isFetching } = useFetchingContext();
-  const { userId } = useConnectionContext();
+  const { userId, connectionError } = useConnectionContext();
   const { setInProgress, setProgress } = useProgressingContext();
   const { resetTransactionStatus } = useTransactionContext();
 
@@ -65,11 +65,13 @@ export const TweetIdForm: React.FC<ICutsomFormProps> = ({
     setValidating(true);
     validate(urlInputValue)
       .then((data: string) => {
-        setInProgress(true);
-        setProgress(0);
+        if (!connectionError) {
+          setInProgress(true);
+          setProgress(0);
+          setInvalid(false);
+          fetchPreviewData(dispatch, data, userId!);
+        }
         setValidating(false);
-        setInvalid(false);
-        fetchPreviewData(dispatch, data, userId!);
         resetTransactionStatus();
         navigate(`/preview`);
       })
