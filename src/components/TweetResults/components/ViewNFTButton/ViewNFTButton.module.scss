@@ -58,6 +58,18 @@
     align-items: center;
     border: none;
 
+    &:disabled {
+      color: #6c7f83;
+      border: 1px solid #6c7f83;
+      background-color: inherit;
+
+      box-shadow: none;
+      &:hover,
+      &:active {
+        transform: scale(1);
+      }
+    }
+
     .image {
       width: 2rem;
       display: flex;

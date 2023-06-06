@@ -5,4 +5,5 @@ export interface ITweetResultsProps {
   imageUrl: string | null;
   tweetdata: ITweetData | null;
   tweetId: string | null;
+  nftId?: string;
 }
