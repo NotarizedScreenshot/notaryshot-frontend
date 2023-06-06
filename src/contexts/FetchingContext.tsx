@@ -76,7 +76,6 @@ const reducer = (state: IFetchingContextState, action: TFetcingAction): IFetchin
       if (!payload) return state;
       return { ...state, isFetching: false, error: false, data: payload, tweetId: payload.tweetId };
     case EFetchingActionTypes.setFetchingFailed:
-      console.log('failed', { ...state, isFetching: false, error: true, data: null });
       return { ...state, isFetching: false, error: true, data: null };
     default:
       return state;
