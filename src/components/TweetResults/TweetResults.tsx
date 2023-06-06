@@ -16,7 +16,7 @@ import { ITweetAttributes, ITweetBody, ITweetDetails, ITweetUser } from 'types';
 import { GatewayLink } from 'components/GatewayLink';
 import { useProgressingContext, useTransactionContext } from 'contexts';
 
-export const TweetResults: React.FC<ITweetResultsProps> = ({ imageUrl, tweetdata, tweetId }) => {
+export const TweetResults: React.FC<ITweetResultsProps> = ({ imageUrl, tweetdata, tweetId, nftId }) => {
   const [user, setUser] = useState<ITweetUser | null>(null);
   const [details, setDetails] = useState<ITweetDetails | null>(null);
   const [attributes, setAttributes] = useState<ITweetAttributes | null>(null);
@@ -60,7 +60,7 @@ export const TweetResults: React.FC<ITweetResultsProps> = ({ imageUrl, tweetdata
         )}
         {media && media.length > 0 && <TweetMedia media={media} />}
       </div>
-      {transactionStatus && transactionId ? <ViewNFTButton /> : <NotarizeButton tweetId={tweetId} />}
+      {transactionStatus && transactionId ? <ViewNFTButton nftId={nftId} /> : <NotarizeButton tweetId={tweetId} />}
     </div>
   );
 };
