@@ -22,6 +22,12 @@ html {
   color: white;
 }
 
+@media only screen and (max-width: 1200px) {
+  html {
+    font-size: 50%;
+  }
+}
+
 body {
   background: var(--backgroundColor);
   margin: 0;
@@ -84,4 +90,16 @@ a:visited {
   color: #187ec5;
 
   text-decoration: none;
+}
+
+.nomobile {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.nomobile h1 {
+  text-align: center;
+  padding: 1rem;
 }
