@@ -2,7 +2,9 @@ node_modules
 .idea
 .vscode
 dist
-.env*
+
+#UNCOMMENT .env FROM gitignore IF CONTAINS SENSITIVE DATA
+# .env
 
 
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
