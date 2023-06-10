@@ -19,8 +19,7 @@ export const Hero: React.FC<IHeroProps> = () => {
 
       <h1 className={styles.h1}>Mint it, prove it - QuantumOracle.</h1>
       <p className={styles.p2}>
-        With QuantumOracle, users can create verified screenshots as proof that the web content they discovered was
-        legitimately served by servers at that moment .
+        Capture and authenticate web2 history with QuantumOracle. Verified screenshots you can trust.
       </p>
       <Button title='Try it!' />
       <div className={styles.agent}>

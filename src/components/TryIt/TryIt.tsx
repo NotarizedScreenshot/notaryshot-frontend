@@ -12,36 +12,32 @@ export const TryIt: React.FC<ITryItProps> = () => {
           <div className={styles.number}>
             <CircledNumber number={1} />
           </div>
-          <p className={styles.p2}>Log into your crypto wallet</p>
+          <p className={styles.p2}>Login with your crypto wallet</p>
         </li>
         <li className={styles.li}>
           <div className={styles.number}>
             <CircledNumber number={2} />
           </div>
-          <p className={styles.p2}>
-            Paste the link to the any <br />
-            tweet you want
-          </p>
+          <p className={styles.p2}>Paste a tweet link or ID</p>
         </li>
         <li className={styles.li}>
           <div className={styles.number}>
             <CircledNumber number={3} />
           </div>
-
-          <p className={styles.p2}>Make a screenshot</p>
+          <p className={styles.p2}>Capture a screenshot</p>
         </li>
         <li className={styles.li}>
           <div className={styles.number}>
             <CircledNumber number={4} />
           </div>
 
-          <p className={styles.p2}>Notarize</p>
+          <p className={styles.p2}>Notarize the screenshot for authenticity.</p>
         </li>
         <li className={styles.li}>
           <div className={styles.number}>
             <CircledNumber number={5} />
           </div>
-          <p className={styles.p2}>Get a verified nft screenshot whose authenticity is recorded in the blockchain</p>
+          <p className={styles.p2}>Receive a verified NFT screenshot, its authenticity recorded on the blockchain</p>
         </li>
       </ol>
       <div className={styles.description}>
