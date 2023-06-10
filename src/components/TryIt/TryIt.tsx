@@ -31,13 +31,13 @@ export const TryIt: React.FC<ITryItProps> = () => {
             <CircledNumber number={4} />
           </div>
 
-          <p className={styles.p2}>Receive a verified NFT screenshot, its authenticity recorded on the blockchain</p>
+          <p className={styles.p2}>Notarize the screenshot for authenticity.</p>
         </li>
         <li className={styles.li}>
           <div className={styles.number}>
             <CircledNumber number={5} />
           </div>
-          <p className={styles.p2}>Get a verified nft screenshot whose authenticity is recorded in the blockchain</p>
+          <p className={styles.p2}>Receive a verified NFT screenshot, its authenticity recorded on the blockchain</p>
         </li>
       </ol>
       <div className={styles.description}>
