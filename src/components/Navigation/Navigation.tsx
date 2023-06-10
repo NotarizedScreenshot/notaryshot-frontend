@@ -25,7 +25,7 @@ export const Navigation: React.FC<INavigationProps> = () => {
         </a>
       </div>
       <div className={classes.navElement}>
-        <a href='mailto:@example.com' target='_blank' rel='noreferrer'>
+        <a href='mailto:hello@chainhackers.xyz' target='_blank' rel='noreferrer'>
           E-mail
         </a>
       </div>
