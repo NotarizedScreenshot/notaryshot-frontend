@@ -5,12 +5,12 @@ export const Navigation: React.FC<INavigationProps> = () => {
   return (
     <div className={classes.container} data-testid='navigation'>
       <div className={classes.navElement}>
-        <a href='https://github.com/NotarizedScreenshot' target='_blank' rel='noreferrer'>
+        <a href='https://discord.gg/YTTr2BA6DU' target='_blank' rel='noreferrer'>
           Discord
         </a>
       </div>
       <div className={classes.navElement}>
-        <a href='https://github.com/NotarizedScreenshot' target='_blank' rel='noreferrer'>
+        <a href='https://github.com/NotarizedScreenshot/QuantumOracle-Docs' target='_blank' rel='noreferrer'>
           Docs
         </a>
       </div>
@@ -25,7 +25,7 @@ export const Navigation: React.FC<INavigationProps> = () => {
         </a>
       </div>
       <div className={classes.navElement}>
-        <a href='https://github.com/NotarizedScreenshot' target='_blank' rel='noreferrer'>
+        <a href='mailto:@example.com' target='_blank' rel='noreferrer'>
           E-mail
         </a>
       </div>
