@@ -31,10 +31,10 @@ export const ConnectionContextProvider = ({ children }: { children: React.ReactN
       setConnectionError(null);
       console.log('received socket id:', socketId);
 
-      const savedUserId = window.localStorage.getItem('qoUserId');
+      const savedUserId = window.sessionStorage.getItem('qoUserId');
 
       if (!savedUserId) {
-        window.localStorage.setItem('qoUserId', socketId);
+        window.sessionStorage.setItem('qoUserId', socketId);
         console.log('new user id saved');
       }
 
