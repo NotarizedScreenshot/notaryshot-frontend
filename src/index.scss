@@ -20,6 +20,10 @@ html {
   box-sizing: border-box;
   font-size: 62.5%;
   color: white;
+
+  @media screen and (max-width: 320px) {
+    font-size: 55%;
+  }
 }
 
 body {

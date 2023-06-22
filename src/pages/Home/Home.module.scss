@@ -1,8 +1,14 @@
 .container {
+  // overflow:
   position: relative;
   color: white;
   margin: auto;
   background-color: #131314;
+
+  &.noscroll {
+    overflow: hidden !important;
+  }
+
   .background {
     position: absolute;
     width: 100%;
@@ -22,6 +28,7 @@
   }
 
   .content {
+    position: relative;
     max-width: 137rem;
     padding: 0 4rem 5rem;
     margin: auto;

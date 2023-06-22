@@ -6,8 +6,105 @@
   align-items: center;
   justify-content: space-between;
 
-  .version {
-    font-size: 1rem;
-    padding-left: 1rem;
+  .title {
+    position: relative;
+    .version {
+      position: absolute;
+      bottom: -1rem;
+      color: white;
+      font-size: 1rem;
+    }
+  }
+
+  @media only screen and (max-width: 1023px) {
+    .navigation,
+    .connect {
+      display: none;
+    }
+  }
+  @media only screen and (max-width: 640px) {
+    padding: 2rem 0;
+    justify-content: start;
+  }
+  @media only screen and (max-width: 320px) {
+    padding: 2rem 0;
+    justify-content: start;
+  }
+
+  .menu {
+    min-height: 100vh;
+    min-width: 100vw;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 9999;
+    padding: 3rem 4rem;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .menuButton {
+    margin-right: 3rem;
+    width: 30px;
+    height: 30px;
+    position: relative;
+    display: none;
+    align-items: center;
+
+    @media only screen and (max-width: 1023px) {
+      display: flex;
+    }
+    .button {
+      height: 100%;
+      width: 100%;
+      background: none;
+      border: none;
+
+      .close {
+        position: relative;
+        width: 30px;
+        height: 30px;
+        overflow: hidden;
+        &::before,
+        &::after {
+          content: '';
+          position: absolute;
+          width: 5rem;
+          height: 1px;
+          background-color: white;
+          top: 50%;
+          left: 50%;
+        }
+        &::before {
+          transform: translate(-50%) rotate(45deg);
+        }
+
+        &::after {
+          transform: translate(-50%) rotate(-45deg);
+        }
+      }
+      .burger {
+        position: relative;
+        background-color: white;
+        width: 3rem;
+        height: 2px;
+        border-radius: 100px;
+        &::before,
+        &::after {
+          position: absolute;
+          content: '';
+          width: 3rem;
+          height: 2px;
+          background-color: inherit;
+          border-radius: 100px;
+        }
+        &::before {
+          top: -1rem;
+        }
+        &::after {
+          top: 1rem;
+        }
+      }
+    }
   }
 }

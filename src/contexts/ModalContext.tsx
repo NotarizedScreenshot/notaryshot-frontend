@@ -11,6 +11,7 @@ interface IModalContextState {
 export enum EModalDialogTypes {
   transaction,
   preloader,
+  headerMenu,
 }
 
 const modalContextInitialValue: IModalContextState = {

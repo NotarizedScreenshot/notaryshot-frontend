@@ -7,7 +7,7 @@ import { publicProvider } from 'wagmi/providers/public';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
 import '@rainbow-me/rainbowkit/styles.css';
-import './index.css';
+import './index.scss';
 import { Preview, Home, Results, Page404 } from 'pages';
 import { io } from 'socket.io-client';
 import {
