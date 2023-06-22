@@ -1,9 +1,10 @@
+import cn from 'classnames';
 import { INavigationProps } from './NavigationProps';
 import classes from './Navigation.module.scss';
 
-export const Navigation: React.FC<INavigationProps> = () => {
+export const Navigation: React.FC<INavigationProps> = ({ vertical }) => {
   return (
-    <div className={classes.container} data-testid='navigation'>
+    <div className={cn(classes.container, vertical ? classes.vertical : null)} data-testid='navigation'>
       <div className={classes.navElement}>
         <a href='https://discord.gg/YTTr2BA6DU' target='_blank' rel='noreferrer'>
           Discord

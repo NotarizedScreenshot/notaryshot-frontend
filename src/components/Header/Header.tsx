@@ -35,7 +35,7 @@ export const Header: React.FC<IHeaderProps> = () => {
               <div className={styles.close}></div>
             </button>
           </div>
-          <Navigation />
+          <Navigation vertical />
         </div>
       )}
       <div className={styles.title}>

@@ -1,10 +1,11 @@
 .container {
   color: white;
   display: flex;
-  justify-content: flex-start;
+  justify-content: space-evenly;
   align-items: center;
+  flex-wrap: wrap;
 
-  @media only screen and (max-width: 1023px) {
+  &.vertical {
     flex: 0.7;
     flex-direction: column;
     height: 100%;
@@ -18,15 +19,10 @@
     letter-spacing: 0em;
     text-align: left;
     color: white;
-
-    @media only screen and (max-width: 1023px) {
-      font-size: 2.2rem;
-      font-weight: 600;
-    }
   }
 
   .navElement {
-    padding: 0 2rem;
+    padding: 1rem 2rem;
     font-weight: 700;
 
     &.small {
