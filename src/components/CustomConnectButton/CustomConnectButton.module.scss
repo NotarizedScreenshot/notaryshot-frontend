@@ -1,6 +1,9 @@
 .container {
-  background: var(--backgroundColor);
   padding: 0 1.8rem;
+
+  & > * {
+    justify-content: center !important;
+  }
 
   button {
     border-radius: 100px !important;

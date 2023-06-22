@@ -6,10 +6,15 @@
   flex-wrap: wrap;
 
   &.vertical {
-    flex: 0.7;
+    flex: 0.3;
     flex-direction: column;
     height: 100%;
     justify-content: space-evenly;
+
+    a{
+      font-weight: 700;
+      font-size: 2rem;
+    }
   }
 
   a {

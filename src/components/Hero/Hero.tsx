@@ -17,11 +17,16 @@ export const Hero: React.FC<IHeroProps> = () => {
         <img src='images/ellipse-background-pink.png' alt='elips' />
       </div>
 
-      <h1 className={styles.h1}>Mint it, prove it - QuantumOracle.</h1>
+      <h1 className={styles.h1}>
+        Mint it, prove it - <br />
+        QuantumOracle.
+      </h1>
       <p className={styles.p2}>
         Capture and authenticate web2 history with QuantumOracle. Verified screenshots you can trust.
       </p>
-      <Button title='Try it!' />
+      <div className={styles.tryButton}>
+        <Button title='Try it!' />
+      </div>
       <div className={styles.agent}>
         <div className={styles.bgElipseBlack}></div>
         <img src='images/agent.png' alt='agent'></img>

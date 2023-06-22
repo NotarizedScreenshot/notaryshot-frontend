@@ -1,5 +1,4 @@
 .container {
-  // overflow:
   position: relative;
   color: white;
   margin: auto;
@@ -32,5 +31,12 @@
     max-width: 137rem;
     padding: 0 4rem 5rem;
     margin: auto;
+
+    @media only screen and (max-width: 1023px) {
+      padding: 0 3rem 5rem;
+    }
+    @media only screen and (max-width: 639px) {
+      padding: 0 2rem 5rem;
+    }
   }
 }

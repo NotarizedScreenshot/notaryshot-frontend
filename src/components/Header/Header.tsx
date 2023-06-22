@@ -36,6 +36,7 @@ export const Header: React.FC<IHeaderProps> = () => {
             </button>
           </div>
           <Navigation vertical />
+          <CustomConnectButton />
         </div>
       )}
       <div className={styles.title}>
