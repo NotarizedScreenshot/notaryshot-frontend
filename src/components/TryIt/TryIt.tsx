@@ -50,16 +50,16 @@ export const TryIt: React.FC<ITryItProps> = () => {
           <div className={styles.processOrder}>
             <ProcessIcon title='Server DNS' iconURL='images/icon-dns.png' />
             <div className={styles.divider}>
-              <img src='images/divider-line.png' alt='div-line'></img>
+              {/* <img src='images/divider-line.png' alt='div-line'></img> */}
             </div>
             <ProcessIcon title='Timestamp' iconURL='images/icon-timestamp.png' />
             <div className={styles.divider}>
-              <img src='images/divider-line.png' alt='div-line'></img>
+              {/* <img src='images/divider-line.png' alt='div-line'></img> */}
             </div>
             <ProcessIcon title='Content hash' iconURL='images/icon-hash.png' />
           </div>
         </div>
-        <div className={styles.web3note}>
+        {/* <div className={styles.web3note}>
           <div className={styles.rects}>
             <div className={styles.spy}>
               <img src='images/spy-2.png' alt='spy'></img>
@@ -73,7 +73,7 @@ export const TryIt: React.FC<ITryItProps> = () => {
             Combining, verifying, and delivering all of this through web3 technologies provides more robust proof than a
             simple image that can be easily manipulated in a matter of minutes.
           </p>
-        </div>
+        </div> */}
       </div>
     </div>
   );

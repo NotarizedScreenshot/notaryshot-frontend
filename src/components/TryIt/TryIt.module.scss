@@ -1,4 +1,5 @@
 .container {
+  position: relative;
   background: rgba(23, 23, 28, 0.6);
   box-shadow: inset -2px -2px 4px rgba(255, 255, 255, 0.08), inset 2px 2px 4px rgba(255, 255, 255, 0.08);
   backdrop-filter: blur(13px);
@@ -7,12 +8,29 @@
 
   padding: 4rem 4rem 6rem;
 
+  @media only screen and (max-width: 1023px) {
+    top: -9rem;
+  }
+  @media only screen and (max-width: 639px) {
+    padding: 1.5rem 1.5rem 6rem;
+  }
+
   .ol {
     padding: 4rem 0;
     list-style-type: none;
     margin: 0;
 
     display: flex;
+
+    @media only screen and (max-width: 1023px) {
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    @media only screen and (max-width: 639px) {
+      display: block;
+      padding: 2rem 0;
+      min-width: 2.5rem;
+    }
 
     .li {
       max-width: 30rem;
@@ -65,37 +83,137 @@
         font-size: 1.6rem;
         line-height: 150%;
       }
+      @media only screen and (max-width: 1023px) {
+        // display: block;
+        padding: 2rem 3rem;
+        min-width: 27.5rem;
+      }
+      @media only screen and (max-width: 639px) {
+        display: flex;
+        max-width: unset;
+        width: 100%;
+        text-align: start;
+        align-items: center;
+        padding: 0.5rem 0;
+
+        .number {
+          margin-right: 1rem;
+        }
+
+        .p2 {
+          padding: 0;
+        }
+      }
     }
   }
 
   .description {
     display: flex;
     justify-content: space-between;
+    @media only screen and (max-width: 1023px) {
+      display: block;
+    }
     .process {
       max-width: 59rem;
+      @media only screen and (max-width: 1023px) {
+        max-width: unset;
+        width: 100%;
+      }
       .h2 {
         font-size: 4.8rem;
         font-weight: 600;
         line-height: 5.8rem;
         padding: 0;
         margin-bottom: 2rem;
+
+        @media only screen and (max-width: 1023px) {
+          text-align: center;
+        }
+
+        @media only screen and (max-width: 639px) {
+          font-size: 2.8rem;
+          line-height: 3.8rem;
+          text-align: start;
+        }
       }
       .p2 {
         font-size: 1.6rem;
         font-weight: 400;
         line-height: 2.4rem;
         margin-bottom: 4rem;
+        @media only screen and (max-width: 1023px) {
+          max-width: 80rem;
+          text-align: center;
+          margin: auto;
+          margin-bottom: 4rem;
+        }
+        @media only screen and (max-width: 639px) {
+          text-align: start;
+          max-width: unset;
+        }
       }
 
       .processOrder {
         display: flex;
         justify-content: space-between;
+        align-items:flex-start;
+
+        @media only screen and (max-width: 1023px) {
+          justify-content: center;
+
+          & > * {
+            margin: 1rem;
+          }
+        }
+
+        @media only screen and (max-width: 639px) {
+          display: block;
+        }
 
         .divider {
-          padding-top: 4rem;
+          // height: 14px;
+          // padding-top: 4rem;
+          position: relative;
+          border: 1px solid white;
+          width: 7rem;
+          // padding: 0 2rem;
+          // margin: 2.5rem 2.5rem;
+          transform: translateY(3.5rem);
+
+          &::before,
+          &::after {
+            position: absolute;
+            content: '';
+            background-image: url(../../../public/images/line-dot.png);
+            background-size: 14px;
+            width: 14px;
+            height: 14px;
+            top: 0;
+            // transform: translate(20%, -50%);
+          }
+
+          &::before {
+            left: -1.5rem;
+            transform: translateY(-50%);
+          }
+
+          &::after {
+            right: -1.5rem;
+            transform: translateY(-50%);
+          }
 
           img {
             transform: translateY(-50%);
+          }
+          @media only screen and (max-width: 639px) {
+            width: unset;
+
+            margin: 2.5rem 2.5rem;
+            padding: 0;
+            transform: translate(0);
+            img {
+              transform: translate(0);
+            }
           }
         }
       }

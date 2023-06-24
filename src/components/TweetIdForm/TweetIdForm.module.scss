@@ -1,11 +1,12 @@
 .container {
   position: relative;
-  height: 4rem;
+  // height: 4rem;
   z-index: 50;
 
   .form {
     display: flex;
     position: relative;
+    flex-wrap: wrap;
 
     .error {
       position: absolute;
@@ -22,10 +23,20 @@
       height: 4rem;
       flex: 1 1;
       margin-right: 3rem;
+
+      @media only screen and (max-width: 639px) {
+        flex-basis: 100%;
+        margin-right: 0;
+        margin-bottom: 1rem;
+      }
+
       .input {
         background: #151518;
         border: 1px solid #6c7f83;
         border-radius: 100px;
+        @media only screen and (max-width: 639px) {
+          border-radius: 10px;
+        }
         height: 100%;
         width: 100%;
         padding: 8px 24px;
@@ -94,6 +105,12 @@
     .controls {
       margin-left: auto;
       height: 4rem;
+      @media only screen and (max-width: 639px) {
+        // flex-basis: 100%;
+        // margin-right: 0;
+        // margin-bottom: 1rem;
+        margin: auto;
+      }
 
       .button {
         height: 100%;

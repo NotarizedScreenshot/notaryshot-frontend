@@ -15,4 +15,9 @@
   justify-content: center;
   align-items: center;
 
+  @media only screen and (max-width: 639px) {
+    width: 4.4rem;
+    height: 4.4rem;
+    font-size: 1.6rem;
+  }
 }
