@@ -3,6 +3,8 @@ name: QuantumOracle frontend build and deploy
 on:
   push:
     branches: '*'
+    tags:
+      - v*
   pull_request:
     branches: [ main ]
 
@@ -32,10 +34,9 @@ jobs:
 
   deploy:
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main'
+    if: github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/tags/v')
     needs: build
     steps:
-      - uses: actions/checkout@v3
       - name: Install SSH Key
         uses: shimataro/ssh-key-action@v2
         with:
