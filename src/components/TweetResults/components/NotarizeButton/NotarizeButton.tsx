@@ -12,9 +12,8 @@ import {
   useTransactionContext,
   useProgressingContext,
 } from 'contexts';
-import { useCallback, useEffect } from 'react';
+import { useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { createBrowserHistory } from 'history';
 
 export const NotarizeButton: React.FC<INotarizeButtonProps> = () => {
   const { tweetId } = useFetchingContext();
@@ -52,11 +51,6 @@ export const NotarizeButton: React.FC<INotarizeButtonProps> = () => {
       }, 1500);
     }
   };
-
-  useEffect(() => {
-    const history = createBrowserHistory();
-    history.replace(`/preview?tweetid=${tweetId}&cid=${contentId?.nftMetadataCid}`);
-  }, [tweetId, contentId]);
 
   return (
     <div className={styles.container}>
