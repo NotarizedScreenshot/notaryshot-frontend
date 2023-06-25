@@ -3,9 +3,18 @@ import styles from './NotarizeButton.module.scss';
 import { useConnectModal } from '@rainbow-me/rainbowkit';
 import { useAccount } from 'wagmi';
 import { submitNotarization } from 'lib/apiClient';
-import { useFetchingContext, useModalDispatchContext, showModal, hideModal, EModalDialogTypes, useTransactionContext, useProgressingContext } from 'contexts';
-import { useCallback } from 'react';
+import {
+  useFetchingContext,
+  useModalDispatchContext,
+  showModal,
+  hideModal,
+  EModalDialogTypes,
+  useTransactionContext,
+  useProgressingContext,
+} from 'contexts';
+import { useCallback, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { createBrowserHistory } from 'history';
 
 export const NotarizeButton: React.FC<INotarizeButtonProps> = () => {
   const { tweetId } = useFetchingContext();
@@ -25,9 +34,9 @@ export const NotarizeButton: React.FC<INotarizeButtonProps> = () => {
       if (!!openConnectModal) openConnectModal();
       return;
     }
-    if (tweetId && contentId?.metadataToSaveCid) {
+    if (tweetId && contentId?.nftMetadataCid) {
       updateStateOnTransaction('Waiting for transaction...');
-      const result = await submitNotarization(tweetId, contentId?.metadataToSaveCid, updateStateOnTransaction);
+      const result = await submitNotarization(tweetId, contentId?.nftMetadataCid, updateStateOnTransaction);
       if (result.status === 'failed') {
         updateStateOnTransaction(result.error ? result.error : 'Transaction declined');
 
@@ -43,6 +52,11 @@ export const NotarizeButton: React.FC<INotarizeButtonProps> = () => {
       }, 1500);
     }
   };
+
+  useEffect(() => {
+    const history = createBrowserHistory();
+    history.replace(`/preview?tweetid=${tweetId}&cid=${contentId?.nftMetadataCid}`);
+  }, [tweetId, contentId]);
 
   return (
     <div className={styles.container}>

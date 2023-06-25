@@ -14,7 +14,6 @@ export const MetadataPreview: React.FC<IMetadataPreviewProps> = ({ children, tit
     setIsCollapsed(!isCollapsed);
   };
 
-  console.log(contentId?.metadataToSaveCid);
   return (
     <div className={styles.container}>
       <div className={cn(styles.heading, blocked ? styles.blocked : null)} onClick={clickHandler}>
