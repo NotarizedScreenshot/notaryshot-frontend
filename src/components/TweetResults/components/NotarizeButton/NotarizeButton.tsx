@@ -27,14 +27,21 @@ export const NotarizeButton: React.FC<INotarizeButtonProps> = () => {
   const { chain } = useNetwork();
   const { chains } = useSwitchNetwork();
 
+  console.log('Notarize button on render, acceptable chains:', chains);
+  console.log('Notatize button on render, current chains: ', chain);
+
   const updateStateOnTransaction = useCallback(
     (transactionStatus: string) => showModal(dispatch, EModalDialogTypes.transaction, { transactionStatus }),
     [dispatch],
   );
   const clickHandler = async () => {
     const isCurrentChainWrong = !chains.find(({ id }) => chain?.id === id);
+    console.log('Notarize button on click, acceptable chains:', chains);
+    console.log('Notatize button on click, current chains: ', chain);
+    console.log('Notatize button on click, is current chain correct: ', !isCurrentChainWrong);
 
     if (isCurrentChainWrong && !!openChainModal) {
+      console.log('Notatize button click, incorrect current chain');
       openChainModal();
       return;
     }
@@ -43,7 +50,10 @@ export const NotarizeButton: React.FC<INotarizeButtonProps> = () => {
       openConnectModal();
       return;
     }
-    if (tweetId && contentId?.nftMetadataCid) {
+
+    //TODO: #133 remove hardcode chain id check once wrong chaing bug surely fixed
+    //https://github.com/orgs/NotarizedScreenshot/projects/1/views/1?pane=issue&itemId=31996862
+    if (tweetId && contentId?.nftMetadataCid && chain?.id === 137) {
       updateStateOnTransaction('Waiting for transaction...');
       const result = await submitNotarization(tweetId, contentId?.nftMetadataCid, updateStateOnTransaction);
       if (result.status === 'failed') {
