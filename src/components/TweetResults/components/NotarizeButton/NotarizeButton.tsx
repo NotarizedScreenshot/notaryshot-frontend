@@ -53,6 +53,10 @@ export const NotarizeButton: React.FC<INotarizeButtonProps> = () => {
 
     //TODO: #133 remove hardcode chain id check once wrong chaing bug surely fixed
     //https://github.com/orgs/NotarizedScreenshot/projects/1/views/1?pane=issue&itemId=31996862
+    if (chain?.id !== 137) {
+      console.error('Not the polygon chain! Current chain: ', chain);
+      return;
+    }
     if (tweetId && contentId?.nftMetadataCid && chain?.id === 137) {
       updateStateOnTransaction('Waiting for transaction...');
       const result = await submitNotarization(tweetId, contentId?.nftMetadataCid, updateStateOnTransaction);
