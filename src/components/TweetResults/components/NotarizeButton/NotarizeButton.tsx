@@ -1,7 +1,7 @@
 import { INotarizeButtonProps } from './NotarizeButtonProps';
 import styles from './NotarizeButton.module.scss';
-import { useConnectModal } from '@rainbow-me/rainbowkit';
-import { useAccount } from 'wagmi';
+import { useChainModal, useConnectModal } from '@rainbow-me/rainbowkit';
+import { useAccount, useNetwork, useSwitchNetwork } from 'wagmi';
 import { submitNotarization } from 'lib/apiClient';
 import {
   useFetchingContext,
@@ -23,14 +23,24 @@ export const NotarizeButton: React.FC<INotarizeButtonProps> = () => {
   const navigate = useNavigate();
   const { setTransactionId, setTransactionStatus } = useTransactionContext();
   const { contentId } = useProgressingContext();
+  const { openChainModal } = useChainModal();
+  const { chain } = useNetwork();
+  const { chains } = useSwitchNetwork();
 
   const updateStateOnTransaction = useCallback(
     (transactionStatus: string) => showModal(dispatch, EModalDialogTypes.transaction, { transactionStatus }),
     [dispatch],
   );
   const clickHandler = async () => {
-    if (!isConnected) {
-      if (!!openConnectModal) openConnectModal();
+    const isCurrentChainWrong = !chains.find(({ id }) => chain?.id === id);
+
+    if (isCurrentChainWrong && !!openChainModal) {
+      openChainModal();
+      return;
+    }
+
+    if (!isConnected && !!openConnectModal) {
+      openConnectModal();
       return;
     }
     if (tweetId && contentId?.nftMetadataCid) {
