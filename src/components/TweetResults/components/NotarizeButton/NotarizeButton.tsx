@@ -1,9 +1,17 @@
 import { INotarizeButtonProps } from './NotarizeButtonProps';
 import styles from './NotarizeButton.module.scss';
-import { useConnectModal } from '@rainbow-me/rainbowkit';
-import { useAccount } from 'wagmi';
+import { useChainModal, useConnectModal } from '@rainbow-me/rainbowkit';
+import { useAccount, useNetwork, useSwitchNetwork } from 'wagmi';
 import { submitNotarization } from 'lib/apiClient';
-import { useFetchingContext, useModalDispatchContext, showModal, hideModal, EModalDialogTypes, useTransactionContext } from 'contexts';
+import {
+  useFetchingContext,
+  useModalDispatchContext,
+  showModal,
+  hideModal,
+  EModalDialogTypes,
+  useTransactionContext,
+  useProgressingContext,
+} from 'contexts';
 import { useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -14,19 +22,44 @@ export const NotarizeButton: React.FC<INotarizeButtonProps> = () => {
   const dispatch = useModalDispatchContext();
   const navigate = useNavigate();
   const { setTransactionId, setTransactionStatus } = useTransactionContext();
+  const { contentId } = useProgressingContext();
+  const { openChainModal } = useChainModal();
+  const { chain } = useNetwork();
+  const { chains } = useSwitchNetwork();
+
+  console.log('Notarize button on render, acceptable chains:', chains);
+  console.log('Notatize button on render, current chains: ', chain);
 
   const updateStateOnTransaction = useCallback(
     (transactionStatus: string) => showModal(dispatch, EModalDialogTypes.transaction, { transactionStatus }),
     [dispatch],
   );
   const clickHandler = async () => {
-    if (!isConnected) {
-      if (!!openConnectModal) openConnectModal();
+    const isCurrentChainWrong = !chains.find(({ id }) => chain?.id === id);
+    console.log('Notarize button on click, acceptable chains:', chains);
+    console.log('Notatize button on click, current chains: ', chain);
+    console.log('Notatize button on click, is current chain correct: ', !isCurrentChainWrong);
+
+    if (isCurrentChainWrong && !!openChainModal) {
+      console.log('Notatize button click, incorrect current chain');
+      openChainModal();
       return;
     }
-    if (tweetId) {
+
+    if (!isConnected && !!openConnectModal) {
+      openConnectModal();
+      return;
+    }
+
+    //TODO: #133 remove hardcode chain id check once wrong chaing bug surely fixed
+    //https://github.com/orgs/NotarizedScreenshot/projects/1/views/1?pane=issue&itemId=31996862
+    if (chain?.id !== 137) {
+      console.error('Not the polygon chain! Current chain: ', chain);
+      return;
+    }
+    if (tweetId && contentId?.nftMetadataCid && chain?.id === 137) {
       updateStateOnTransaction('Waiting for transaction...');
-      const result = await submitNotarization(tweetId, updateStateOnTransaction);
+      const result = await submitNotarization(tweetId, contentId?.nftMetadataCid, updateStateOnTransaction);
       if (result.status === 'failed') {
         updateStateOnTransaction(result.error ? result.error : 'Transaction declined');
 

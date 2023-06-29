@@ -15,6 +15,7 @@ import { useEffect, useState } from 'react';
 import { ITweetAttributes, ITweetBody, ITweetDetails, ITweetUser } from 'types';
 import { GatewayLink } from 'components/GatewayLink';
 import { useProgressingContext, useTransactionContext } from 'contexts';
+import { createBrowserHistory } from 'history';
 
 export const TweetResults: React.FC<ITweetResultsProps> = ({ imageUrl, tweetdata, tweetId, nftId }) => {
   const [user, setUser] = useState<ITweetUser | null>(null);
@@ -39,6 +40,13 @@ export const TweetResults: React.FC<ITweetResultsProps> = ({ imageUrl, tweetdata
   const date = new Date(details ? details.created_at : Date.now());
 
   const { contentId } = useProgressingContext();
+
+  useEffect(() => {
+    if (!!tweetId && !!contentId?.nftMetadataCid) {
+      const history = createBrowserHistory();
+      history.replace(`/preview?${!transactionStatus ? `tweetid=${tweetId}&` : ''}cid=${contentId?.nftMetadataCid}`);
+    }
+  }, [tweetId, contentId]);
 
   return (
     <div className={styles.container}>

@@ -10,6 +10,7 @@ interface IProgressingContextValue {
     metadataToSaveCid: string;
     screenshotCid: string;
     stampedScreenShotCid: string;
+    nftMetadataCid: string;
     mediaCidMap: { url: string; cid: string | null; error?: string }[];
   } | null;
 }
