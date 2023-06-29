@@ -63,6 +63,7 @@ export const fetchPreviewDataByTweetId = async (
 
 export const submitNotarization = async (
   tweetId: string,
+  cid: string,
   cb?: (data: string) => void,
 ): Promise<
   // TODO: https://github.com/orgs/NotarizedScreenshot/projects/1/views/1?filterQuery=typ&pane=issue&itemId=28111890
@@ -73,7 +74,7 @@ export const submitNotarization = async (
     if (!signer) throw new Error('cant get signer');
     const contract = new Contract(notaryShotContract.address, notaryShotContract.abi, signer);
 
-    const transaction = await contract.submitTweetMint(tweetId);
+    const transaction = await contract.submitTweetMint(tweetId, cid);
 
     if (!!cb) {
       cb(`Trasaction ${transaction.hash} confirmed, waiting for receipt...`);
