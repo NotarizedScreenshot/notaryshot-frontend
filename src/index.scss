@@ -21,6 +21,13 @@ html {
   font-size: 62.5%;
   color: white;
 
+  @media screen and (max-width: 1440px) {
+    font-size: 60%;
+  }
+  @media screen and (max-width: 1200px) {
+    font-size: 47%;
+  }
+
   @media screen and (max-width: 319px) {
     font-size: 40%;
   }

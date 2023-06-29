@@ -10,9 +10,10 @@
 
   @media only screen and (max-width: 1023px) {
     top: -9rem;
+    padding: 4rem 4rem 4rem;
   }
   @media only screen and (max-width: 639px) {
-    padding: 1.5rem 1.5rem 6rem;
+    padding: 2.5rem 2.5rem 4rem;
   }
 
   .ol {
@@ -39,7 +40,7 @@
       flex: 1;
 
       &:last-child {
-        flex: 2;
+        flex: 1.5;
       }
 
       &:not(:first-child) {
@@ -57,6 +58,12 @@
       }
 
       &:not(:last-child) {
+        @media screen and (max-width: 1200px) {
+          margin-right: 1rem;
+        }
+        @media screen and (max-width: 1023px) {
+          margin-right: 0;
+        }
         .number {
           &::after {
             position: absolute;
@@ -84,9 +91,14 @@
         line-height: 150%;
       }
       @media only screen and (max-width: 1023px) {
-        // display: block;
         padding: 2rem 3rem;
-        min-width: 27.5rem;
+        min-width: 31rem;
+      }
+      @media only screen and (max-width: 805px) {
+        min-width: 25rem;
+      }
+      @media only screen and (max-width: 680px) {
+        min-width: 22rem;
       }
       @media only screen and (max-width: 639px) {
         display: flex;
@@ -110,11 +122,13 @@
   .description {
     display: flex;
     justify-content: space-between;
+
     @media only screen and (max-width: 1023px) {
       display: block;
     }
     .process {
       max-width: 59rem;
+      margin-right: 2rem;
       @media only screen and (max-width: 1023px) {
         max-width: unset;
         width: 100%;
@@ -128,6 +142,7 @@
 
         @media only screen and (max-width: 1023px) {
           text-align: center;
+          font-size: 5.2rem;
         }
 
         @media only screen and (max-width: 639px) {
@@ -146,6 +161,9 @@
           text-align: center;
           margin: auto;
           margin-bottom: 4rem;
+          font-size: 2rem;
+
+          line-height: 2.4rem;
         }
         @media only screen and (max-width: 639px) {
           text-align: start;
@@ -156,7 +174,7 @@
       .processOrder {
         display: flex;
         justify-content: space-between;
-        align-items:flex-start;
+        align-items: flex-start;
 
         @media only screen and (max-width: 1023px) {
           justify-content: center;
@@ -205,6 +223,9 @@
           img {
             transform: translateY(-50%);
           }
+          @media only screen and (max-width: 1023px) {
+            width: 11rem;
+          }
           @media only screen and (max-width: 639px) {
             width: unset;
 
@@ -220,9 +241,33 @@
     }
     .web3note {
       max-width: 46rem;
+      @media screen and (max-width: 1023px) {
+        max-width: 70rem;
+        display: flex;
+        align-items: end;
+        padding-top: 5rem;
+        margin: auto;
+      }
+      @media screen and (max-width: 639px) {
+        flex-direction: column;
+        align-items: center;
+        max-width: 58rem;
+      }
+      @media screen and (max-width: 424px) {
+        align-items: flex-start;
+      }
       .rects {
         display: flex;
         margin-bottom: 2rem;
+        position: relative;
+        @media screen and (max-width: 1023px) {
+          margin-bottom: 0;
+          margin-right: 2rem;
+        }
+        @media screen and (max-width: 639px) {
+          margin-bottom: 2rem;
+          margin-right: 0;
+        }
         .spy {
           width: 27rem;
           height: 21rem;
@@ -235,6 +280,7 @@
 
           position: relative;
           img {
+            width: 81%;
             position: absolute;
             bottom: 0;
             left: 50%;
@@ -266,6 +312,17 @@
           flex-direction: column;
           justify-content: center;
 
+          @media screen and (max-width: 1023px) {
+            position: absolute;
+            top: 0;
+            right: 0;
+            transform: scale(0.75) rotate(15deg) translate(120%, -90%);
+          }
+
+          @media screen and (max-width: 639px) {
+            transform: scale(0.8) rotate(15deg) translate(60%, -90%);
+          }
+
           p:last-child {
             position: relative;
             text-align: right;
@@ -288,6 +345,10 @@
         font-size: 1.6rem;
         font-weight: 400;
         line-height: 2.4rem;
+        @media screen and (max-width: 1023px) {
+          font-size: 2rem;
+          line-height: 2.8rem;
+        }
       }
     }
   }

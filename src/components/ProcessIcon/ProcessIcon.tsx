@@ -5,7 +5,7 @@ export const ProcessIcon: React.FC<IProcessIconProps> = ({ title = 'title', icon
     <div className={styles.container}>
       <div className={styles.icon}>
         <img src='images/glow.png' alt='glow' className={styles.glow} />
-        {iconURL && <img src={iconURL} alt='icon-dns'></img>}
+        {iconURL && <img src={iconURL} alt='icon-dns' className={styles.image}></img>}
       </div>
       <div className={styles.title}>{title}</div>
     </div>
