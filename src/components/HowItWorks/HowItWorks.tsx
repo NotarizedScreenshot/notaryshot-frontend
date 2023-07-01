@@ -7,7 +7,7 @@ export const HowItWorks: React.FC<IHowItWorksProps> = () => {
       <div className={styles.bg}>
         <img className={styles.byImage} src='images/background-vector.png' alt='bg' />
       </div>
-      <h2>How it works</h2>
+      <h2 className={styles.h2}>How it works</h2>
       <div className={styles.cards}>
         <HowItWorksCard
           number={1}

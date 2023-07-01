@@ -14,7 +14,6 @@ export const HowItWorksCard: React.FC<IHowItWorksCardProps> = ({
         <CircledNumber number={number} />
       </div>
       <div className={styles.bubble}>
-        <img src='images/bubble.png' alt='bubble' />
         <div className={styles.message}>
           {Array.isArray(message)
             ? message.map((string, index) => (
