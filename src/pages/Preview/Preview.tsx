@@ -24,7 +24,6 @@ export const Preview: React.FC<IPreviewProps> = () => {
 
   const testContract = useCallback(async () => {
     try {
-    } catch (err) {
       const signer = await fetchSigner();
       if (!signer) throw new Error('cant get signer');
       const contract = new Contract(notaryShotContract.address, notaryShotContract.abi, signer);
@@ -37,6 +36,8 @@ export const Preview: React.FC<IPreviewProps> = () => {
       contract.on('SubmitTweetMint', (...args) => {
         console.log('on SubmitTweetMint in preview', args);
       });
+    } catch (err) {
+      console.log('error in testContract preview', err);
     }
   }, []);
 

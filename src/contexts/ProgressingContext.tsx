@@ -53,6 +53,10 @@ export const ProgressingContextProvider = ({ children }: { children: React.React
         1500,
       );
     });
+    socket.on('uploadRejected', (message) => {
+      console.log('uploadReject', message);
+      setProgressValue((prev) => ({ ...prev, inProgress: false }));
+    });
   }, []);
 
   return (

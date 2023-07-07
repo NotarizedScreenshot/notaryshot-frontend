@@ -55,6 +55,7 @@ export interface IFetchedData {
   imageUrl: string | null;
   tweetdata: string | null;
   metadata: string | null;
+  parsedTweetData: ITweetData | null;
 }
 
 export interface ITweetAttributes {

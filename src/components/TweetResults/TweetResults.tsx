@@ -68,7 +68,11 @@ export const TweetResults: React.FC<ITweetResultsProps> = ({ imageUrl, tweetdata
         )}
         {media && media.length > 0 && <TweetMedia media={media} />}
       </div>
-      {transactionStatus && transactionId ? <ViewNFTButton nftId={nftId} /> : <NotarizeButton tweetId={tweetId} />}
+      {!!tweetdata && (
+        <>
+          {transactionStatus && transactionId ? <ViewNFTButton nftId={nftId} /> : <NotarizeButton tweetId={tweetId} />}
+        </>
+      )}
     </div>
   );
 };
