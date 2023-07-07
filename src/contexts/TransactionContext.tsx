@@ -6,6 +6,8 @@ interface ITransactionContextValue {
   setTransactionStatus: React.Dispatch<React.SetStateAction<'fail' | 'success' | null>>;
   setTransactionId: React.Dispatch<React.SetStateAction<string | null>>;
   resetTransactionStatus: () => void;
+  nftId: string | null;
+  setNftId: React.Dispatch<React.SetStateAction<string | null>>;
 }
 
 const transactionContextInitialValue: ITransactionContextValue = {
@@ -14,6 +16,8 @@ const transactionContextInitialValue: ITransactionContextValue = {
   setTransactionId: () => undefined,
   setTransactionStatus: () => undefined,
   resetTransactionStatus: () => undefined,
+  nftId: null,
+  setNftId: () => undefined,
 };
 
 export const TransactionContext = createContext(transactionContextInitialValue);
@@ -27,6 +31,7 @@ export const TransactionContextProvider: React.FC<{ children: React.ReactNode }>
   const [transactionId, setTransactionId] = useState<ITransactionContextValue['transactionId']>(
     transactionContextInitialValue.transactionId,
   );
+  const [nftId, setNftId] = useState<string | null>(null);
 
   const resetTransactionStatus = useCallback(() => {
     setTransactionStatus(transactionContextInitialValue.transactionStatus);
@@ -39,6 +44,8 @@ export const TransactionContextProvider: React.FC<{ children: React.ReactNode }>
     setTransactionId,
     setTransactionStatus,
     resetTransactionStatus,
+    nftId,
+    setNftId,
   };
   return <TransactionContext.Provider value={value}>{children}</TransactionContext.Provider>;
 };

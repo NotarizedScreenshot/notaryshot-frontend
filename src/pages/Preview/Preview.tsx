@@ -10,19 +10,28 @@ import {
   Preloader,
   Modal,
 } from 'components';
-import { useFetchingContext, useProgressingContext, useModalContext, useConnectionContext } from 'contexts';
+import {
+  useFetchingContext,
+  useProgressingContext,
+  useModalContext,
+  useConnectionContext,
+  useTransactionContext,
+} from 'contexts';
 import { fetchSigner } from '@wagmi/core';
 import { useCallback, useEffect } from 'react';
-import { Contract } from 'ethers';
+import { BigNumber, Contract } from 'ethers';
 import notaryShotContract from 'contracts/screenshot-manager.json';
+import { useAccount } from 'wagmi';
 
 export const Preview: React.FC<IPreviewProps> = () => {
   const { data, isFetching, tweetId, error: fetchingError } = useFetchingContext();
   const { isShowModal } = useModalContext();
   const { inProgress } = useProgressingContext();
   const { connectionError } = useConnectionContext();
+  const { setNftId, nftId } = useTransactionContext();
+  const { address } = useAccount();
 
-  const testContract = useCallback(async () => {
+  const initContract = useCallback(async () => {
     try {
       const signer = await fetchSigner();
       if (!signer) throw new Error('cant get signer');
@@ -32,18 +41,22 @@ export const Preview: React.FC<IPreviewProps> = () => {
 
       contract.on('Transfer', (...args) => {
         console.log('on transfer in preview', args);
+        const [, ownerAddress, mintedNftId] = args as [string, string, BigNumber];
+        console.log('results ownerAddress, mintedNftId: ', ownerAddress, mintedNftId.toString());
+        if (ownerAddress.toLowerCase() === address?.toLowerCase()) {
+          setNftId(mintedNftId.toString());
+        }
       });
       contract.on('SubmitTweetMint', (...args) => {
         console.log('on SubmitTweetMint in preview', args);
       });
     } catch (err) {
-      console.log('error in testContract preview', err);
+      console.log('error in initContract preview', err);
     }
   }, []);
 
   useEffect(() => {
-    'run useEffect in preview';
-    testContract();
+    initContract();
   }, []);
 
   console.log('inProgress', inProgress);
@@ -74,7 +87,7 @@ export const Preview: React.FC<IPreviewProps> = () => {
               </div>
             </div>
             <h2 className={styles.h2}>Confirm Verification</h2>
-            <TweetResults imageUrl={data.imageUrl} tweetdata={data.tweetdata} tweetId={tweetId} />
+            <TweetResults imageUrl={data.imageUrl} tweetdata={data.tweetdata} tweetId={tweetId} nftId={nftId} />
             <MetadataPreview
               blocked={!data.metadata}
               title={`Http headers meta${!data.metadata ? ': data unavailable' : ''}`}
