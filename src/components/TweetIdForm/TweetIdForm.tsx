@@ -12,7 +12,7 @@ import {
   useProgressingContext,
   useTransactionContext,
 } from 'contexts';
-import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { validateTweetLinkOrTweetId } from 'utils';
 
 export const TweetIdForm: React.FC<ICutsomFormProps> = ({

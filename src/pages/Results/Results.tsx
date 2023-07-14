@@ -1,8 +1,8 @@
 import { IResultsProps } from './ResultsProps';
 import styles from './Results.module.scss';
 import { Header, TweetIdForm, TweetResults, MetadataPreview, HTTPMetadata, DNSMetadata } from 'components';
-import { memo, useCallback, useEffect } from 'react';
-import { useContractContext, useFetchingContext, useTransactionContext } from 'contexts';
+import { memo } from 'react';
+import { useContractContext, useFetchingContext } from 'contexts';
 
 
 export const Results: React.FC<IResultsProps> = memo(() => {

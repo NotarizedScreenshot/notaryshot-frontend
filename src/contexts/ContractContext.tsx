@@ -1,10 +1,8 @@
 import { fetchSigner } from '@wagmi/core';
-import { ProcessIcon } from 'components';
-import { sign } from 'crypto';
 import { createContext, useContext, useState } from 'react';
 import { useAccount, useContract, useProvider } from 'wagmi';
 import notaryShotContract from 'contracts/screenshot-manager.json';
-import { BigNumber, Contract } from 'ethers';
+import { BigNumber } from 'ethers';
 interface IContractContext {
   contract: any;
   nftId: string | null;
