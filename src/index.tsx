@@ -17,6 +17,7 @@ import {
   ProgressingContextProvider,
   ModalContextProvider,
   TransactionContextProvider,
+  ContractContextProvider,
 } from 'contexts';
 
 const { chains, provider } = configureChains([polygon], [publicProvider()]);
@@ -53,22 +54,24 @@ const router = createBrowserRouter([
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 root.render(
   <React.StrictMode>
-    <ModalContextProvider>
-      <ConnectionContextProvider>
-        <PreviewContextProvider>
-          <ProgressingContextProvider>
-            <FetchingContextProvider>
-              <TransactionContextProvider>
-                <WagmiConfig client={wagmiClient}>
-                  <RainbowKitProvider chains={chains} theme={darkTheme()}>
-                    <RouterProvider router={router} />
-                  </RainbowKitProvider>
-                </WagmiConfig>
-              </TransactionContextProvider>
-            </FetchingContextProvider>
-          </ProgressingContextProvider>
-        </PreviewContextProvider>
-      </ConnectionContextProvider>
-    </ModalContextProvider>
+    <ContractContextProvider>
+      <ModalContextProvider>
+        <ConnectionContextProvider>
+          <PreviewContextProvider>
+            <ProgressingContextProvider>
+              <FetchingContextProvider>
+                <TransactionContextProvider>
+                  <WagmiConfig client={wagmiClient}>
+                    <RainbowKitProvider chains={chains} theme={darkTheme()}>
+                      <RouterProvider router={router} />
+                    </RainbowKitProvider>
+                  </WagmiConfig>
+                </TransactionContextProvider>
+              </FetchingContextProvider>
+            </ProgressingContextProvider>
+          </PreviewContextProvider>
+        </ConnectionContextProvider>
+      </ModalContextProvider>
+    </ContractContextProvider>
   </React.StrictMode>,
 );

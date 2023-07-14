@@ -22,6 +22,7 @@ import { useCallback, useEffect } from 'react';
 import { BigNumber, Contract } from 'ethers';
 import notaryShotContract from 'contracts/screenshot-manager.json';
 import { useAccount } from 'wagmi';
+import { useLocation } from 'react-router-dom';
 
 export const Preview: React.FC<IPreviewProps> = () => {
   const { data, isFetching, tweetId, error: fetchingError } = useFetchingContext();
@@ -30,6 +31,8 @@ export const Preview: React.FC<IPreviewProps> = () => {
   const { connectionError } = useConnectionContext();
   const { setNftId, nftId } = useTransactionContext();
   const { address } = useAccount();
+  const { search } = useLocation();
+  const tweetIDquery = new URLSearchParams(search).get('tweetid');
 
   const initContract = useCallback(async () => {
     try {
@@ -59,7 +62,7 @@ export const Preview: React.FC<IPreviewProps> = () => {
     initContract();
   }, []);
 
-  console.log('inProgress', inProgress);
+  // console.log('inProgress', inProgress);
 
   return (
     <div className={styles.container}>
@@ -67,7 +70,7 @@ export const Preview: React.FC<IPreviewProps> = () => {
       <main className={styles.main}>
         {(isFetching || inProgress) && <Preloader percent={!isFetching ? 10 : 5} />}
         {isShowModal && <Modal />}
-        <TweetIdForm />
+        <TweetIdForm initialInputData={tweetIDquery} />
         {(connectionError || fetchingError) && (
           <div className={styles.errors}>
             <h2 className={styles.h2}>Error</h2>
