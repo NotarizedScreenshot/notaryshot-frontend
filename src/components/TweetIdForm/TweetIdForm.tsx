@@ -26,9 +26,7 @@ export const TweetIdForm: React.FC<ICutsomFormProps> = ({
   const { setInProgress, setProgress } = useProgressingContext();
   const { resetTransactionStatus } = useTransactionContext();
 
-  const [urlInputValue, setUrlInputValue] = useState<string>(
-    initialInputData ? initialInputData : '1679913338174853120',
-  );
+  const [urlInputValue, setUrlInputValue] = useState<string>(initialInputData ? initialInputData : '');
   const [dirty, setDirty] = useState<boolean>(false);
   const [isInvalid, setInvalid] = useState<boolean>(false);
   const [error, setError] = useState<string | null>('');
