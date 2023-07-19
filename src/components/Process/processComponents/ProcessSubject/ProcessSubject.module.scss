@@ -1,5 +1,13 @@
 .container {
   width: 14rem;
+  @media screen and (max-width: 508px) {
+    width: 10rem;
+  }
+  @media screen and (max-width: 374px) {
+    width: 8rem;
+  }
+
+  
 
   .userpic {
     width: 5rem;

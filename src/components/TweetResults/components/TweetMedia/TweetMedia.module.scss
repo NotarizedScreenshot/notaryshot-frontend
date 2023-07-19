@@ -10,12 +10,12 @@
   padding: 10px 20px;
 
   max-width: 100%;
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(min-content, 15rem));
+  display: flex;
   justify-self: start;
   gap: 1rem;
 
   .mediaElement {
+    flex: 1;
     width: 14rem;
     border-radius: 8px;
     overflow: hidden;
@@ -26,7 +26,6 @@
       max-height: 8rem;
       overflow: hidden;
       border-radius: 8px;
-      margin-bottom: 1rem;
       img {
         width: 100%;
       }

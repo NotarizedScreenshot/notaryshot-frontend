@@ -1,8 +1,8 @@
 .container {
-  height: 44px;
   display: flex;
   .profileImage {
-    width: 4.4rem;
+    flex: 0 0 4.4rem;
+
     height: 4.4rem;
     border-radius: 100px;
     background-color: #1b222c;
@@ -18,8 +18,11 @@
   }
 
   .profileName {
+    flex: 0 0 34rem;
     display: flex;
     align-items: center;
+    flex-wrap: wrap;
+    word-break: break-all;
 
     .profileLink {
       font-weight: 600;

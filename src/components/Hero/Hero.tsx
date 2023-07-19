@@ -2,6 +2,12 @@ import { IHeroProps } from './HeroProps';
 import styles from './Hero.module.scss';
 import { Button } from 'components';
 export const Hero: React.FC<IHeroProps> = () => {
+  const handleClickScroll = () => {
+    const trySection = document.getElementById('try');
+    if (trySection) {
+      trySection.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
   return (
     <div className={styles.container}>
       <div className={styles.rock1}>
@@ -25,7 +31,7 @@ export const Hero: React.FC<IHeroProps> = () => {
         Capture and authenticate web2 history with QuantumOracle. Verified screenshots you can trust.
       </p>
       <div className={styles.tryButton}>
-        <Button title='Try it!' />
+        <Button title='Try it!' onClick={handleClickScroll} />
       </div>
       <div className={styles.agent}>
         <div className={styles.bgElipseBlack}></div>

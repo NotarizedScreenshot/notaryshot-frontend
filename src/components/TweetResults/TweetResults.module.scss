@@ -41,7 +41,6 @@
 
     .heading {
       display: flex;
-      height: 44px;
       justify-self: stretch !important;
 
       & > *:first-child {
@@ -49,7 +48,7 @@
       }
 
       & > *:not(:first-child) {
-        margin-left: 4rem;
+        margin-left: 2rem;
       }
     }
     .text {

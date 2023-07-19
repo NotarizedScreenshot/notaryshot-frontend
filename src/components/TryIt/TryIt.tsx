@@ -4,7 +4,7 @@ import { TweetIdForm, CircledNumber, ProcessIcon } from 'components';
 
 export const TryIt: React.FC<ITryItProps> = () => {
   return (
-    <div className={styles.container}>
+    <div className={styles.container} id='try'>
       <TweetIdForm />
       <ol className={styles.ol}>
         <li className={styles.li}>

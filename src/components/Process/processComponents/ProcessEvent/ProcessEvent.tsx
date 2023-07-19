@@ -5,7 +5,7 @@ export const ProcessEvent: React.FC<IProcessEventProps> = ({ userPic, message, t
     <div className={styles.container}>
       <div className={styles.message}>
         <div className={styles.bubble}>
-          <img src='images/bubble-small.png' alt='bubble' />
+          <img src='images/bubble-mobile.png' alt='bubble' />
         </div>
         <p className={styles.p}>{message}</p>
       </div>

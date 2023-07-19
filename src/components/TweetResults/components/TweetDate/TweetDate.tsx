@@ -10,7 +10,7 @@ export const TweetDate: React.FC<ITweetDateProps> = ({ date }) => {
         />
       </svg>
       <p className={styles.p2}>
-        {date.toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' })}
+        {date.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })}
       </p>
     </div>
   );

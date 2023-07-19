@@ -7,7 +7,7 @@ export const HowItWorksCard: React.FC<IHowItWorksCardProps> = ({
   personImageUrl,
   tweetImageUrl,
 }) => {
-  console.log(Array.isArray(message));
+  
   return (
     <div className={styles.container}>
       <div className={styles.number}>
