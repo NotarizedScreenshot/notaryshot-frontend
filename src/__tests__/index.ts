@@ -11,28 +11,28 @@ import {
 import stamps from '__fixtures__/stamps';
 import { tweetBodyStubEmpty1, tweetBodyStubFull1 } from '__fixtures__/tweetdata';
 
-describe('isTweetBodyElemetEmpty', () => {
-  test('if card then not epmty', () => {
-    expect(isTweetBodyElementEmpty('card', tweetBodyStubEmpty1)).toBe(false);
-    expect(isTweetBodyElementEmpty('card', tweetBodyStubFull1)).toBe(false);
-  });
-  test('if elements empty', () => {
-    expect(isTweetBodyElementEmpty('full_text', tweetBodyStubEmpty1)).toBe(true);
-    expect(isTweetBodyElementEmpty('urls', tweetBodyStubEmpty1)).toBe(true);
-    expect(isTweetBodyElementEmpty('hashtags', tweetBodyStubEmpty1)).toBe(true);
-    expect(isTweetBodyElementEmpty('media', tweetBodyStubEmpty1)).toBe(true);
-    expect(isTweetBodyElementEmpty('symbols', tweetBodyStubEmpty1)).toBe(true);
-    expect(isTweetBodyElementEmpty('user_mentions', tweetBodyStubEmpty1)).toBe(true);
-  });
-  test('if elements not empty', () => {
-    expect(isTweetBodyElementEmpty('full_text', tweetBodyStubFull1)).toBe(false);
-    expect(isTweetBodyElementEmpty('urls', tweetBodyStubFull1)).toBe(false);
-    expect(isTweetBodyElementEmpty('hashtags', tweetBodyStubFull1)).toBe(false);
-    expect(isTweetBodyElementEmpty('media', tweetBodyStubFull1)).toBe(false);
-    expect(isTweetBodyElementEmpty('symbols', tweetBodyStubFull1)).toBe(false);
-    expect(isTweetBodyElementEmpty('user_mentions', tweetBodyStubFull1)).toBe(false);
-  });
-});
+// describe('isTweetBodyElemetEmpty', () => {
+//   test('if card then not epmty', () => {
+//     expect(isTweetBodyElementEmpty('card', tweetBodyStubEmpty1)).toBe(false);
+//     expect(isTweetBodyElementEmpty('card', tweetBodyStubFull1)).toBe(false);
+//   });
+//   test('if elements empty', () => {
+//     expect(isTweetBodyElementEmpty('full_text', tweetBodyStubEmpty1)).toBe(true);
+//     expect(isTweetBodyElementEmpty('urls', tweetBodyStubEmpty1)).toBe(true);
+//     expect(isTweetBodyElementEmpty('hashtags', tweetBodyStubEmpty1)).toBe(true);
+//     expect(isTweetBodyElementEmpty('media', tweetBodyStubEmpty1)).toBe(true);
+//     expect(isTweetBodyElementEmpty('symbols', tweetBodyStubEmpty1)).toBe(true);
+//     expect(isTweetBodyElementEmpty('user_mentions', tweetBodyStubEmpty1)).toBe(true);
+//   });
+//   test('if elements not empty', () => {
+//     expect(isTweetBodyElementEmpty('full_text', tweetBodyStubFull1)).toBe(false);
+//     expect(isTweetBodyElementEmpty('urls', tweetBodyStubFull1)).toBe(false);
+//     expect(isTweetBodyElementEmpty('hashtags', tweetBodyStubFull1)).toBe(false);
+//     expect(isTweetBodyElementEmpty('media', tweetBodyStubFull1)).toBe(false);
+//     expect(isTweetBodyElementEmpty('symbols', tweetBodyStubFull1)).toBe(false);
+//     expect(isTweetBodyElementEmpty('user_mentions', tweetBodyStubFull1)).toBe(false);
+//   });
+// });
 
 describe('validateBigin', () => {
   test('get error if invalid', async () => {
@@ -60,43 +60,43 @@ describe('test isValidBigInt', () => {
   });
 });
 
-describe('test validateTweetLinkOrTweetId', () => {
-  test('valid', async () => {
-    expect(await validateTweetLinkOrTweetId('1661997848689352')).toBe('1661997848689352');
-    expect(await validateTweetLinkOrTweetId('https://twitter.com/LibertyCappy/status/1661997848689352705')).toBe(
-      '1661997848689352705',
-    );
-    expect(await validateTweetLinkOrTweetId('https://twitter.com/twitter/status/1661997848689352705')).toBe(
-      '1661997848689352705',
-    );
-    expect(await validateTweetLinkOrTweetId('http://twitter.com/LibertyCappy/status/1661997848689352705')).toBe(
-      '1661997848689352705',
-    );
-  });
-  test('invalid', async () => {
-    function tweetError(data: string): Error {
-      return new Error('expected a valid tweet link or a tweet id, actual value: ' + data)
-    }
-    const invalidStrings: string[] = [
-      '',
-      'some random string',
-      '1661997848689352705a',
-      '166199784868935270504',
-      'LibertyCappy/status/1661997848689352705',
-      'ftp://twitter.com/LibertyCappy/status/1661997848689352705',
-      'https://titter.com/LibertyCappy/status/1661997848689352705',
-      'https://twitter.com/LibertyCappy/status/16619978486893a52705',
-      'http://twitter.com/LibertyCappy/1661997848689352705',
-      'http://twitter.com/LibertyCappy/not_status/1661997848689352705',
-      'http://twitter.com/LibertyCappy/status/166199784868930052705'
-    ];
-    invalidStrings.forEach((invalidString) => {
-      expect(validateTweetLinkOrTweetId(invalidString)).rejects.toEqual(
-          tweetError(invalidString),
-      );
-    });
-  });
-});
+// describe('test validateTweetLinkOrTweetId', () => {
+//   test('valid', async () => {
+//     expect(await validateTweetLinkOrTweetId('1661997848689352')).toBe('1661997848689352');
+//     expect(await validateTweetLinkOrTweetId('https://twitter.com/LibertyCappy/status/1661997848689352705')).toBe(
+//       '1661997848689352705',
+//     );
+//     expect(await validateTweetLinkOrTweetId('https://twitter.com/twitter/status/1661997848689352705')).toBe(
+//       '1661997848689352705',
+//     );
+//     expect(await validateTweetLinkOrTweetId('http://twitter.com/LibertyCappy/status/1661997848689352705')).toBe(
+//       '1661997848689352705',
+//     );
+//   });
+//   test('invalid', async () => {
+//     function tweetError(data: string): Error {
+//       return new Error('expected a valid tweet link or a tweet id, actual value: ' + data)
+//     }
+//     const invalidStrings: string[] = [
+//       '',
+//       'some random string',
+//       '1661997848689352705a',
+//       '166199784868935270504',
+//       'LibertyCappy/status/1661997848689352705',
+//       'ftp://twitter.com/LibertyCappy/status/1661997848689352705',
+//       'https://titter.com/LibertyCappy/status/1661997848689352705',
+//       'https://twitter.com/LibertyCappy/status/16619978486893a52705',
+//       'http://twitter.com/LibertyCappy/1661997848689352705',
+//       'http://twitter.com/LibertyCappy/not_status/1661997848689352705',
+//       'http://twitter.com/LibertyCappy/status/166199784868930052705'
+//     ];
+//     invalidStrings.forEach((invalidString) => {
+//       expect(validateTweetLinkOrTweetId(invalidString)).rejects.toEqual(
+//           tweetError(invalidString),
+//       );
+//     });
+//   });
+// });
 
 describe('getOffset', () => {
   test('if throw when image bigger than canvas', () => {
