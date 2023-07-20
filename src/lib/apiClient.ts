@@ -76,8 +76,11 @@ export const submitNotarization = async (
 
     const transaction = await contract.submitTweetMint(tweetId, cid);
 
+    const splitHash = transaction.hash.split('');
+    splitHash.splice(6, splitHash.length - 6 * 2, '...');
+
     if (!!cb) {
-      cb(`Trasaction ${transaction.hash} confirmed, waiting for receipt...`);
+      cb(`Trasaction ${splitHash.join('')} confirmed, waiting for receipt...`);
     }
 
     const receipt: ContractReceipt = await transaction.wait();

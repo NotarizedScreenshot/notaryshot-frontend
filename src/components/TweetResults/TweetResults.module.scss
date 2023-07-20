@@ -4,6 +4,13 @@
   padding-bottom: 5rem;
   margin-bottom: 5rem;
 
+  @media screen and (max-width: 1023px) {
+    margin-bottom: 16rem;
+  }
+  @media screen and (max-width: 767px) {
+    margin-bottom: 34rem;
+  }
+
   .content {
     overflow: hidden;
     position: relative;
@@ -21,6 +28,18 @@
 
     border-radius: 20px;
 
+    @media screen and (max-width: 1439px) {
+      grid-template-columns: 1fr 1fr;
+    }
+    @media screen and (max-width: 1023px) {
+      padding-bottom: 12rem;
+      grid-template-columns: repeat(2, calc(50% - 1.5rem));
+    }
+    @media screen and (max-width: 767px) {
+      grid-template-columns: 1fr;
+      padding-bottom: 6rem;
+    }
+
     .glow {
       position: absolute;
       left: 50%;
@@ -31,34 +50,45 @@
 
     & > div:first-child {
       grid-row: 1 / 7;
+      @media screen and (max-width: 767px) {
+        grid-row: 1 / span 1;
+      }
     }
 
     & > div:not(:first-child) {
       grid-column: 2 / -1;
       justify-self: start;
       align-self: start;
+      @media screen and (max-width: 767px) {
+        grid-column: 1 / -1;
+      }
     }
 
     .heading {
       display: flex;
       justify-self: stretch !important;
+      gap: 2rem;
 
       & > *:first-child {
         margin-right: auto;
       }
 
-      & > *:not(:first-child) {
-        margin-left: 2rem;
+      @media screen and (max-width: 1439px) {
+        flex-wrap: wrap;
+        // gap: ;
       }
     }
     .text {
       grid-column: 2 / -1;
 
-      font-size: 16px;
+      font-size: 1.6rem;
       font-weight: 400;
-      line-height: 24px;
+      line-height: 2.4rem;
       letter-spacing: 0em;
       text-align: left;
+      @media screen and (max-width: 1439px) {
+        padding: 1rem;
+      }
     }
   }
 }

@@ -154,7 +154,11 @@ export const TweetIdForm: React.FC<ICutsomFormProps> = ({
             <p className='p2'>Immortalize</p>
           </button>
         </div>
-        <div className={cn(styles.error, isInvalid ? null : styles.hidden)}>{error}</div>
+        {isInvalid && (
+          <div className={cn(styles.error, isInvalid ? null : styles.hidden)}>
+            <div className={styles.errorText}>{error}</div>
+          </div>
+        )}
       </form>
     </div>
   );

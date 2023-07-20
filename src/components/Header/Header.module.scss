@@ -17,9 +17,11 @@
   }
 
   @media only screen and (max-width: 1023px) {
-    .navigation,
-    .connect {
+    .navigation {
       display: none;
+    }
+    .connect {
+      margin-left: auto;
     }
   }
   @media only screen and (max-width: 640px) {
@@ -53,6 +55,9 @@
 
     @media only screen and (max-width: 1023px) {
       display: flex;
+    }
+    @media only screen and (max-width: 425px) {
+      margin-right: 1rem;
     }
     .button {
       height: 100%;

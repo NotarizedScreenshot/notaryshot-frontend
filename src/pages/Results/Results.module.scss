@@ -5,6 +5,10 @@
   padding: 0 4rem 10rem;
   margin: auto;
 
+  @media screen and (max-width: 424px) {
+    padding: 0 2rem 10rem;
+  }
+
   .main {
     position: relative;
     padding-top: 3rem;
@@ -23,19 +27,35 @@
       z-index: 1;
     }
 
+    .tweetResults {
+      position: relative;
+    }
+
     .spy {
       position: absolute;
       right: 40rem;
-      top: 6rem;
+      top: -5rem;
+      @media screen and (max-width: 1439px) {
+        right: 42rem;
+      }
+      @media screen and (max-width: 1023px) {
+        top: initial;
+        bottom: -32rem;
+        right: 45%;
+      }
+      @media screen and (max-width: 767px) {
+        right: 50%;
+        transform: translateX(50%);
+        bottom: -48rem;
+      }
     }
 
     .message {
       position: absolute;
-      // z-index: 1;
-      top: 125px;
-      right: -30px;
-      width: 520px;
-      height: 120px;
+      top: 1.5rem;
+      right: -3rem;
+      width: 56rem;
+      height: 12rem;
       background-image: url('../../../public/images/message-bg.png');
 
       background-repeat: no-repeat;
@@ -47,17 +67,40 @@
       display: flex;
       align-items: center;
       justify-content: center;
+      @media screen and (max-width: 1439px) {
+        background-size: cover;
+        width: 62rem;
+        height: 14rem;
+      }
+
+      @media screen and (max-width: 1023px) {
+        top: initial;
+        bottom: -14rem;
+        right: 35%;
+        transform: translateX(50%);
+      }
+
+      @media screen and (max-width: 767px) {
+        right: 50%;
+        width: 52rem;
+        height: 12rem;
+        background-position-x: -8px;
+      }
 
       .text {
         font-family: 'Russo One';
         font-style: normal;
         font-weight: 400;
-        font-size: 15px;
+        font-size: 1.5rem;
         line-height: 150%;
         color: #15cef7;
-        width: 410px;
+        width: 41rem;
 
         border-radius: 100px;
+        @media screen and (max-width: 1439px) {
+          font-size: 2rem;
+          width: 38rem;
+        }
       }
     }
 

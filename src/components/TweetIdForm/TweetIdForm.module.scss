@@ -10,14 +10,34 @@
 
     .error {
       position: absolute;
-      top: -3rem;
-      left: 2.4rem;
-      font-size: 1.6rem;
-      color: red;
-      font-weight: 600;
-      letter-spacing: 1px;
-    }
+      top: -1rem;
+      left: 0.5rem;
+      width: 80%;
+      @media screen and (max-width: 767px) {
+        width: 100%;
+        left: 0;
+      }
 
+      .errorText {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 100%;
+        bottom: 0;
+        position: absolute;
+        font-size: 1.6rem;
+        color: red;
+        font-weight: 600;
+        letter-spacing: 1px;
+        border: 1px solid red;
+        border-radius: 25px;
+        padding: 0.8rem 2.4rem;
+        background: #151518;
+        @media screen and (max-width: 767px) {
+          border-radius: 10px;
+        }
+      }
+    }
     .inputGroup {
       position: relative;
       height: 4rem;
@@ -39,9 +59,11 @@
         }
         height: 100%;
         width: 100%;
-        padding: 8px 24px;
+        padding: 0.8rem 2.4rem;
+        padding-right: 4.4rem;
         color: var(--textColor);
         font-size: 1.4rem;
+        word-break: break-all;
 
         &:disabled,
         &:disabled:hover,
@@ -53,7 +75,8 @@
       .clearButton {
         position: absolute;
         right: 1.8rem;
-        top: 1rem;
+        top: 50%;
+        transform: translateY(-50%);
         height: 1.8rem;
         width: 1.8rem;
         border: 0;
@@ -73,23 +96,21 @@
           content: '';
           display: block;
           position: absolute;
-          left: 0px;
-          top: 9px;
+          left: 50%;
+          top: 50%;
           border: 1px solid #6c7f83;
-          width: 1.8rem;
+          width: 2.2rem;
           height: 0;
           cursor: pointer;
-          @media screen and (max-width: 768px) {
-            top: 6px;
-          }
+          transform-origin: center;
         }
 
         &::after {
-          transform: rotate(45deg);
+          transform: translate(-50%, -50%) rotate(45deg);
         }
 
         &::before {
-          transform: rotate(-45deg);
+          transform: translate(-50%, -50%) rotate(-45deg);
         }
 
         &:hover,
@@ -106,9 +127,6 @@
       margin-left: auto;
       height: 4rem;
       @media only screen and (max-width: 639px) {
-        // flex-basis: 100%;
-        // margin-right: 0;
-        // margin-bottom: 1rem;
         margin: auto;
       }
 
@@ -124,6 +142,7 @@
           inset 6px 10px 20px rgba(255, 255, 255, 0.05);
 
         transition: all 0.2s;
+        border: 1px solid var(--buttonBgColor);
 
         svg {
           position: relative;

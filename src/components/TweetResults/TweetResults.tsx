@@ -68,7 +68,7 @@ export const TweetResults: React.FC<ITweetResultsProps> = ({ imageUrl, tweetdata
         {transactionStatus && transactionId && contentId && (
           <GatewayLink cid={contentId.metadataToSaveCid} title={`tweet ${tweetId} data`} />
         )}
-        {media && media.length > 0 && <TweetMedia media={media} />}
+        <div className={styles.mediaContainer}>{media && media.length > 0 && <TweetMedia media={media} />}</div>
       </div>
       {!!tweetdata && (
         <>

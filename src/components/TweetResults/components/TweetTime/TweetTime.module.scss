@@ -4,8 +4,11 @@
   align-items: center;
   background: #131314;
   border-radius: 10px;
-  height: 44px;
+  height: 4.4rem;
   padding: 10px;
+  @media screen and (max-width: 1439px) {
+    flex-basis: 15rem;
+  }
 
   .p2 {
     font-family: General Sans;

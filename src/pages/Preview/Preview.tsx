@@ -80,17 +80,21 @@ export const Preview: React.FC<IPreviewProps> = () => {
         )}
         {data && !isFetching && (
           <>
-            <div className={styles.bgCircles}></div>
-            <div className={styles.spy}>
-              <img src='/images/spy.png' alt='spy'></img>
-            </div>
-            <div className={styles.message}>
-              <div className={styles.text}>
-                If you click on «Notarize» your data will be saved forever, show off your NFT like a real secret agent!
+            <div className={styles.tweetResults}>
+              <div className={styles.bgCircles}></div>
+
+              <h2 className={styles.h2}>Confirm Verification</h2>
+              <TweetResults imageUrl={data.imageUrl} tweetdata={data.tweetdata} tweetId={tweetId} nftId={nftId} />
+              <div className={styles.spy}>
+                <img src='/images/spy.png' alt='spy'></img>
+              </div>
+              <div className={styles.message}>
+                <div className={styles.text}>
+                  If you click on «Notarize» your data will be saved forever, show off your NFT like a real secret
+                  agent!
+                </div>
               </div>
             </div>
-            <h2 className={styles.h2}>Confirm Verification</h2>
-            <TweetResults imageUrl={data.imageUrl} tweetdata={data.tweetdata} tweetId={tweetId} nftId={nftId} />
             <MetadataPreview
               blocked={!data.metadata}
               title={`Http headers meta${!data.metadata ? ': data unavailable' : ''}`}

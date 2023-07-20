@@ -4,7 +4,6 @@ import { Header, TweetIdForm, TweetResults, MetadataPreview, HTTPMetadata, DNSMe
 import { memo } from 'react';
 import { useContractContext, useFetchingContext } from 'contexts';
 
-
 export const Results: React.FC<IResultsProps> = memo(() => {
   const { nftId } = useContractContext();
 
@@ -16,18 +15,21 @@ export const Results: React.FC<IResultsProps> = memo(() => {
         <TweetIdForm />
         {data && (
           <>
-            <div className={styles.bgCircles}></div>
-            <div className={styles.spy}>
-              <img src='/images/spy.png' alt='spy'></img>
+            <div className={styles.tweetResults}>
+              <div className={styles.bgCircles}></div>
+
+              <div className={styles.title}>
+                <h2 className={styles.h2}>Tweet verified!</h2>
+                <p className={styles.p3}>{`id: ${tweetId}`}</p>
+              </div>
+              <TweetResults imageUrl={data.imageUrl} tweetdata={data.tweetdata} tweetId={tweetId} nftId={nftId} />
+              <div className={styles.spy}>
+                <img src='/images/spy.png' alt='spy'></img>
+              </div>
+              <div className={styles.message}>
+                <div className={styles.text}>Great! Your NFT is notarized! Now you have invincible evidence!</div>
+              </div>
             </div>
-            <div className={styles.message}>
-              <div className={styles.text}>Great! Your NFT is notarized! Now you have invincible evidence!</div>
-            </div>
-            <div className={styles.title}>
-              <h2 className={styles.h2}>Tweet verified!</h2>
-              <p className={styles.p3}>{`id: ${tweetId}`}</p>
-            </div>
-            <TweetResults imageUrl={data.imageUrl} tweetdata={data.tweetdata} tweetId={tweetId} nftId={nftId} />
             <MetadataPreview
               blocked={!data.metadata}
               title={`Http headers meta${!data.metadata ? ': data unavailable' : ''}`}

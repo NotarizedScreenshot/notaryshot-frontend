@@ -134,7 +134,8 @@ export const isValidTweetLink = (data: string): boolean => {
   }
 };
 
-export const validateTweetLinkOrTweetId = (data: string): Promise<string> => new Promise((resolve, reject) => {
+export const validateTweetLinkOrTweetId = (data: string): Promise<string> =>
+  new Promise((resolve, reject) => {
     if (isValidBigInt(data)) {
       return resolve(data);
     }
@@ -144,9 +145,8 @@ export const validateTweetLinkOrTweetId = (data: string): Promise<string> => new
       resolve(pathnames[pathnames.length - 1]);
     }
 
-    reject(new Error('expected a valid tweet link or a tweet id, actual value: ' + data));
+    reject(new Error('invalid tweet link or id'));
   });
-
 
 export const isTweetBodyElementEmpty = (key: keyof ITweetBody, body: ITweetBody): boolean =>
   key === 'card' ? false : !body[key] || body[key]?.length === 0;
