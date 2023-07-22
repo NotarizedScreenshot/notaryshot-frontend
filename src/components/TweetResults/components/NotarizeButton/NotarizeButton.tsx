@@ -1,7 +1,8 @@
 import { INotarizeButtonProps } from './NotarizeButtonProps';
 import styles from './NotarizeButton.module.scss';
-import { useChainModal, useConnectModal } from '@rainbow-me/rainbowkit';
-import { useAccount, useNetwork, useSwitchNetwork } from 'wagmi';
+// import { useChainModal, useConnectModal } from '@rainbow-me/rainbowkit';
+import { useNetwork, useSwitchNetwork } from 'wagmi';
+// import { useContractWrite } from 'wagmi';
 import { submitNotarization } from 'lib/apiClient';
 import {
   useFetchingContext,
@@ -15,51 +16,76 @@ import {
 import { useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+// import notaryShotContract from 'contracts/screenshot-manager.json';
+
 export const NotarizeButton: React.FC<INotarizeButtonProps> = () => {
   const { tweetId } = useFetchingContext();
-  const { isConnected } = useAccount();
-  const { openConnectModal } = useConnectModal();
+  // const { isConnected } = useAccount();
+  // const { openConnectModal } = useConnectModal();
   const dispatch = useModalDispatchContext();
   const navigate = useNavigate();
   const { setTransactionId, setTransactionStatus } = useTransactionContext();
   const { contentId } = useProgressingContext();
-  const { openChainModal } = useChainModal();
+  // const { openChainModal } = useChainModal();
   const { chain } = useNetwork();
   const { chains } = useSwitchNetwork();
 
-  console.log('Notarize button on render, acceptable chains:', chains);
-  console.log('Notatize button on render, current chains: ', chain);
+  // const { address } = useAccount();
+
+  // console.log('Notarize button on render, acceptable chains:', chains);
+  // console.log('Notatize button on render, current chains: ', chain);
 
   const updateStateOnTransaction = useCallback(
     (transactionStatus: string) => showModal(dispatch, EModalDialogTypes.transaction, { transactionStatus }),
     [dispatch],
   );
+
+  // const { data, isLoading, isSuccess, write } = useContractWrite({
+  //   address: notaryShotContract.address as `0x${string}`,
+  //   abi: notaryShotContract.abi,
+  //   functionName: 'submitTweetMint',
+  //   args: ['1324', '1sdfasdf'],
+  // });
+
   const clickHandler = async () => {
     const isCurrentChainWrong = !chains.find(({ id }) => chain?.id === id);
     console.log('Notarize button on click, acceptable chains:', chains);
     console.log('Notatize button on click, current chains: ', chain);
     console.log('Notatize button on click, is current chain correct: ', !isCurrentChainWrong);
 
-    if (isCurrentChainWrong && !!openChainModal) {
-      console.log('Notatize button click, incorrect current chain');
-      openChainModal();
-      return;
-    }
+    // if (isCurrentChainWrong && !!openChainModal) {
+    //   console.log('Notatize button click, incorrect current chain');
+    //   openChainModal();
+    //   return;
+    // }
 
-    if (!isConnected && !!openConnectModal) {
-      openConnectModal();
-      return;
-    }
+    // // if (!isConnected && !!openConnectModal) {
+    // //   openConnectModal();
+    // //   return;
+    // // }
 
-    //TODO: #133 remove hardcode chain id check once wrong chaing bug surely fixed
-    //https://github.com/orgs/NotarizedScreenshot/projects/1/views/1?pane=issue&itemId=31996862
+    // //TODO: #133 remove hardcode chain id check once wrong chaing bug surely fixed
+    // //https://github.com/orgs/NotarizedScreenshot/projects/1/views/1?pane=issue&itemId=31996862
     if (chain?.id !== 137) {
       console.error('Not the polygon chain! Current chain: ', chain);
       return;
     }
+
+    // const { data, isLoading, isSuccess, write } = useContractWrite({
+    //   address: notaryShotContract.address as `0x${string}`,
+    //   abi: notaryShotContract.abi,
+    //   functionName: 'submitTweetMint',
+    //   args: ['1324', '1sdfasdf'],
+    // });
+
+    // console.log(data, isLoading, isSuccess, write);
+
+    // write();
+
     if (tweetId && contentId?.nftMetadataCid && chain?.id === 137) {
       updateStateOnTransaction('Waiting for transaction...');
       const result = await submitNotarization(tweetId, contentId?.nftMetadataCid, updateStateOnTransaction);
+      console.log(result);
       if (result.status === 'failed') {
         updateStateOnTransaction(result.error ? result.error : 'Transaction declined');
 

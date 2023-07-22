@@ -17,11 +17,11 @@ import {
   useConnectionContext,
   useTransactionContext,
 } from 'contexts';
-import { fetchSigner } from '@wagmi/core';
+// import { fetchSigner } from '@wagmi/core';
 import { useCallback, useEffect } from 'react';
-import { BigNumber, Contract } from 'ethers';
-import notaryShotContract from 'contracts/screenshot-manager.json';
-import { useAccount } from 'wagmi';
+// import { BigNumber, Contract } from 'ethers';
+// import notaryShotContract from 'contracts/screenshot-manager.json';
+// import { useAccount } from 'wagmi';
 import { useLocation } from 'react-router-dom';
 
 export const Preview: React.FC<IPreviewProps> = () => {
@@ -29,30 +29,30 @@ export const Preview: React.FC<IPreviewProps> = () => {
   const { isShowModal } = useModalContext();
   const { inProgress } = useProgressingContext();
   const { connectionError } = useConnectionContext();
-  const { setNftId, nftId } = useTransactionContext();
-  const { address } = useAccount();
+  const { nftId } = useTransactionContext();
+  // const { address } = useAccount();
   const { search } = useLocation();
   const tweetIDquery = new URLSearchParams(search).get('tweetid');
 
   const initContract = useCallback(async () => {
     try {
-      const signer = await fetchSigner();
-      if (!signer) throw new Error('cant get signer');
-      const contract = new Contract(notaryShotContract.address, notaryShotContract.abi, signer);
+      // const signer = await fetchSigner();
+      // if (!signer) throw new Error('cant get signer');
+      // const contract = new Contract(notaryShotContract.address, notaryShotContract.abi, signer);
 
-      console.log('contract in preview', contract);
+      // console.log('contract in preview', contract);
 
-      contract.on('Transfer', (...args) => {
-        console.log('on transfer in preview', args);
-        const [, ownerAddress, mintedNftId] = args as [string, string, BigNumber];
-        console.log('results ownerAddress, mintedNftId: ', ownerAddress, mintedNftId.toString());
-        if (ownerAddress.toLowerCase() === address?.toLowerCase()) {
-          setNftId(mintedNftId.toString());
-        }
-      });
-      contract.on('SubmitTweetMint', (...args) => {
-        console.log('on SubmitTweetMint in preview', args);
-      });
+      // contract.on('Transfer', (...args) => {
+      //   console.log('on transfer in preview', args);
+      //   const [, ownerAddress, mintedNftId] = args as [string, string, BigNumber];
+      //   console.log('results ownerAddress, mintedNftId: ', ownerAddress, mintedNftId.toString());
+      //   if (ownerAddress.toLowerCase() === address?.toLowerCase()) {
+      //     setNftId(mintedNftId.toString());
+      //   }
+      // });
+      // contract.on('SubmitTweetMint', (...args) => {
+      //   console.log('on SubmitTweetMint in preview', args);
+      // });
     } catch (err) {
       console.log('error in initContract preview', err);
     }

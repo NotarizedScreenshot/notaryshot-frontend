@@ -5,11 +5,11 @@ import {
   getOffset,
   isValidBigInt,
   validateBigInt,
-  isTweetBodyElementEmpty,
-  validateTweetLinkOrTweetId,
+  // isTweetBodyElementEmpty,
+  // validateTweetLinkOrTweetId,
 } from 'utils';
 import stamps from '__fixtures__/stamps';
-import { tweetBodyStubEmpty1, tweetBodyStubFull1 } from '__fixtures__/tweetdata';
+// import { tweetBodyStubEmpty1, tweetBodyStubFull1 } from '__fixtures__/tweetdata';
 
 // describe('isTweetBodyElemetEmpty', () => {
 //   test('if card then not epmty', () => {
