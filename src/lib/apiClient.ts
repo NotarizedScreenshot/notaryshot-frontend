@@ -68,11 +68,12 @@ export const submitNotarization = async (
   cb?: (data: string) => void,
 ): Promise<{ status: 'failed' | 'success'; transactionHash?: string | null; error?: string | null }> => {
   try {
+    const bg = BigInt(tweetId);
     const { hash } = await writeContract({
       address: notaryShotContract.address as `0x${string}`,
       abi: notaryShotContract.abi,
       functionName: 'submitTweetMint',
-      args: [tweetId, cid],
+      args: [bg, cid],
     });
 
     const splitHash = hash.split('');
