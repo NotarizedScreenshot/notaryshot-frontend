@@ -93,6 +93,9 @@
         transform: translateX(50%);
         bottom: -48rem;
       }
+      @media screen and (max-width: 425px) {
+        bottom: -55rem;
+      }
     }
 
     .message {
