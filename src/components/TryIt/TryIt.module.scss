@@ -193,13 +193,9 @@
         }
 
         .divider {
-          // height: 14px;
-          // padding-top: 4rem;
           position: relative;
           border: 1px solid white;
           width: 7rem;
-          // padding: 0 2rem;
-          // margin: 2.5rem 2.5rem;
           transform: translateY(3.5rem);
 
           &::before,
@@ -211,7 +207,6 @@
             width: 14px;
             height: 14px;
             top: 0;
-            // transform: translate(20%, -50%);
           }
 
           &::before {

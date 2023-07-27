@@ -28,13 +28,11 @@ export const ContractContextProvider = ({ children }: { children: React.ReactNod
     abi: notaryShotContract.abi,
     eventName: 'Transfer',
     listener([log]) {
-      console.log('Transfer', log);
+      console.log('Contract on Transfer Event, log:', log);
 
       const { args } = log as typeof log & { args: { tokenId: bigint; to: `0x${string}` } };
 
       args.tokenId.toString();
-
-      console.log('Transfer', args, args.tokenId, typeof args.tokenId, args.tokenId.toString());
 
       if (args.to.toLowerCase() === address?.toLowerCase()) {
         setNftId(args.tokenId.toString());
@@ -42,30 +40,6 @@ export const ContractContextProvider = ({ children }: { children: React.ReactNod
     },
   });
 
-  // fetchSigner().then((signer) => {
-  //   console.log('signer', signer);
-  // });
-
-  // const provider = useProvider();
-  // console.log(provider);
-
-  // const contract = useContract({
-  //   address: notaryShotContract.address,
-  //   abi: notaryShotContract.abi,
-  //   signerOrProvider: provider,
-  // });
-
-  // console.log(contract);
-
-  // contract!.on('Transfer', (...args) => {
-  //   console.log('on transfer in preview', args);
-  //   const [, ownerAddress, mintedNftId] = args as [string, string, BigNumber];
-  //   console.log('results ownerAddress, mintedNftId: ', ownerAddress, mintedNftId.toString());
-
-  // });
-  // contract!.on('SubmitTweetMint', (...args) => {
-  //   console.log('on SubmitTweetMint in preview', args);
-  // });
 
   const value = {
     contract: null,

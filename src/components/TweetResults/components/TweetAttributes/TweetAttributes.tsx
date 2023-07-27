@@ -12,7 +12,7 @@ export const TweetAttributes: React.FC<ITweetAttributesProps> = ({ attributes })
           {attributes.hashtags.map((hashtag, index) => (
             <div key={`${hashtag}-${index}`} className={cn(styles.attribute, styles.hashtag)}>
               <a href={`https://twitter.com/hashtag/${hashtag}`} target='_blank' rel='noreferrer'>{`#${hashtag}`}</a>
-              </div>
+            </div>
           ))}
         </div>
       )}
@@ -44,5 +44,3 @@ export const TweetAttributes: React.FC<ITweetAttributesProps> = ({ attributes })
     </div>
   );
 };
-
-// https://twitter.com/hashtag/QuantumOracle

@@ -1,5 +1,3 @@
-// import { fetchSigner } from '@wagmi/core';
-// import { Contract, ContractReceipt } from 'ethers';
 import { IFetchedData, IMetadata } from 'types';
 import { writeContract } from '@wagmi/core';
 

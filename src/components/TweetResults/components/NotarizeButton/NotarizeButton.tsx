@@ -2,7 +2,6 @@ import { INotarizeButtonProps } from './NotarizeButtonProps';
 import styles from './NotarizeButton.module.scss';
 import { useChainModal, useConnectModal } from '@rainbow-me/rainbowkit';
 import { useAccount, useNetwork, useSwitchNetwork } from 'wagmi';
-// import { useContractWrite } from 'wagmi';
 import { submitNotarization } from 'lib/apiClient';
 import {
   useFetchingContext,
@@ -16,8 +15,6 @@ import {
 import { useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-// import notaryShotContract from 'contracts/screenshot-manager.json';
-
 export const NotarizeButton: React.FC<INotarizeButtonProps> = () => {
   const { tweetId } = useFetchingContext();
   const { isConnected } = useAccount();
@@ -30,30 +27,16 @@ export const NotarizeButton: React.FC<INotarizeButtonProps> = () => {
   const { chain } = useNetwork();
   const { chains } = useSwitchNetwork();
 
-  // const { address } = useAccount();
-
-  // console.log('Notarize button on render, acceptable chains:', chains);
-  // console.log('Notatize button on render, current chains: ', chain);
-
   const updateStateOnTransaction = useCallback(
     (transactionStatus: string) => showModal(dispatch, EModalDialogTypes.transaction, { transactionStatus }),
     [dispatch],
   );
-
-  // const { data, isLoading, isSuccess, write } = useContractWrite({
-  //   address: notaryShotContract.address as `0x${string}`,
-  //   abi: notaryShotContract.abi,
-  //   functionName: 'submitTweetMint',
-  //   args: ['1324', '1sdfasdf'],
-  // });
 
   const clickHandler = async () => {
     if (!isConnected && !!openConnectModal) {
       openConnectModal();
       return;
     }
-    // const wrongChainId = 136;
-    // const isCurrentChainWrong = !chains.find(({ id }) => wrongChainId === id);
     const isCurrentChainUnavailable = !chains.find(({ id }) => chain?.id === id);
     console.log('Notarize button on click, acceptable chains:', chains);
     console.log('Notatize button on click, current chains: ', chain);
