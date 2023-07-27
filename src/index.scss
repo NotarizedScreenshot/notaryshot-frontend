@@ -30,10 +30,6 @@ html {
   @media screen and (max-width: 424px) {
     font-size: 40%;
   }
-
-  @media screen and (max-width: 319px) {
-    font-size: 40%;
-  }
 }
 
 body {
@@ -85,6 +81,7 @@ button {
   letter-spacing: 0;
   text-align: left;
   background-color: var(--buttonBgColor);
+  color: var(--backgroundColor);
   cursor: pointer;
 }
 
