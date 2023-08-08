@@ -1,29 +1,47 @@
 .container {
   position: relative;
-  background-color: var(--backgroundColor);
   max-width: max-content;
+
+  @media screen and (max-width: 1023px) {
+    margin: auto;
+    margin-top: 2rem;
+    max-width: 58rem;
+  }
 
   .description {
     border: 1px solid #fbfbfb;
     border-radius: 20px;
     padding: 1rem 1rem;
+    background-color: var(--backgroundColor);
+    @media screen and (max-width: 508px) {
+      margin: auto;
+    }
+
+    &:has(ul) {
+      padding-right: 2.5rem;
+      max-width: max-content;
+      position: relative;
+      @media screen and (max-width: 1023px) {
+        max-width: 38rem;
+      }
+    }
+
+    @media screen and (max-width: 1439px) {
+      padding: 2rem 1.4rem;
+    }
+    @media screen and (max-width: 1023px) {
+      padding: 2rem 2.4rem;
+    }
 
     &.pictured {
       padding-bottom: 3rem;
+      margin-bottom: 8rem;
     }
-  }
-
-  .p2 {
-    font-size: 1.6rem;
-    font-weight: 400;
-    line-height: 2.4rem;
-    text-align: center;
-    max-width: 27.5rem;
   }
 
   .person {
     position: absolute;
-    transform: translate(-50%, -2.5rem);
+    transform: translate(-50%, -10.5rem);
     left: 50%;
     text-align: center;
 

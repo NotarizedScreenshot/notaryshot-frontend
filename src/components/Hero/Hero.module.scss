@@ -8,10 +8,24 @@
     img {
       width: 100%;
     }
+
+    @media only screen and (max-width: 1023px) {
+      top: 25%;
+    }
   }
   .h1 {
     max-width: 57.5rem;
     margin-bottom: 3rem;
+
+    @media only screen and (max-width: 1023px) {
+      text-align: center;
+      margin: auto;
+    }
+
+    @media only screen and (max-width: 639px) {
+      font-size: 3.5rem;
+      line-height: 5.5rem;
+    }
   }
 
   .p2 {
@@ -21,6 +35,19 @@
     line-height: 2.4rem;
     letter-spacing: 0em;
     margin-bottom: 3rem;
+    @media only screen and (max-width: 1023px) {
+      padding: 1rem 0;
+      text-align: center;
+      margin: auto;
+    }
+  }
+
+  .tryButton {
+    @media only screen and (max-width: 1023px) {
+      padding: 1rem 0;
+      display: flex;
+      justify-content: center;
+    }
   }
   .agent {
     position: absolute;
@@ -38,24 +65,79 @@
       top: -25rem;
       right: -40rem;
     }
+    @media only screen and (max-width: 1023px) {
+      margin: auto;
+      margin-top: 1rem;
+      position: relative;
+      top: unset;
+      right: 0.5rem;
+      width: 40%;
+    }
+
+    @media only screen and (max-width: 750px) {
+      width: 50%;
+    }
+    @media only screen and (max-width: 639px) {
+      width: 80%;
+    }
   }
   .rock1,
   .rock2,
   .rock3 {
     position: absolute;
+
+    img {
+      width: 100%;
+    }
   }
 
   .rock1 {
+    width: 12rem;
     top: 50%;
     left: 13rem;
+    @media only screen and (max-width: 1023px) {
+      top: 70%;
+    }
+
+    @media only screen and (max-width: 639px) {
+      left: 2rem;
+    }
+
+    @media only screen and (max-width: 375px) {
+      left: 0rem;
+    }
   }
   .rock2 {
+    width: 15rem;
     left: 50%;
     bottom: 0;
     opacity: 0.5;
+    @media only screen and (max-width: 1023px) {
+      width: 10rem;
+      left: 12rem;
+      bottom: 30%;
+      opacity: 0.7;
+    }
+    @media only screen and (max-width: 639px) {
+      bottom: 33%;
+      left: 1rem;
+    }
+
+    @media only screen and (max-width: 375px) {
+      bottom: 30%;
+      left: -1rem;
+    }
   }
 
   .rock3 {
+    width: 15rem;
     left: 50%;
+
+    @media only screen and (max-width: 1023px) {
+      width: 10rem;
+      top: 50%;
+      right: 20%;
+      left: unset;
+    }
   }
 }

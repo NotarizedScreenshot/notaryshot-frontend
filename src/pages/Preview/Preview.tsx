@@ -10,42 +10,23 @@ import {
   Preloader,
   Modal,
 } from 'components';
-import { useFetchingContext, useProgressingContext, useModalContext, useConnectionContext } from 'contexts';
-import { fetchSigner } from '@wagmi/core';
-import { useCallback, useEffect } from 'react';
-import { Contract } from 'ethers';
-import notaryShotContract from 'contracts/screenshot-manager.json';
+import {
+  useFetchingContext,
+  useProgressingContext,
+  useModalContext,
+  useConnectionContext,
+  useTransactionContext,
+} from 'contexts';
+import { useLocation } from 'react-router-dom';
 
 export const Preview: React.FC<IPreviewProps> = () => {
   const { data, isFetching, tweetId, error: fetchingError } = useFetchingContext();
   const { isShowModal } = useModalContext();
   const { inProgress } = useProgressingContext();
   const { connectionError } = useConnectionContext();
-
-  const testContract = useCallback(async () => {
-    try {
-    } catch (err) {
-      const signer = await fetchSigner();
-      if (!signer) throw new Error('cant get signer');
-      const contract = new Contract(notaryShotContract.address, notaryShotContract.abi, signer);
-
-      console.log('contract in preview', contract);
-
-      contract.on('Transfer', (...args) => {
-        console.log('on transfer in preview', args);
-      });
-      contract.on('SubmitTweetMint', (...args) => {
-        console.log('on SubmitTweetMint in preview', args);
-      });
-    }
-  }, []);
-
-  useEffect(() => {
-    'run useEffect in preview';
-    testContract();
-  }, []);
-
-  console.log('inProgress', inProgress);
+  const { nftId } = useTransactionContext();
+  const { search } = useLocation();
+  const tweetIDquery = new URLSearchParams(search).get('tweetid');
 
   return (
     <div className={styles.container}>
@@ -53,7 +34,7 @@ export const Preview: React.FC<IPreviewProps> = () => {
       <main className={styles.main}>
         {(isFetching || inProgress) && <Preloader percent={!isFetching ? 10 : 5} />}
         {isShowModal && <Modal />}
-        <TweetIdForm />
+        <TweetIdForm initialInputData={tweetIDquery} />
         {(connectionError || fetchingError) && (
           <div className={styles.errors}>
             <h2 className={styles.h2}>Error</h2>
@@ -63,17 +44,21 @@ export const Preview: React.FC<IPreviewProps> = () => {
         )}
         {data && !isFetching && (
           <>
-            <div className={styles.bgCircles}></div>
-            <div className={styles.spy}>
-              <img src='/images/spy.png' alt='spy'></img>
-            </div>
-            <div className={styles.message}>
-              <div className={styles.text}>
-                If you click on «Notarize» your data will be saved forever, show off your NFT like a real secret agent!
+            <div className={styles.tweetResults}>
+              <div className={styles.bgCircles}></div>
+
+              <h2 className={styles.h2}>Confirm Verification</h2>
+              <TweetResults imageUrl={data.imageUrl} tweetdata={data.tweetdata} tweetId={tweetId} nftId={nftId} />
+              <div className={styles.spy}>
+                <img src='/images/spy.png' alt='spy'></img>
+              </div>
+              <div className={styles.message}>
+                <div className={styles.text}>
+                  If you click on «Notarize» your data will be saved forever, show off your NFT like a real secret
+                  agent!
+                </div>
               </div>
             </div>
-            <h2 className={styles.h2}>Confirm Verification</h2>
-            <TweetResults imageUrl={data.imageUrl} tweetdata={data.tweetdata} tweetId={tweetId} />
             <MetadataPreview
               blocked={!data.metadata}
               title={`Http headers meta${!data.metadata ? ': data unavailable' : ''}`}

@@ -55,10 +55,24 @@ export interface IFetchedData {
   imageUrl: string | null;
   tweetdata: string | null;
   metadata: string | null;
+  parsedTweetData: ITweetData | null;
 }
 
 export interface ITweetAttributes {
   hashtags: ITweetBody['hashtags'];
   user_mentions: ITweetBody['user_mentions'];
   urls: ITweetBody['urls'];
+}
+
+export enum ETransactionStatus {
+  'success',
+  'failed',
+}
+export interface INotarizeTransactionSuccess {
+  status: ETransactionStatus.success;
+  transactionHash: string;
+}
+export interface INotarizeTransactionFailure {
+  status: ETransactionStatus.failed;
+  error: string;
 }

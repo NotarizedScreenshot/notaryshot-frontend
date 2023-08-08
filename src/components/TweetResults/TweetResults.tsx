@@ -61,14 +61,20 @@ export const TweetResults: React.FC<ITweetResultsProps> = ({ imageUrl, tweetdata
         <div className={styles.glow}>
           <img src='/images/glow-1.png' alt='glow' />
         </div>
-        {attributes && <TweetAttributes attributes={attributes} />}
+        {attributes && Object.values(attributes).some((el) => !!el && el.length > 0) && (
+          <TweetAttributes attributes={attributes} />
+        )}
         {details && <TweetStats {...details} />}
         {transactionStatus && transactionId && contentId && (
           <GatewayLink cid={contentId.metadataToSaveCid} title={`tweet ${tweetId} data`} />
         )}
-        {media && media.length > 0 && <TweetMedia media={media} />}
+        <div className={styles.mediaContainer}>{media && media.length > 0 && <TweetMedia media={media} />}</div>
       </div>
-      {transactionStatus && transactionId ? <ViewNFTButton nftId={nftId} /> : <NotarizeButton tweetId={tweetId} />}
+      {!!tweetdata && (
+        <>
+          {transactionStatus && transactionId ? <ViewNFTButton nftId={nftId} /> : <NotarizeButton tweetId={tweetId} />}
+        </>
+      )}
     </div>
   );
 };

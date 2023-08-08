@@ -1,8 +1,12 @@
 .container {
-  height: 44px;
   display: flex;
+  @media screen and (max-width: 1439px) {
+    flex-basis: 100%;
+  }
+
   .profileImage {
-    width: 4.4rem;
+    flex: 0 0 4.4rem;
+
     height: 4.4rem;
     border-radius: 100px;
     background-color: #1b222c;
@@ -18,12 +22,22 @@
   }
 
   .profileName {
+    flex: 0 0 34rem;
     display: flex;
     align-items: center;
+    flex-wrap: wrap;
+    word-break: break-all;
+
+    @media screen and (max-width: 1439px) {
+      flex-grow: 1;
+    }
+    @media screen and (max-width: 1023px) {
+      flex-basis: 28rem;
+    }
 
     .profileLink {
       font-weight: 600;
-      font-size: 18px;
+      font-size: 1.8rem;
       line-height: 150%;
 
       span {

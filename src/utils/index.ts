@@ -134,7 +134,8 @@ export const isValidTweetLink = (data: string): boolean => {
   }
 };
 
-export const validateTweetLinkOrTweetId = (data: string): Promise<string> => new Promise((resolve, reject) => {
+export const validateTweetLinkOrTweetId = (data: string): Promise<string> =>
+  new Promise((resolve, reject) => {
     if (isValidBigInt(data)) {
       return resolve(data);
     }
@@ -144,9 +145,8 @@ export const validateTweetLinkOrTweetId = (data: string): Promise<string> => new
       resolve(pathnames[pathnames.length - 1]);
     }
 
-    reject(new Error('expected a valid tweet link or a tweet id, actual value: ' + data));
+    reject(new Error('invalid tweet link or id'));
   });
-
 
 export const isTweetBodyElementEmpty = (key: keyof ITweetBody, body: ITweetBody): boolean =>
   key === 'card' ? false : !body[key] || body[key]?.length === 0;
@@ -154,6 +154,10 @@ export const isTweetBodyElementEmpty = (key: keyof ITweetBody, body: ITweetBody)
 export const getTweetResultsFromTweetRawData = (tweetRawDataString: string, tweetId: string) => {
   try {
     const tweetRawDataParsed = JSON.parse(tweetRawDataString);
+
+    if (tweetRawDataParsed.data?.tweetResult?.result) {
+      return tweetRawDataParsed.data.tweetResult.result;
+    }
     const tweetResponseInstructions = tweetRawDataParsed.data['threaded_conversation_with_injections_v2'].instructions;
 
     const tweetTimeLineEntries = tweetResponseInstructions.find((el: any) => el.type === 'TimelineAddEntries').entries;
@@ -169,132 +173,132 @@ export const getTweetResultsFromTweetRawData = (tweetRawDataString: string, twee
   }
 };
 
-export const createTweetData = (tweetResults: ITweetResults): ITweetData => {
-  const { legacy, views, core, card } = tweetResults;
-  const {
-    full_text,
-    created_at,
-    favorite_count,
-    quote_count,
-    retweet_count,
-    entities,
-    extended_entities,
-    bookmark_count,
-  } = legacy;
+export const createTweetData = (tweetResults: ITweetResults): ITweetData | null => {
+  try {
+    const { legacy, views, core, card } = tweetResults;
+    const {
+      full_text,
+      created_at,
+      favorite_count,
+      quote_count,
+      retweet_count,
+      entities,
+      extended_entities,
+      bookmark_count,
+    } = legacy;
 
-  const { user_mentions, urls, hashtags, symbols } = entities as {
-    user_mentions: { screen_name: string }[];
-    urls: { expanded_url: string }[];
-    hashtags: { text: string }[];
-    symbols: { text: string }[];
-  };
+    const { user_mentions, urls, hashtags, symbols } = entities as {
+      user_mentions: { screen_name: string }[];
+      urls: { expanded_url: string }[];
+      hashtags: { text: string }[];
+      symbols: { text: string }[];
+    };
 
-  const media = extended_entities?.media ?? [];
+    const media = extended_entities?.media ?? [];
 
-  const { profile_image_url_https, name, screen_name } = core.user_results.result.legacy;
+    const { profile_image_url_https, name, screen_name } = core.user_results.result.legacy;
 
-  const user: ITweetUser = {
-    profile_image_url_https,
-    name,
-    screen_name,
-  };
+    const user: ITweetUser = {
+      profile_image_url_https,
+      name,
+      screen_name,
+    };
 
-  const views_count = views.count;
-  const details: ITweetDetails = {
-    created_at,
-    favorite_count,
-    quote_count,
-    retweet_count,
-    views_count,
-    bookmark_count: String(bookmark_count),
-  };
+    const views_count = views.count;
+    const details: ITweetDetails = {
+      created_at,
+      favorite_count,
+      quote_count,
+      retweet_count,
+      views_count,
+      bookmark_count: String(bookmark_count),
+    };
 
-  const props = [
-    'vanity_url',
-    'card_url',
-    'title',
-    'description',
-    'domain',
-    'thumbnail_image_original',
-    'player_image_original',
-  ];
+    const props = [
+      'vanity_url',
+      'card_url',
+      'title',
+      'description',
+      'domain',
+      'thumbnail_image_original',
+      'player_image_original',
+    ];
 
-  const cardData: ITweetBody['card'] = !card
-    ? null
-    : card?.legacy.binding_values.reduce((acc: any, val: any) => {
-        if (props.includes(val.key)) {
-          if (val.value.type === 'STRING') {
-            acc[val.key] = val.value.string_value;
+    const cardData: ITweetBody['card'] = !card
+      ? null
+      : card?.legacy.binding_values.reduce((acc: any, val: any) => {
+          if (props.includes(val.key)) {
+            if (val.value.type === 'STRING') {
+              acc[val.key] = val.value.string_value;
+            }
+
+            if (val.value.type === 'IMAGE') {
+              acc[val.key] = val.value.image_value.url;
+            }
           }
+          return acc;
+        }, {});
 
-          if (val.value.type === 'IMAGE') {
-            acc[val.key] = val.value.image_value.url;
-          }
-        }
-        return acc;
-      }, {});
-
-  const tweetUrls: ITweetBody['urls'] =
+    const tweetUrls: ITweetBody['urls'] =
       !urls || urls.length === 0 ? null : urls.map((url: { expanded_url: string }) => url.expanded_url);
 
-  const tweetHashTags: ITweetBody['hashtags'] =
-    !hashtags || hashtags.length === 0 ? null : hashtags.map((hashtag: { text: string }) => hashtag.text);
+    const tweetHashTags: ITweetBody['hashtags'] =
+      !hashtags || hashtags.length === 0 ? null : hashtags.map((hashtag: { text: string }) => hashtag.text);
 
-  const tweetSymbols: ITweetBody['symbols'] =
-    !symbols || symbols.length === 0 ? null : symbols.map((symbol: { text: string }) => symbol.text);
+    const tweetSymbols: ITweetBody['symbols'] =
+      !symbols || symbols.length === 0 ? null : symbols.map((symbol: { text: string }) => symbol.text);
 
-  const tweetMedia: ITweetBody['media'] = !media
-    ? null
-    : media.map(
-        ({
-          type,
-          media_url_https,
-          video_info,
-        }: {
-          media_url_https: string;
-          type: 'photo' | 'video';
-          video_info: { variants: any[] };
-        }) => {
-          if (type === 'video') {
-            const maxBitrateVariant = video_info.variants.reduce((acc, val) => {
-              if ((!!acc.bitrate && val.bitrate > acc.bitrate) || (!acc.bitrate && val.bitrate)) return val;
-              return acc;
-            }, {});
-            return { type, src: maxBitrateVariant.url, thumb: media_url_https };
-          }
-          return { type, src: media_url_https };
-        },
-      );
-
-  const tweetMentions: ITweetBody['user_mentions'] =
-    !user_mentions || user_mentions.length === 0
+    const tweetMedia: ITweetBody['media'] = !media
       ? null
-      : user_mentions.map((mention: { screen_name: string }) => mention.screen_name);
+      : media.map(
+          ({
+            type,
+            media_url_https,
+            video_info,
+          }: {
+            media_url_https: string;
+            type: 'photo' | 'video';
+            video_info: { variants: any[] };
+          }) => {
+            if (type === 'video') {
+              const maxBitrateVariant = video_info.variants.reduce((acc, val) => {
+                if ((!!acc.bitrate && val.bitrate > acc.bitrate) || (!acc.bitrate && val.bitrate)) return val;
+                return acc;
+              }, {});
+              return { type, src: maxBitrateVariant.url, thumb: media_url_https };
+            }
+            return { type, src: media_url_https };
+          },
+        );
 
-  const tweetBookmarksCount: string | null = bookmark_count > 0 ? String(bookmark_count) : null;
+    const tweetMentions: ITweetBody['user_mentions'] =
+      !user_mentions || user_mentions.length === 0
+        ? null
+        : user_mentions.map((mention: { screen_name: string }) => mention.screen_name);
 
-  const body: ITweetBody = {
-    full_text,
-    card: cardData,
-    urls: tweetUrls,
-    hashtags: tweetHashTags,
-    symbols: tweetSymbols,
-    media: tweetMedia,
-    user_mentions: tweetMentions,
-    bookmark_count: tweetBookmarksCount,
-  };
+    const tweetBookmarksCount: string | null = bookmark_count > 0 ? String(bookmark_count) : null;
 
-  const tweetData = {
-    body,
-    user,
-    details,
-  };
-  return tweetData;
-};
+    const body: ITweetBody = {
+      full_text,
+      card: cardData,
+      urls: tweetUrls,
+      hashtags: tweetHashTags,
+      symbols: tweetSymbols,
+      media: tweetMedia,
+      user_mentions: tweetMentions,
+      bookmark_count: tweetBookmarksCount,
+    };
 
-export const processTweetData = (tweetRawData: any, tweetId: string) => {
-  const tweetResults = getTweetResultsFromTweetRawData(tweetRawData, tweetId) as ITweetResults;
-  return createTweetData(tweetResults);
+    const tweetData = {
+      body,
+      user,
+      details,
+    };
+    return tweetData;
+  } catch (error) {
+    console.log('create tweet data error: ', error);
+    return null;
+  }
 };
 
 export const getGatewayLink = (cid: string) => `${process.env.REACT_APP_STORAGE_GATEWAY}${cid}`;

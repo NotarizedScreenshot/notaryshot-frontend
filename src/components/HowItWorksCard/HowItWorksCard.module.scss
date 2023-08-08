@@ -1,8 +1,7 @@
 .container {
   position: relative;
-  width: 63rem;
 
-  background: rgba(23, 23, 28, 0.6);
+  background-color: rgba(23, 23, 28, 0.6);
   box-shadow: inset -2px -2px 4px rgba(255, 255, 255, 0.08), inset 2px 2px 4px rgba(255, 255, 255, 0.08);
   backdrop-filter: blur(13px);
 
@@ -10,10 +9,25 @@
   padding: 3rem 2.2rem 3rem 3rem;
 
   display: grid;
-  grid-template-columns: repeat(2, min-content);
+  grid-template-columns: 1fr 1fr;
   justify-content: space-between;
+  column-gap: 2.5rem;
 
-  min-height: 15rem;
+  @media screen and (max-width: 1023px) {
+    max-width: 95%;
+    margin: auto;
+    padding: 4rem;
+    column-gap: 4rem;
+  }
+  @media screen and (max-width: 640px) {
+    padding: 3rem;
+    column-gap: 3rem;
+  }
+  @media screen and (max-width: 507px) {
+    max-width: 100%;
+    gap: 2.5rem;
+    grid-template-rows: 1.5fr 2fr;
+  }
 
   .number {
     position: absolute;
@@ -23,17 +37,43 @@
   }
 
   .bubble {
+    height: 26%;
+    width: 54.5%;
+    background-image: url(../../../public/images/bubble.png);
+    background-size: 100%;
+    background-repeat: no-repeat;
+
     position: absolute;
-    right: 0;
-    top: 0;
-    transform: translate(1.5rem, 1.5rem);
+    right: 2.2rem;
+    top: 3rem;
+
+    @media screen and (max-width: 1023px) {
+      background-image: url(../../../public/images/bubble-mobile.png);
+      height: 34%;
+      width: 49.5%;
+      top: 1rem;
+      right: 9rem;
+    }
+    @media screen and (max-width: 850px) {
+      top: 1rem;
+      right: 6rem;
+    }
+
+    @media screen and (max-width: 507px) {
+      position: relative;
+      top: unset;
+      right: unset;
+      grid-column: 1 / -1;
+      height: 100%;
+      width: 100%;
+    }
 
     .message {
-      width: 37rem;
-      height: 9rem;
+      width: 86%;
       position: absolute;
-      top: 1.8rem;
-      right: 1.5rem;
+      top: 47%;
+      left: 53%;
+      transform: translate(-50%, -50%);
 
       font-family: Russo One;
       font-size: 1.4rem;
@@ -41,12 +81,51 @@
       line-height: 2.3rem;
 
       text-align: center;
-      padding: 0 4rem;
 
       display: flex;
       align-items: center;
       justify-content: center;
       flex-direction: column;
+    
+      @media screen and (max-width: 1023px) {
+        font-size: 2.2rem;
+        line-height: 4.2rem;
+      }
+      @media screen and (max-width: 960px) {
+        font-size: 2rem;
+        line-height: 3.6rem;
+      }
+      @media screen and (max-width: 770px) {
+        font-size: 1.6rem;
+        line-height: 2.8rem;
+      }
+
+      @media screen and (max-width: 670px) {
+        font-size: 1.3rem;
+        line-height: 2.4rem;
+      }
+      @media screen and (max-width: 610px) {
+        font-size: 1.2rem;
+        line-height: 2rem;
+      }
+      @media screen and (max-width: 580px) {
+        font-size: 1rem;
+      }
+      @media screen and (max-width: 507px) {
+        max-width: 75%;
+        font-size: 2rem;
+        line-height: 3rem;
+      }
+      @media screen and (max-width: 425px) {
+        max-width: 80%;
+        font-size: 1.8rem;
+        line-height: 2.5rem;
+      }
+      @media screen and (max-width: 375px) {
+        max-width: 80%;
+        font-size: 1.4rem;
+        line-height: 2.4rem;
+      }
     }
   }
 
@@ -54,14 +133,19 @@
     border-radius: 10px;
     img {
       display: block;
+      width: 100%;
     }
   }
 
   .action {
     border-radius: 10px;
     align-self: end;
+    @media screen and (max-width: 507px) {
+      align-self: start;
+    }
     img {
       display: block;
+      width: 100%;
     }
   }
 }

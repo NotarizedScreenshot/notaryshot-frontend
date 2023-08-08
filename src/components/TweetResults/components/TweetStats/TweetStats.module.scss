@@ -11,11 +11,13 @@
   align-items: center;
   justify-self: flex-start;
   align-self: flex-start;
+  gap: 4rem;
+  flex-wrap: wrap;
 
+  @media screen and (max-width: 1024px) {
+    gap: 2rem;
+  }
   .stat {
-    &:not(:last-child) {
-      margin-right: 4rem;
-    }
     .icon {
       width: 2.8rem;
       height: 2.8rem;

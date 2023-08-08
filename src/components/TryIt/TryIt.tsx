@@ -4,9 +4,8 @@ import { TweetIdForm, CircledNumber, ProcessIcon } from 'components';
 
 export const TryIt: React.FC<ITryItProps> = () => {
   return (
-    <div className={styles.container}>
+    <div className={styles.container} id='try'>
       <TweetIdForm />
-
       <ol className={styles.ol}>
         <li className={styles.li}>
           <div className={styles.number}>
@@ -49,13 +48,9 @@ export const TryIt: React.FC<ITryItProps> = () => {
           </p>
           <div className={styles.processOrder}>
             <ProcessIcon title='Server DNS' iconURL='images/icon-dns.png' />
-            <div className={styles.divider}>
-              <img src='images/divider-line.png' alt='div-line'></img>
-            </div>
+            <div className={styles.divider}></div>
             <ProcessIcon title='Timestamp' iconURL='images/icon-timestamp.png' />
-            <div className={styles.divider}>
-              <img src='images/divider-line.png' alt='div-line'></img>
-            </div>
+            <div className={styles.divider}></div>
             <ProcessIcon title='Content hash' iconURL='images/icon-hash.png' />
           </div>
         </div>

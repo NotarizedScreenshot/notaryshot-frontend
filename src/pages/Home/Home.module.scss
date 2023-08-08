@@ -3,6 +3,11 @@
   color: white;
   margin: auto;
   background-color: #131314;
+
+  &.noscroll {
+    overflow: hidden !important;
+  }
+
   .background {
     position: absolute;
     width: 100%;
@@ -22,8 +27,16 @@
   }
 
   .content {
+    position: relative;
     max-width: 137rem;
     padding: 0 4rem 5rem;
     margin: auto;
+
+    @media only screen and (max-width: 1023px) {
+      padding: 0 3rem 5rem;
+    }
+    @media only screen and (max-width: 639px) {
+      padding: 0 1.5rem 5rem;
+    }
   }
 }

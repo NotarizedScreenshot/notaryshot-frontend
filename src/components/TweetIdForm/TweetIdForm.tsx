@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import cn from 'classnames';
 
 import { ICutsomFormProps } from './TweetIdFormProps';
@@ -20,7 +20,8 @@ export const TweetIdForm: React.FC<ICutsomFormProps> = ({
   validate = validateTweetLinkOrTweetId,
 }) => {
   const dispatch = useFetchingDispatchContext();
-  const { isFetching } = useFetchingContext();
+  const { data: fetchedData, isFetching } = useFetchingContext();
+
   const { userId, connectionError } = useConnectionContext();
   const { setInProgress, setProgress } = useProgressingContext();
   const { resetTransactionStatus } = useTransactionContext();
@@ -59,6 +60,32 @@ export const TweetIdForm: React.FC<ICutsomFormProps> = ({
         });
     }
   };
+
+  const submitForm = useCallback(
+    (tweetIdOrUrl: string, userIdx: string) => {
+      setDirty(true);
+      setValidating(true);
+      validate(tweetIdOrUrl)
+        .then((data: string) => {
+          if (!connectionError) {
+            setInProgress(true);
+            setProgress(0);
+            setInvalid(false);
+            fetchPreviewData(dispatch, data, userIdx);
+          }
+          setValidating(false);
+          resetTransactionStatus();
+          navigate(`/preview?tweetid=${data}`);
+        })
+        .catch((submitValidationError: Error) => {
+          setInvalid(true);
+          setError(submitValidationError.message);
+          inputRef.current?.focus();
+        });
+    },
+    [userId],
+  );
+
   const submitHandler: React.FormEventHandler<HTMLFormElement> = (event) => {
     event.preventDefault();
     setDirty(true);
@@ -73,7 +100,7 @@ export const TweetIdForm: React.FC<ICutsomFormProps> = ({
         }
         setValidating(false);
         resetTransactionStatus();
-        navigate(`/preview`);
+        navigate(`/preview?tweetid=${data}`);
       })
       .catch((submitValidationError: Error) => {
         setInvalid(true);
@@ -81,6 +108,10 @@ export const TweetIdForm: React.FC<ICutsomFormProps> = ({
         inputRef.current?.focus();
       });
   };
+
+  useEffect(() => {
+    if (!fetchedData && initialInputData && initialInputData.length > 0) submitForm(initialInputData, userId!);
+  }, [userId]);
   return (
     <div className={styles.container}>
       <form onSubmit={submitHandler} className={styles.form}>
@@ -123,7 +154,11 @@ export const TweetIdForm: React.FC<ICutsomFormProps> = ({
             <p className='p2'>Immortalize</p>
           </button>
         </div>
-        <div className={cn(styles.error, isInvalid ? null : styles.hidden)}>{error}</div>
+        {isInvalid && (
+          <div className={cn(styles.error, isInvalid ? null : styles.hidden)}>
+            <div className={styles.errorText}>{error}</div>
+          </div>
+        )}
       </form>
     </div>
   );

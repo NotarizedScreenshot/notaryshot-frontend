@@ -20,6 +20,16 @@ html {
   box-sizing: border-box;
   font-size: 62.5%;
   color: white;
+
+  @media screen and (max-width: 1440px) {
+    font-size: 60%;
+  }
+  @media screen and (max-width: 1200px) {
+    font-size: 47%;
+  }
+  @media screen and (max-width: 424px) {
+    font-size: 40%;
+  }
 }
 
 body {
@@ -71,6 +81,7 @@ button {
   letter-spacing: 0;
   text-align: left;
   background-color: var(--buttonBgColor);
+  color: var(--backgroundColor);
   cursor: pointer;
 }
 

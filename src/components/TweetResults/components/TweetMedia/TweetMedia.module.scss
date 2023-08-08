@@ -7,26 +7,33 @@
   backdrop-filter: blur(5px);
 
   border-radius: 14px;
-  padding: 10px 20px;
+  padding: 1rem;
 
   max-width: 100%;
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(min-content, 15rem));
+  display: flex;
   justify-self: start;
   gap: 1rem;
 
+  @media screen and (max-width: 767px) {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
   .mediaElement {
-    width: 14rem;
+    flex: 1;
+    max-width: 14rem;
     border-radius: 8px;
     overflow: hidden;
     justify-self: center;
+    @media screen and (max-width: 767px) {
+      flex: unset;
+      max-width: 18rem;
+    }
 
     .preview {
-      width: 14rem;
       max-height: 8rem;
       overflow: hidden;
       border-radius: 8px;
-      margin-bottom: 1rem;
       img {
         width: 100%;
       }

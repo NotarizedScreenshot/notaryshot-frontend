@@ -6,9 +6,12 @@
 
   .lens {
     position: relative;
-    width: 20rem;
+    width: 31rem;
+    display: flex;
+    justify-content: center;
 
     .image {
+      width: 100%;
       position: relative;
       animation-duration: 5s;
       animation-name: searching;
@@ -34,7 +37,7 @@
   }
 
   .progressBar {
-    width: 310px;
+    width: 31rem;
     height: 20px;
     border: 0.7px solid #15cef7;
     box-shadow: inset 0px 0px 4px rgba(4, 210, 255, 0.2);

@@ -1,4 +1,4 @@
 export interface IViewNFTButtonProps {
   children?: React.ReactNode;
-  nftId?: string;
+  nftId: string | null;
 }
