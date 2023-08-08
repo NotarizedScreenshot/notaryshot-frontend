@@ -6,7 +6,7 @@ on:
     tags:
       - v*
   pull_request:
-    branches: [ main ]
+    branches: [main]
 
 jobs:
   build:
@@ -24,6 +24,8 @@ jobs:
       - name: Lint
         run: yarn lint
       - name: Build
+        env:
+          REACT_APP_WALLET_CONNECT_ID: ${{ secrets.FRONTEND_DEPLOY_SSH_PRIVATE_KEY }}
         run: yarn build
       - name: Save Build Cache
         id: cache-build-save
