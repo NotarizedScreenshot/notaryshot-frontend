@@ -1,10 +1,7 @@
-// import { fetchSigner } from '@wagmi/core';
 import { createContext, useContext, useState } from 'react';
-// import { useAccount } from 'wagmi';
 import { useContractEvent, useAccount } from 'wagmi';
 import notaryShotContract from 'contracts/screenshot-manager.json';
 
-// import { BigNumber } from 'ethers';
 interface IContractContext {
   contract: any;
   nftId: string | null;
@@ -32,14 +29,11 @@ export const ContractContextProvider = ({ children }: { children: React.ReactNod
 
       const { args } = log as typeof log & { args: { tokenId: bigint; to: `0x${string}` } };
 
-      args.tokenId.toString();
-
       if (args.to.toLowerCase() === address?.toLowerCase()) {
         setNftId(args.tokenId.toString());
       }
     },
   });
-
 
   const value = {
     contract: null,

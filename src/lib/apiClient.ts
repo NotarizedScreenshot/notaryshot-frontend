@@ -1,4 +1,10 @@
-import { IFetchedData, IMetadata } from 'types';
+import {
+  ETransactionStatus,
+  IFetchedData,
+  IMetadata,
+  INotarizeTransactionFailure,
+  INotarizeTransactionSuccess,
+} from 'types';
 import { writeContract } from '@wagmi/core';
 
 import notaryShotContract from 'contracts/screenshot-manager.json';
@@ -64,7 +70,7 @@ export const submitNotarization = async (
   tweetId: string,
   cid: string,
   cb?: (data: string) => void,
-): Promise<{ status: 'failed' | 'success'; transactionHash?: string | null; error?: string | null }> => {
+): Promise<INotarizeTransactionSuccess | INotarizeTransactionFailure> => {
   try {
     const bg = BigInt(tweetId);
     const { hash } = await writeContract({
@@ -81,13 +87,13 @@ export const submitNotarization = async (
       cb(`Trasaction ${splitHash.join('')} confirmed, waiting for receipt...`);
     }
 
-    return { status: 'success', transactionHash: hash, error: null };
+    return { status: ETransactionStatus.success, transactionHash: hash };
   } catch (error) {
     if (error instanceof Error) {
       console.error('submit notarization error', error);
-      return { status: 'failed', error: error.message };
+      return { status: ETransactionStatus.failed, error: error.message };
     }
-    return { status: 'failed', error: JSON.stringify(error) };
+    return { status: ETransactionStatus.failed, error: JSON.stringify(error) };
   }
 };
 

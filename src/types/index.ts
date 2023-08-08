@@ -63,3 +63,16 @@ export interface ITweetAttributes {
   user_mentions: ITweetBody['user_mentions'];
   urls: ITweetBody['urls'];
 }
+
+export enum ETransactionStatus {
+  'success',
+  'failed',
+}
+export interface INotarizeTransactionSuccess {
+  status: ETransactionStatus.success;
+  transactionHash: string;
+}
+export interface INotarizeTransactionFailure {
+  status: ETransactionStatus.failed;
+  error: string;
+}

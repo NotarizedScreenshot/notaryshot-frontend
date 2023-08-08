@@ -9,6 +9,9 @@ import {
   // validateTweetLinkOrTweetId,
 } from 'utils';
 import stamps from '__fixtures__/stamps';
+
+//TODO: #94
+//https://github.com/orgs/NotarizedScreenshot/projects/1?pane=issue&itemId=23440437
 // import { tweetBodyStubEmpty1, tweetBodyStubFull1 } from '__fixtures__/tweetdata';
 
 // describe('isTweetBodyElemetEmpty', () => {
