@@ -25,7 +25,7 @@ jobs:
         run: yarn lint
       - name: Build
         env:
-          REACT_APP_WALLET_CONNECT_ID: ${{ secrets.FRONTEND_DEPLOY_SSH_PRIVATE_KEY }}
+          REACT_APP_WALLET_CONNECT_ID: ${{ secrets.WALLET_CONNECT_ID }}
         run: yarn build
       - name: Save Build Cache
         id: cache-build-save
