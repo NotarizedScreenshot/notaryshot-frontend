@@ -45,7 +45,7 @@ const { chains, publicClient } = configureChains([polygon], [publicProvider()]);
 
 const { connectors } = getDefaultWallets({
   appName: 'Quantum Oracle App',
-  projectId: '6c1f221e5a67ca1b6d9ecc2ec3303b18',
+  projectId: process.env.REACT_APP_WALLET_CONNECT_ID!,
   chains,
 });
 
