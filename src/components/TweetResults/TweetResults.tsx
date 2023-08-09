@@ -44,7 +44,11 @@ export const TweetResults: React.FC<ITweetResultsProps> = ({ imageUrl, tweetdata
   useEffect(() => {
     if (!!tweetId && !!contentId?.nftMetadataCid) {
       const history = createBrowserHistory();
-      history.replace(`/preview?${!transactionStatus ? `tweetid=${tweetId}&` : ''}cid=${contentId?.nftMetadataCid}`);
+      history.replace(
+        transactionStatus
+          ? `/results?cid=${contentId?.nftMetadataCid}`
+          : `/preview?tweetid=${tweetId}&cid=${contentId?.nftMetadataCid}`,
+      );
     }
   }, [tweetId, contentId]);
 
