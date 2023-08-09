@@ -20,6 +20,8 @@ export const ContractContextProvider = ({ children }: { children: React.ReactNod
   const [nftId, setNftId] = useState<string | null>(null);
   const { address } = useAccount();
 
+  console.log('ContractContextProvider address', address);
+
   useContractEvent({
     address: notaryShotContract.address as `0x${string}`,
     abi: notaryShotContract.abi,
@@ -29,8 +31,17 @@ export const ContractContextProvider = ({ children }: { children: React.ReactNod
 
       const { args } = log as typeof log & { args: { tokenId: bigint; to: `0x${string}` } };
 
+      console.log('ContractContextProvider useContractEvent, transfer event, args.to:', args.to.toLowerCase());
+      console.log('ContractContextProvider useContractEvent, transfer event, current address:', address?.toLowerCase());
+      console.log(
+        'ContractContextProvider useContractEvent, current address is equal to args.to: ',
+        args.to.toLowerCase() === address?.toLowerCase(),
+      );
+
       if (args.to.toLowerCase() === address?.toLowerCase()) {
         setNftId(args.tokenId.toString());
+      } else {
+        console.log('args.to is not equal to current address, args.to: ', args.to, 'current address: ', address);
       }
     },
   });

@@ -19,7 +19,7 @@ import { ETransactionStatus } from 'types';
 
 export const NotarizeButton: React.FC<INotarizeButtonProps> = () => {
   const { tweetId } = useFetchingContext();
-  const { isConnected } = useAccount();
+  const { isConnected, address } = useAccount();
   const { openConnectModal } = useConnectModal();
   const dispatch = useModalDispatchContext();
   const navigate = useNavigate();
@@ -70,7 +70,7 @@ export const NotarizeButton: React.FC<INotarizeButtonProps> = () => {
       }, DEFAULT_TIMEOUT_MS);
       return;
     }
-
+    console.log('Notarize button clickHandler, current address: ', address);
     updateStateOnTransaction('Pending transaction...');
     console.log(`Notatize button on click, tweetId: ${tweetId}, nftMetadataCid: ${contentId?.nftMetadataCid}`);
     const result = await submitNotarization(tweetId, contentId?.nftMetadataCid, updateStateOnTransaction);
