@@ -1,6 +1,8 @@
-import { createContext, useContext, useState } from 'react';
-import { useContractEvent, useAccount } from 'wagmi';
+import { createContext, useContext, useEffect, useState } from 'react';
+import { useAccount } from 'wagmi';
 import notaryShotContract from 'contracts/screenshot-manager.json';
+import { createPublicClient, http } from 'viem';
+import { polygon } from 'viem/chains';
 
 interface IContractContext {
   contract: any;
@@ -20,31 +22,51 @@ export const ContractContextProvider = ({ children }: { children: React.ReactNod
   const [nftId, setNftId] = useState<string | null>(null);
   const { address } = useAccount();
 
-  console.log('ContractContextProvider address', address);
-
-  useContractEvent({
-    address: notaryShotContract.address as `0x${string}`,
-    abi: notaryShotContract.abi,
-    eventName: 'Transfer',
-    listener([log]) {
-      console.log('Contract on Transfer Event, log:', log);
-
-      const { args } = log as typeof log & { args: { tokenId: bigint; to: `0x${string}` } };
-
-      console.log('ContractContextProvider useContractEvent, transfer event, args.to:', args.to.toLowerCase());
-      console.log('ContractContextProvider useContractEvent, transfer event, current address:', address?.toLowerCase());
-      console.log(
-        'ContractContextProvider useContractEvent, current address is equal to args.to: ',
-        args.to.toLowerCase() === address?.toLowerCase(),
-      );
-
-      if (args.to.toLowerCase() === address?.toLowerCase()) {
-        setNftId(args.tokenId.toString());
-      } else {
-        console.log('args.to is not equal to current address, args.to: ', args.to, 'current address: ', address);
-      }
-    },
+  const publicClient = createPublicClient({
+    chain: polygon,
+    transport: http(),
   });
+
+  const setWatcher = () => {
+    console.count('run set Watched');
+    return publicClient.watchContractEvent({
+      address: notaryShotContract.address as `0x${string}`,
+      abi: notaryShotContract.abi,
+      eventName: 'Transfer',
+      onLogs: (logs) => {
+        console.log('Contract on Transfer Event, log:', logs);
+
+        const log = logs[0];
+
+        const { args } = log as typeof log & { args: { tokenId: bigint; to: `0x${string}` } };
+
+        console.log('ContractContextProvider useContractEvent, transfer event, args.to:', args.to.toLowerCase());
+        console.log(
+          'ContractContextProvider useContractEvent, transfer event, current address:',
+          address?.toLowerCase(),
+        );
+        console.log(
+          'ContractContextProvider useContractEvent, current address is equal to args.to: ',
+          args.to.toLowerCase() === address?.toLowerCase(),
+        );
+
+        if (args.to.toLowerCase() === address?.toLowerCase()) {
+          setNftId(args.tokenId.toString());
+        } else {
+          console.log('args.to is not equal to current address, args.to: ', args.to, 'current address: ', address);
+        }
+      },
+    });
+  };
+
+  useEffect(() => {
+    const unWatch = setWatcher();
+
+    return () => {
+      console.count('run useEffect retrun and unwatch Watched');
+      unWatch();
+    };
+  }, [address]);
 
   const value = {
     contract: null,
