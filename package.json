@@ -33,7 +33,7 @@
     "typescript": "*",
     "viem": "^1.4.0",
     "wagmi": "^1.3.9",
-    "web-vitals": "^2.1.4",
+    "web-vitals": "^3.4.0",
     "yup": "^1.0.0"
   },
   "proxy": "http://localhost:9000",
