@@ -63,7 +63,7 @@ export const ContractContextProvider = ({ children }: { children: React.ReactNod
     const unWatch = setWatcher();
 
     return () => {
-      console.count('run useEffect retrun and unwatch Watched');
+      console.count('run useEffect return and unwatch Watched');
       unWatch();
     };
   }, [address]);
